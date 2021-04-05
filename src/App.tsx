@@ -1,8 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import "./App.css";
+///ctr + space to get code hinting
 
-function App() {
+const App: FC = () => {
   return <div></div>;
-}
+};
 
 export default App;
