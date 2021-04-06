@@ -49,7 +49,7 @@ interface SetUserAction {
   payload: User;
 }
 
-interface SetIsVerfiedAction {
+interface SetIsVerifiedAction {
   type: typeof IS_VERIFIED;
   payload: boolean;
 }
@@ -82,6 +82,6 @@ export type AuthAction =
   | SetLoadingAction
   | SignOutAction
   | SetErrorAction
-  | SetIsVerfiedAction
+  | SetIsVerifiedAction
   | NeedVerificationAction
   | SetSuccessAction;

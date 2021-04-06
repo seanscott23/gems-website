@@ -146,13 +146,15 @@ export const setNeedVerification = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return (dispatch) => {
     console.log("just to check if this works" + value);
-    if (value) {
+    if (value === true) {
       dispatch({
         type: NEED_VERIFICATION,
+        payload: value
       });
-    } else {
+    } if (value === false) {
       dispatch({
         type: IS_VERIFIED,
+        payload: value
       });
     }
   };
