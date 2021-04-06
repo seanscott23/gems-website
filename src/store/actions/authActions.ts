@@ -33,7 +33,7 @@ export const signup = (
         };
         await firebase
           .firestore()
-          .collection("./user")
+          .collection("./users")
           .doc(res.user.uid)
           .set(userData);
         await res.user.sendEmailVerification();

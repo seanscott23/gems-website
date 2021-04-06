@@ -6,7 +6,7 @@ import Header from "./components/sections/Header";
 import SignUp from "./components/pages/SignUp";
 import SignIn from "./components/pages/Signin";
 import ForgotPassword from "./components/pages/ForgotPassword";
-import Homepage from "./components/pages/";
+import Homepage from "./components/pages/Homepage";
 import Dashboard from "./components/pages/Dashboard";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import PublicRoute from "./components/auth/PublicRoute";

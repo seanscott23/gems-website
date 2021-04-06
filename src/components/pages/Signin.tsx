@@ -44,6 +44,7 @@ const Signin: FC = () => {
           <Input
             name="password"
             value={password}
+            type="passowrd"
             onChange={(e) => setPassword(e.currentTarget.value)}
             placeholder="Password"
             label="Password"
