@@ -4,6 +4,7 @@ import Input from "../UI/Input";
 import Button from "../UI/Button";
 import Message from "../UI/Message";
 import { signup, setError } from "../../store/actions/authActions";
+import { Form, Card } from "react-bootstrap";
 import { RootState } from "../../store";
 
 const SignUp: FC = () => {
@@ -29,10 +30,10 @@ const SignUp: FC = () => {
   };
 
   return (
-    <section className="section">
+    <Card className="section">
       <div className="container">
         <h2 className="has-tex-centered is-size-2 mb-3">Sign Up</h2>
-        <form className="form" onSubmit={submitHandler}>
+        <Form className="form" onSubmit={submitHandler}>
           {error && <Message type="danger" msg={error} />}
           <Input
             name="firstName"
@@ -57,12 +58,13 @@ const SignUp: FC = () => {
           />
           <Button
             text={loading ? "Loading..." : "Sign Up"}
-            className="is-primary is-fullwidth mt-5"
+            className="w-100 btn btn-primary"
+            type="submit"
             disabled={loading}
           />
-        </form>
+        </Form>
       </div>
-    </section>
+    </Card>
   );
 };
 

@@ -6,9 +6,11 @@ import {
   User,
   SET_LOADING,
   SIGN_OUT,
+  SET_SIGNED_IN,
   SignInData,
   SET_ERROR,
   NEED_VERIFICATION,
+  IS_VERIFIED,
   SET_SUCCESS,
 } from "../types";
 
@@ -25,16 +27,18 @@ export const signup = (
         .auth()
         .createUserWithEmailAndPassword(data.email, data.password);
       if (res.user) {
+        // userSessionRef.update({createdAt: firebase.database.ServerValue.TIMESTAMP})
         const userData: User = {
           email: data.email,
           firstName: data.firstName,
           id: res.user.uid,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          createdAt: Date.now(),
         };
+        console.log(userData);
         await firebase
-          .firestore()
-          .collection("./users")
-          .doc(res.user.uid)
+          .database()
+          .ref("/users")
+          .child(res.user.uid)
           .set(userData);
         await res.user.sendEmailVerification();
         dispatch({
@@ -61,9 +65,11 @@ export const getUserById = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      const user = await firebase.firestore().collection("users").doc(id).get();
-      if (user.exists) {
-        const userData = user.data() as User;
+      const user = await firebase.database().ref("users").child(id).get();
+      // firebase.database().goOnline();
+      if (user.exists()) {
+        const userData = user.val() as User;
+        console.log(userData);
         dispatch({
           type: SET_USER,
           payload: userData,
@@ -94,7 +100,10 @@ export const signin = (
     try {
       await firebase
         .auth()
-        .signInWithEmailAndPassword(data.email, data.password);
+        .signInWithEmailAndPassword(data.email, data.password)
+        .then((userCredential) => {
+          console.log(userCredential);
+        });
     } catch (err) {
       console.log(err);
       onError();
@@ -132,16 +141,20 @@ export const setError = (
 
 // set need verification
 
-export const setNeedVerification = (): ThunkAction<
-  void,
-  RootState,
-  null,
-  AuthAction
-> => {
+export const setNeedVerification = (
+  value: boolean
+): ThunkAction<void, RootState, null, AuthAction> => {
   return (dispatch) => {
-    dispatch({
-      type: NEED_VERIFICATION,
-    });
+    console.log("just to check if this works" + value);
+    if (value) {
+      dispatch({
+        type: NEED_VERIFICATION,
+      });
+    } else {
+      dispatch({
+        type: IS_VERIFIED,
+      });
+    }
   };
 };
 

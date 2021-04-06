@@ -4,6 +4,8 @@ export const SET_LOADING = "SET_LOADING";
 export const SET_ERROR = "SET_ERROR";
 export const NEED_VERIFICATION = "NEED_VERIFICATION";
 export const SET_SUCCESS = "SET_SUCCESS";
+export const IS_VERIFIED = "IS_VERIFIED";
+export const SET_SIGNED_IN = "SET_SIGNED_IN";
 
 export interface User {
   firstName: string;
@@ -27,15 +29,29 @@ export interface SignUpData {
   password: string;
 }
 
+// export interface SignedInUser {
+//   email: string;
+//   id: string;
+// }
 export interface SignInData {
   email: string;
   password: string;
 }
 
 //Actions
+// interface SetSignedInAction {
+//   type: typeof SET_SIGNED_IN;
+//   payload: SignedInUser;
+// }
+
 interface SetUserAction {
   type: typeof SET_USER;
   payload: User;
+}
+
+interface SetIsVerfiedAction {
+  type: typeof IS_VERIFIED;
+  payload: boolean;
 }
 
 interface SetLoadingAction {
@@ -66,5 +82,6 @@ export type AuthAction =
   | SetLoadingAction
   | SignOutAction
   | SetErrorAction
+  | SetIsVerfiedAction
   | NeedVerificationAction
   | SetSuccessAction;

@@ -9,12 +9,12 @@ interface Props extends RouteProps {
 
 const PrivateRoute: FC<Props> = ({ component: Component, ...rest }) => {
   const { authenticated } = useSelector((state: RootState) => state.auth);
-
+  console.log(authenticated);
   return (
     <Route
       {...rest}
       render={(props) =>
-        authenticated ? <Component {...props} /> : <Redirect to="signin" />
+        authenticated ? <Component {...props} /> : <Redirect to="/signin" />
       }
     />
   );

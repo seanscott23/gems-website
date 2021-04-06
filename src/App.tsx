@@ -11,13 +11,12 @@ import Dashboard from "./components/pages/Dashboard";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import PublicRoute from "./components/auth/PublicRoute";
 import Loader from "./components/UI/Loader";
-
 import firebase from "./firebase/config";
+
 import {
   getUserById,
   setLoading,
   setNeedVerification,
-  signin,
 } from "./store/actions/authActions";
 import { RootState } from "./store";
 
@@ -32,7 +31,9 @@ const App: FC = () => {
         dispatch(setLoading(true));
         await dispatch(getUserById(user.uid));
         if (!user.emailVerified) {
-          dispatch(setNeedVerification());
+          dispatch(setNeedVerification(true));
+        } else {
+          dispatch(setNeedVerification(false));
         }
       }
       dispatch(setLoading(false));

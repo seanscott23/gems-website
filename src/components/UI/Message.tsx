@@ -9,13 +9,13 @@ const Message: FC<MessageProps> = ({ msg, type }) => {
   let typeClass = "";
 
   if (type === "danger") {
-    typeClass = "is-danger";
+    typeClass = "alert-danger";
   }
   if (type === "success") {
-    typeClass = "is-success";
+    typeClass = "alert-success";
   }
   return (
-    <article className={`message ${typeClass}`}>
+    <article className={`alert ${typeClass}`}>
       <div className="message-body">{msg}</div>
     </article>
   );

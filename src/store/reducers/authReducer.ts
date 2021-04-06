@@ -7,6 +7,8 @@ import {
   SET_SUCCESS,
   NEED_VERIFICATION,
   SIGN_OUT,
+  IS_VERIFIED,
+  SET_SIGNED_IN,
 } from "../types";
 
 const initialState: AuthState = {
@@ -18,7 +20,7 @@ const initialState: AuthState = {
   success: "",
 };
 
-export default (state = initialState, action: AuthAction) => {
+const authReducer = (state = initialState, action: AuthAction) => {
   switch (action.type) {
     case SET_USER:
       return {
@@ -26,6 +28,12 @@ export default (state = initialState, action: AuthAction) => {
         user: action.payload,
         authenticated: true,
       };
+    // case SET_SIGNED_IN:
+    //   return {
+    //     ...state,
+    //     user: action.payload,
+    //     authenticated: true,
+    //   };
     case SET_LOADING:
       return {
         ...state,
@@ -48,6 +56,11 @@ export default (state = initialState, action: AuthAction) => {
         ...state,
         needVerification: true,
       };
+    case IS_VERIFIED:
+      return {
+        ...state,
+        needVerification: false,
+      };
     case SET_SUCCESS:
       return {
         ...state,
@@ -57,3 +70,5 @@ export default (state = initialState, action: AuthAction) => {
       return state;
   }
 };
+
+export default authReducer;
