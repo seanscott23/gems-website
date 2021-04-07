@@ -3,6 +3,7 @@ export const SIGN_OUT = "SIGN_OUT";
 export const SET_LOADING = "SET_LOADING";
 export const SET_ERROR = "SET_ERROR";
 export const NEED_VERIFICATION = "NEED_VERIFICATION";
+export const SET_FORM_SUCCESS = "SET_FORM_SUCCESS";
 export const SET_SUCCESS = "SET_SUCCESS";
 export const IS_VERIFIED = "IS_VERIFIED";
 export const SET_SIGNED_IN = "SET_SIGNED_IN";
@@ -21,6 +22,7 @@ export interface AuthState {
   error: string;
   needVerification: boolean;
   success: string;
+  formSuccess: GemFormData | null;
 }
 
 export interface SignUpData {
@@ -29,20 +31,21 @@ export interface SignUpData {
   password: string;
 }
 
-// export interface SignedInUser {
-//   email: string;
-//   id: string;
-// }
+export interface GemFormData {
+  rssFeed: string;
+  title: string;
+  description: string;
+}
 export interface SignInData {
   email: string;
   password: string;
 }
 
 //Actions
-// interface SetSignedInAction {
-//   type: typeof SET_SIGNED_IN;
-//   payload: SignedInUser;
-// }
+interface GemFormSubmitAction {
+  type: typeof SET_FORM_SUCCESS;
+  payload: GemFormData;
+}
 
 interface SetUserAction {
   type: typeof SET_USER;
@@ -84,4 +87,5 @@ export type AuthAction =
   | SetErrorAction
   | SetIsVerifiedAction
   | NeedVerificationAction
+  | GemFormSubmitAction
   | SetSuccessAction;

@@ -8,7 +8,7 @@ import {
   NEED_VERIFICATION,
   SIGN_OUT,
   IS_VERIFIED,
-  SET_SIGNED_IN,
+  SET_FORM_SUCCESS,
 } from "../types";
 
 const initialState: AuthState = {
@@ -18,6 +18,7 @@ const initialState: AuthState = {
   error: "",
   needVerification: false,
   success: "",
+  formSuccess: null,
 };
 
 const authReducer = (state = initialState, action: AuthAction) => {
@@ -28,12 +29,11 @@ const authReducer = (state = initialState, action: AuthAction) => {
         user: action.payload,
         authenticated: true,
       };
-    // case SET_SIGNED_IN:
-    //   return {
-    //     ...state,
-    //     user: action.payload,
-    //     authenticated: true,
-    //   };
+    case SET_FORM_SUCCESS:
+      return {
+        ...state,
+        formSuccess: action.payload,
+      };
     case SET_LOADING:
       return {
         ...state,

@@ -1,6 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 import {
   SignUpData,
+  GemFormData,
   AuthAction,
   SET_USER,
   User,
@@ -12,6 +13,7 @@ import {
   NEED_VERIFICATION,
   IS_VERIFIED,
   SET_SUCCESS,
+  SET_FORM_SUCCESS,
 } from "../types";
 
 import { RootState } from "..";
@@ -128,18 +130,30 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
   };
 };
 
-//library
-// export const goToLibrary = (): ThunkAction<void, RootState, null, AuthAction> => {
-//   return async (dispatch) => {
-//     try{
-//         dispatch({
-//         type: IS_VERIFIED,
-//         payload: true
-//       });
-//     }catch(err){
-//     console.log(err)
-//   }
-// }
+//dashboard form
+export const submitGemForm = (
+  data: GemFormData,
+  onError: () => void
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      console.log(data);
+      if (
+        data.title.length > 0 &&
+        data.description.length > 0 &&
+        data.rssFeed.slice(0, 7) === "https://"
+      )
+        dispatch({
+          type: SET_FORM_SUCCESS,
+          payload: data,
+        });
+    } catch (err) {
+      console.log(err);
+      onError();
+      dispatch(setError(err.message));
+    }
+  };
+};
 
 export const setError = (
   msg: string
@@ -192,13 +206,13 @@ export const sendPasswordResetEmail = (
   email: string,
   successMsg: string
 ): ThunkAction<void, RootState, null, AuthAction> => {
-  return async (disptach) => {
+  return async (dispatch) => {
     try {
       await firebase.auth().sendPasswordResetEmail(email);
-      disptach(setSuccess(successMsg));
+      dispatch(setSuccess(successMsg));
     } catch (err) {
       console.log(err);
-      disptach(setError(err.message));
+      dispatch(setError(err.message));
     }
   };
 };
