@@ -1,10 +1,11 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Switch } from "react-router-dom";
-import "./App.css";
+import "./styles/App.css";
 import Header from "./components/sections/Header";
 import SignUp from "./components/pages/SignUp";
 import SignIn from "./components/pages/Signin";
+import Library from "./components/pages/Library";
 import ForgotPassword from "./components/pages/ForgotPassword";
 import Homepage from "./components/pages/Homepage";
 import Dashboard from "./components/pages/Dashboard";
@@ -55,6 +56,7 @@ const App: FC = () => {
         <PublicRoute path="/signin" component={SignIn} exact />
         <PublicRoute path="/forgot-password" component={ForgotPassword} exact />
         <PrivateRoute path="/dashboard" component={Dashboard} exact />
+        <PrivateRoute path="/library" component={Library} exact />
       </Switch>
     </BrowserRouter>
   );

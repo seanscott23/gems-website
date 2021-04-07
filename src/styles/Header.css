@@ -1,0 +1,11 @@
+.loggedIn-buttons > button {
+  margin: 10px;
+}
+
+.loggedOut-buttons > button {
+  margin: 10px;
+}
+
+.navbar-item {
+  font-size: 1.4em;
+}

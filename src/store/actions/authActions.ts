@@ -128,6 +128,19 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
   };
 };
 
+//library
+// export const goToLibrary = (): ThunkAction<void, RootState, null, AuthAction> => {
+//   return async (dispatch) => {
+//     try{
+//         dispatch({
+//         type: IS_VERIFIED,
+//         payload: true
+//       });
+//     }catch(err){
+//     console.log(err)
+//   }
+// }
+
 export const setError = (
   msg: string
 ): ThunkAction<void, RootState, null, AuthAction> => {
@@ -145,16 +158,16 @@ export const setNeedVerification = (
   value: boolean
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return (dispatch) => {
-    console.log("just to check if this works" + value);
     if (value === true) {
       dispatch({
         type: NEED_VERIFICATION,
-        payload: value
+        payload: value,
       });
-    } if (value === false) {
+    }
+    if (value === false) {
       dispatch({
         type: IS_VERIFIED,
-        payload: value
+        payload: value,
       });
     }
   };
