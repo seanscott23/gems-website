@@ -13,21 +13,19 @@ const Input: FC<InputProps> = ({
   label,
 }) => {
   return (
-    <div>
-      <div>
-        <label htmlFor={name}>{label}</label>
-        <input
-          className="input"
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          name={name}
-          id={name}
-          onChange={onChange}
-          required
-          autoComplete="off"
-        />
-      </div>
+    <div className="allInputs">
+      <label htmlFor={name}>{label}</label>
+      <input
+        className="input"
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        name={name}
+        id={name}
+        onChange={onChange}
+        required
+        autoComplete="off"
+      />
     </div>
   );
 };
