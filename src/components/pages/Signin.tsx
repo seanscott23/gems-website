@@ -7,6 +7,7 @@ import { signin, setError } from "../../store/actions/authActions";
 import { RootState } from "../../store";
 import { Link } from "react-router-dom";
 import { Form, Card } from "react-bootstrap";
+import "../../styles/Signin.css";
 
 const Signin: FC = () => {
   const [email, setEmail] = useState("");
@@ -30,11 +31,11 @@ const Signin: FC = () => {
   };
 
   return (
-    <Card className="section">
-      <div className="container">
-        <h2 className="text-center">Sign In</h2>
-        <Form className="form" onSubmit={submitHandler}>
-          <div className="form-group">
+    <Card className="container">
+      <h2 className="text-center">Sign In</h2>
+      <Form onSubmit={submitHandler}>
+        <div>
+          <Form.Group controlId="formBasicEmail">
             {error && <Message type="danger" msg={error} />}
             <Input
               name="email"
@@ -43,6 +44,8 @@ const Signin: FC = () => {
               placeholder="Email address"
               label="Email address"
             />
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
             <Input
               name="password"
               value={password}
@@ -51,18 +54,18 @@ const Signin: FC = () => {
               placeholder="Password"
               label="Password"
             />
-            <p>
-              <Link to="/forgot-password">Forgot password?</Link>
-            </p>
-          </div>
-          <Button
-            text={loading ? "Loading..." : "Sign In"}
-            className="w-100 btn btn-primary"
-            type="submit"
-            disabled={loading}
-          />
-        </Form>
-      </div>
+          </Form.Group>
+          <p>
+            <Link to="/forgot-password">Forgot password?</Link>
+          </p>
+        </div>
+        <Button
+          text={loading ? "Loading..." : "Sign In"}
+          className="w-100 btn btn-primary"
+          type="submit"
+          disabled={loading}
+        ></Button>
+      </Form>
     </Card>
   );
 };
