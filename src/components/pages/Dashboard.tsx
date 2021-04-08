@@ -1,14 +1,16 @@
 import React, { FC, FormEvent, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Message from "../UI/Message";
+import { useHistory, Link } from "react-router-dom";
 import { setSuccess, submitGemForm } from "../../store/actions/authActions";
 import { RootState } from "../../store";
-import { Form, FormControl } from "react-bootstrap";
+import { Alert, Form, FormControl } from "react-bootstrap";
 import Button from "../UI/Button";
 import AudioUpload from "../sections/AudioUpload";
 
 const Dashboard: FC = () => {
-  const { user, needVerification, success } = useSelector(
+  const history = useHistory();
+  const { user, needVerification, success, error } = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -23,11 +25,21 @@ const Dashboard: FC = () => {
   }, [success, dispatch]);
 
   const submitHandler = (e: FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    dispatch(submitGemForm({ rssFeed }, () => setLoading(false)));
+    if (rssFeed.length > 0) {
+      e.preventDefault();
+      setLoading(true);
+      dispatch(submitGemForm({ rssFeed }, () => setLoading(false)));
+    }
   };
-
+  const isValidRssFeed = () => {
+    if (rssFeed.slice(0, 8) === "https://") {
+      console.log(true);
+      return true;
+    } else {
+      console.log(false);
+      return false;
+    }
+  };
   return (
     <section className="container">
       <div>
@@ -47,11 +59,22 @@ const Dashboard: FC = () => {
             type="url"
           />
         </Form.Group>
-          <AudioUpload></AudioUpload>
+
+        <AudioUpload></AudioUpload>
         <Button
           text={loading ? "Loading..." : "Upload Gem"}
           className="w-100 btn btn-primary"
           type="submit"
+          onClick={() =>
+            isValidRssFeed() ? (
+              history.push("/rssFeed")
+            ) : (
+              <div>
+                <Alert variant="danger">Please enter a valid RSS Feed</Alert>
+                <Message type="danger" msg={error} />
+              </div>
+            )
+          }
           disabled={loading}
         ></Button>
       </Form>
