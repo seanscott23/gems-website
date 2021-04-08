@@ -8,8 +8,8 @@ import Button from "../UI/Button";
 import Parser from "rss-parser";
 import fs from "fs";
 
-const RssFeed: FC = () => {
-  const { data, success } = useSelector((state: RootState) => state.auth);
+const RssFeed: FC = (data) => {
+  const { success } = useSelector((state: RootState) => state.auth);
 
   const [rssFeed, setRssFeed] = useState("");
   const [loading, setLoading] = useState(false);

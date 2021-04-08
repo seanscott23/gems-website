@@ -159,13 +159,14 @@ export const submitGemForm = (
         const ex = "https://feeds.buzzsprout.com/1506739.rss";
         const RssParser = new Parser();
         const feed = await RssParser.parseURL(data?.rssFeed);
+        console.log(feed);
         const items = feed.items;
         const readyToUpload: Array<object> = [];
         const needsToBeTrimmed: Array<object> = [];
         items.map(async (currentItem) => {
-          if (currentItem.itunes.duration <= 600) {
+          if (currentItem.itunes.duration < 600) {
             readyToUpload.push(currentItem);
-          } else if (currentItem.itunes.duration > 600) {
+          } else if (currentItem.itunes.duration >= 600) {
             needsToBeTrimmed.push(currentItem);
           }
         });

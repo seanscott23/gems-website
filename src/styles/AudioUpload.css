@@ -1,0 +1,38 @@
+
+
+.signup-user-photo {
+    border: 2px dashed #ccc;
+    width: 100%;
+    height: 130px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.preparing-4-drag {
+   text-align: center;
+}
+
+#fileElem {
+    display: none;
+}
+
+.image-label-instruction {
+    margin-top: 20px;
+    color: grey;
+}
+
+.beingDraggedOver {
+    background: rgba(94, 92, 230, 1);
+}
+
+.uploading, .success, .failure {
+    height: 100%;
+    display: grid;
+    align-content: center;
+}
+
+.dragdrop-image {
+    display: grid;
+    justify-self: center;
+    margin-bottom: 15px;
+}

@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import Message from "../UI/Message";
 import { setSuccess, submitGemForm } from "../../store/actions/authActions";
 import { RootState } from "../../store";
-import { Form } from "react-bootstrap";
+import { Form, FormControl } from "react-bootstrap";
 import Button from "../UI/Button";
+import AudioUpload from "../sections/AudioUpload";
 
 const Dashboard: FC = () => {
   const { user, needVerification, success } = useSelector(
@@ -46,6 +47,7 @@ const Dashboard: FC = () => {
             type="url"
           />
         </Form.Group>
+          <AudioUpload></AudioUpload>
         <Button
           text={loading ? "Loading..." : "Upload Gem"}
           className="w-100 btn btn-primary"
