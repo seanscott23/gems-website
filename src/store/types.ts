@@ -24,6 +24,11 @@ export interface AuthState {
   success: string;
   formSuccess: GemFormData | null;
 }
+// export interface Parser {
+
+// }
+// export interface CustomFeed { foo: string };
+// export interface CustomItem { bar: number };
 
 export interface SignUpData {
   firstName: string;
@@ -33,8 +38,6 @@ export interface SignUpData {
 
 export interface GemFormData {
   rssFeed: string;
-  title: string;
-  description: string;
 }
 export interface SignInData {
   email: string;

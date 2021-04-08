@@ -15,7 +15,8 @@ import {
   SET_SUCCESS,
   SET_FORM_SUCCESS,
 } from "../types";
-
+import Parser from "rss-parser";
+import fs from "fs";
 import { RootState } from "..";
 import firebase from "../../firebase/config";
 
@@ -71,7 +72,7 @@ export const getUserById = (
       // firebase.database().goOnline();
       if (user.exists()) {
         const userData = user.val() as User;
-        console.log(userData);
+        // console.log(userData);
         dispatch({
           type: SET_USER,
           payload: userData,
@@ -137,16 +138,58 @@ export const submitGemForm = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      console.log(data);
-      if (
-        data.title.length > 0 &&
-        data.description.length > 0 &&
-        data.rssFeed.slice(0, 7) === "https://"
-      )
-        dispatch({
-          type: SET_FORM_SUCCESS,
-          payload: data,
-        });
+      if (data.rssFeed.slice(0, 8) === "https://") {
+        // const isEquivalent = (a: string, b: string) => {
+        //   // Create arrays of property names
+        //   let aProps = Object.getOwnPropertyNames(a);
+        //   let bProps = Object.getOwnPropertyNames(b);
+        //   if (aProps.length !== bProps.length) {
+        //     return false;
+        //   }
+
+        //   for (let i = 0; i < aProps.length; i++) {
+        //     let propName = aProps[i];
+
+        //     if (a[propName] !== b[propName]) {
+        //       return false;
+        //     }
+        //   }
+        //   return true;
+        // };
+        const ex = "https://feeds.buzzsprout.com/1506739.rss";
+        const RssParser = new Parser();
+        console.log("what is the data? " + data?.rssFeed);
+        const feed = await RssParser.parseURL(data?.rssFeed);
+        console.log(feed);
+        console.log(feed.items[0]);
+        
+        const title = feed.title
+        
+        // let items: Array<string> = [];
+        // const fileName = `${feed?.title}`;
+        // const filenameReplacement = fileName
+        //   .replace(/\s+/g, "-")
+        //   .replace(/[/\\?%*:|"<>]/g, "")
+        //   .toLowerCase();
+        // if (fs.existsSync(filenameReplacement)) {
+        //   items = require(`./${filenameReplacement}`);
+        // }
+        // await Promise.all(
+        //   feed.items.map(async (currentItem) => {
+        //     if (
+        //       items.filter((item) => isEquivalent(item, currentItem)).length <=
+        //       0
+        //     ) {
+        //       items.push(currentItem);
+        //     }
+        //   })
+        // );
+        // fs.writeFileSync(fileName, JSON.stringify(items));
+      }
+      dispatch({
+        type: SET_FORM_SUCCESS,
+        payload: data,
+      });
     } catch (err) {
       console.log(err);
       onError();
