@@ -13,7 +13,7 @@ function AudioUpload() {
 
     const dragOverHandler = (ev: DragEvent<HTMLLabelElement>) => {
         ev.preventDefault();
-        console.log("I am over you")
+       
         document.getElementsByClassName("signup-user-photo")[0].classList.add("beingDraggedOver")
       
     }
@@ -24,7 +24,7 @@ function AudioUpload() {
 
    const dropHandler = (ev: DragEvent<HTMLLabelElement>) => {
        let event = ev
-        console.log(event)
+      
         event.stopPropagation();
         event.preventDefault();
 

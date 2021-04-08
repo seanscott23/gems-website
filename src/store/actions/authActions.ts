@@ -1,7 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 import {
   SignUpData,
-  GemFormData,
+  // GemFormData,
   AuthAction,
   SET_USER,
   User,
@@ -133,69 +133,21 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
 
 //dashboard form
 export const submitGemForm = (
-  data: GemFormData,
+  data: string,
   onError: () => void
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      if (data.rssFeed.slice(0, 8) === "https://") {
-        // const isEquivalent = (a: string, b: string) => {
-        //   // Create arrays of property names
-        //   let aProps = Object.getOwnPropertyNames(a);
-        //   let bProps = Object.getOwnPropertyNames(b);
-        //   if (aProps.length !== bProps.length) {
-        //     return false;
-        //   }
-
-        //   for (let i = 0; i < aProps.length; i++) {
-        //     let propName = aProps[i];
-
-        //     if (a[propName] !== b[propName]) {
-        //       return false;
-        //     }
-        //   }
-        //   return true;
-        // };
-        const ex = "https://feeds.buzzsprout.com/1506739.rss";
-        const RssParser = new Parser();
-        const feed = await RssParser.parseURL(data?.rssFeed);
-        console.log(feed);
-        const items = feed.items;
-        const readyToUpload: Array<object> = [];
-        const needsToBeTrimmed: Array<object> = [];
-        items.map(async (currentItem) => {
-          if (currentItem.itunes.duration < 600) {
-            readyToUpload.push(currentItem);
-          } else if (currentItem.itunes.duration >= 600) {
-            needsToBeTrimmed.push(currentItem);
-          }
-        });
-
-        // let items: Array<string> = [];
-        // const fileName = `${feed?.title}`;
-        // const filenameReplacement = fileName
-        //   .replace(/\s+/g, "-")
-        //   .replace(/[/\\?%*:|"<>]/g, "")
-        //   .toLowerCase();
-        // if (fs.existsSync(filenameReplacement)) {
-        //   items = require(`./${filenameReplacement}`);
-        // }
-        // await Promise.all(
-        //   feed.items.map(async (currentItem) => {
-        //     if (
-        //       items.filter((item) => isEquivalent(item, currentItem)).length <=
-        //       0
-        //     ) {
-        //       items.push(currentItem);
-        //     }
-        //   })
-        // );
-        // fs.writeFileSync(fileName, JSON.stringify(items));
-      }
+      console.log(data.slice(0, 8) === "https://");
+      // if (data.slice(0, 8) === "https://") {
+      // const ex = "https://feeds.buzzsprout.com/1506739.rss";
+      const RssParser = new Parser();
+      const feed = await RssParser.parseURL(data);
       dispatch({
         type: SET_FORM_SUCCESS,
-        payload: data,
+        payload: feed,
       });
+      // }
     } catch (err) {
       console.log(err);
       onError();

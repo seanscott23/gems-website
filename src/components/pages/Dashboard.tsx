@@ -10,7 +10,7 @@ import AudioUpload from "../sections/AudioUpload";
 
 const Dashboard: FC = () => {
   const history = useHistory();
-  const { user, needVerification, success, error } = useSelector(
+  const { user, needVerification, success } = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -25,21 +25,14 @@ const Dashboard: FC = () => {
   }, [success, dispatch]);
 
   const submitHandler = (e: FormEvent) => {
-    if (rssFeed.length > 0) {
-      e.preventDefault();
-      setLoading(true);
-      dispatch(submitGemForm({ rssFeed }, () => setLoading(false)));
-    }
-  };
-  const isValidRssFeed = () => {
+    e.preventDefault();
     if (rssFeed.slice(0, 8) === "https://") {
-      console.log(true);
-      return true;
-    } else {
-      console.log(false);
-      return false;
+      setLoading(true);
+      dispatch(submitGemForm(rssFeed, () => setLoading(false)));
+      history.push("/rssFeed");
     }
   };
+
   return (
     <section className="container">
       <div>
@@ -48,6 +41,7 @@ const Dashboard: FC = () => {
         )}
         <h1 className="is-size-1">Welcome {user?.firstName}</h1>
       </div>
+
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="exampleForm.ControlInput1">
           <Form.Label>RSS Feed</Form.Label>
@@ -65,16 +59,6 @@ const Dashboard: FC = () => {
           text={loading ? "Loading..." : "Upload Gem"}
           className="w-100 btn btn-primary"
           type="submit"
-          onClick={() =>
-            isValidRssFeed() ? (
-              history.push("/rssFeed")
-            ) : (
-              <div>
-                <Alert variant="danger">Please enter a valid RSS Feed</Alert>
-                <Message type="danger" msg={error} />
-              </div>
-            )
-          }
           disabled={loading}
         ></Button>
       </Form>

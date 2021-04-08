@@ -1,0 +1,9 @@
+/* .rss-columns {
+  display: inline-block;
+} */
+
+#needToBeTrimmed,
+#readyToUpload {
+  display: inline-block;
+  width: 50%;
+}

@@ -22,13 +22,8 @@ export interface AuthState {
   error: string;
   needVerification: boolean;
   success: string;
-  formSuccess: GemFormData | null;
+  feedUrl: {} | null;
 }
-// export interface Parser {
-
-// }
-// export interface CustomFeed { foo: string };
-// export interface CustomItem { bar: number };
 
 export interface SignUpData {
   firstName: string;
@@ -36,9 +31,10 @@ export interface SignUpData {
   password: string;
 }
 
-export interface GemFormData {
-  rssFeed: string;
-}
+// export interface GemFormData {
+//   rssFeed: object;
+// }
+
 export interface SignInData {
   email: string;
   password: string;
@@ -47,7 +43,7 @@ export interface SignInData {
 //Actions
 interface GemFormSubmitAction {
   type: typeof SET_FORM_SUCCESS;
-  payload: GemFormData;
+  payload: {};
 }
 
 interface SetUserAction {
