@@ -8,6 +8,7 @@ import SignIn from "./components/pages/Signin";
 import Library from "./components/pages/Library";
 import ForgotPassword from "./components/pages/ForgotPassword";
 import Homepage from "./components/pages/Homepage";
+import RssFeed from "./components/pages/RssFeed";
 import Dashboard from "./components/pages/Dashboard";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import PublicRoute from "./components/auth/PublicRoute";
@@ -56,6 +57,7 @@ const App: FC = () => {
         <PublicRoute path="/signin" component={SignIn} exact />
         <PublicRoute path="/forgot-password" component={ForgotPassword} exact />
         <PrivateRoute path="/dashboard" component={Dashboard} exact />
+        <PrivateRoute path="/RssFeed" component={RssFeed} exact />
         <PrivateRoute path="/library" component={Library} exact />
       </Switch>
     </BrowserRouter>

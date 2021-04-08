@@ -158,13 +158,18 @@ export const submitGemForm = (
         // };
         const ex = "https://feeds.buzzsprout.com/1506739.rss";
         const RssParser = new Parser();
-        console.log("what is the data? " + data?.rssFeed);
         const feed = await RssParser.parseURL(data?.rssFeed);
-        console.log(feed);
-        console.log(feed.items[0]);
-        
-        const title = feed.title
-        
+        const items = feed.items;
+        const readyToUpload: Array<object> = [];
+        const needsToBeTrimmed: Array<object> = [];
+        items.map(async (currentItem) => {
+          if (currentItem.itunes.duration <= 600) {
+            readyToUpload.push(currentItem);
+          } else if (currentItem.itunes.duration > 600) {
+            needsToBeTrimmed.push(currentItem);
+          }
+        });
+
         // let items: Array<string> = [];
         // const fileName = `${feed?.title}`;
         // const filenameReplacement = fileName
