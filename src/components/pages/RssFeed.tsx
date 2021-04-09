@@ -1,9 +1,10 @@
-import { FC, useEffect, useState } from "react";
+import { FC, ReactElement, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSuccess } from "../../store/actions/authActions";
 import { RootState } from "../../store";
-import { Card, ListGroup } from "react-bootstrap";
+import { Button, Card, ListGroup } from "react-bootstrap";
 import "../../styles/RssFeed.css";
+import AudioModalRipper from "./AudioModalRipper";
 
 const RssFeed: FC = () => {
   const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
@@ -45,6 +46,11 @@ const RssFeed: FC = () => {
     return audioItems;
   };
 
+  const showModal = (): ReactElement => {
+    console.log("I am here to test the function");
+    return <AudioModalRipper/>
+  }
+
   const returnHTML = () => {
     const items = audioClipsTooLong();
     var codeBlock = [<div />];
@@ -56,7 +62,8 @@ const RssFeed: FC = () => {
             <Card.Body>
               <Card.Title>{clip.title}</Card.Title>
               {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
-              <Card.Link href={clip.enclosure.url}>Trim audio</Card.Link>
+              {/* <Card.Link href={clip.enclosure.url} onClick={showModal}>Trim audio</Card.Link> */}
+              <Button onClick={showModal}>Trim audio</Button>
             </Card.Body>
           </Card>
         </ListGroup.Item>

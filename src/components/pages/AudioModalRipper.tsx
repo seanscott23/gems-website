@@ -1,8 +1,8 @@
-import "../../styles/AudioModelRipper.css"
+import "../../styles/AudioModalRipper.css"
 import React, { useEffect, useState } from 'react';
 
-function AudioModelRipper() {
-
+function AudioModalRipper() {
+console.log("Heyyyyyyyyyy BAbbbyyyy")
     return(
         <div id="myModal" className="modal">
             <div className="modal-content">
@@ -12,4 +12,4 @@ function AudioModelRipper() {
         </div>
     );
 }
-export default AudioModelRipper;
+export default AudioModalRipper;

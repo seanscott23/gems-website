@@ -1,6 +1,14 @@
+
+#model {
+  display: block;
+  background: blue;
+  width: 100%;
+  height: 50%;
+}
+
 /* Modal Content */
 .modal-content {
-    background-color: #fefefe;
+    background-color: red;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
