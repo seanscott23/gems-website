@@ -19,16 +19,19 @@ const Dashboard: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (success) {
-      dispatch(setSuccess(""));
-    }
-  }, [success, dispatch]);
+    return () => {
+      if (success) {
+        dispatch(setSuccess(""));
+      }
+    };
+  }, [dispatch, success]);
 
-  const submitHandler = (e: FormEvent) => {
+  const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
     if (rssFeed.slice(0, 8) === "https://") {
       setLoading(true);
-      dispatch(submitGemForm(rssFeed, () => setLoading(false)));
+      await dispatch(submitGemForm(rssFeed, "Success"));
+      setLoading(false);
       history.push("/rssFeed");
     }
   };
@@ -56,7 +59,7 @@ const Dashboard: FC = () => {
 
         <AudioUpload></AudioUpload>
         <Button
-          text={loading ? "Loading..." : "Upload Gem"}
+          text={loading ? "Loading..." : "Upload Rss Feed"}
           className="w-100 btn btn-primary"
           type="submit"
           disabled={loading}

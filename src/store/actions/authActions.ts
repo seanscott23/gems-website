@@ -14,6 +14,7 @@ import {
   IS_VERIFIED,
   SET_SUCCESS,
   SET_FORM_SUCCESS,
+  // GemFormData,
 } from "../types";
 import Parser from "rss-parser";
 import fs from "fs";
@@ -134,23 +135,19 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
 //dashboard form
 export const submitGemForm = (
   data: string,
-  onError: () => void
+  successMsg: string
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      console.log(data.slice(0, 8) === "https://");
-      // if (data.slice(0, 8) === "https://") {
-      // const ex = "https://feeds.buzzsprout.com/1506739.rss";
       const RssParser = new Parser();
       const feed = await RssParser.parseURL(data);
       dispatch({
         type: SET_FORM_SUCCESS,
         payload: feed,
       });
-      // }
+      dispatch(setSuccess(successMsg));
     } catch (err) {
       console.log(err);
-      onError();
       dispatch(setError(err.message));
     }
   };

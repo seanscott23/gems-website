@@ -18,7 +18,7 @@ const initialState: AuthState = {
   error: "",
   needVerification: false,
   success: "",
-  feedUrl: null,
+  rssFeedUrl: {},
 };
 
 const authReducer = (state = initialState, action: AuthAction) => {
@@ -32,7 +32,7 @@ const authReducer = (state = initialState, action: AuthAction) => {
     case SET_FORM_SUCCESS:
       return {
         ...state,
-        feedUrl: action.payload,
+        rssFeedUrl: action.payload,
       };
     case SET_LOADING:
       return {

@@ -1,9 +1,17 @@
-/* .rss-columns {
-  display: inline-block;
-} */
-
+.rss-columns {
+  width: 70%;
+  margin: 0 auto;
+}
+/* 
 #needToBeTrimmed,
 #readyToUpload {
-  display: inline-block;
   width: 50%;
+} */
+
+.show {
+  visibility: visible;
+}
+
+.hide {
+  visibility: hidden;
 }
