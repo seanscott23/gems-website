@@ -2,11 +2,11 @@
   display: inline-block;
 } */
 
-#needToBeTrimmed,
+/* #needToBeTrimmed,
 #readyToUpload {
   display: inline-block;
   width: 50%;
-}
+} */
 
 .show {
   visibility: visible;
@@ -15,4 +15,3 @@
 .hide {
   visibility: hidden;
 }
-

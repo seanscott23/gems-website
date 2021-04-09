@@ -27,7 +27,18 @@ const RssFeed: FC = () => {
     const audioItems: Array<object> = [];
     const allItems = rssFeedUrl.items;
     allItems.map(async (currentItem: any) => {
-      if (parseInt(currentItem.itunes.duration) >= 600) {
+      if (parseInt(currentItem.itunes.duration) > 600) {
+        audioItems.push(currentItem);
+      }
+    });
+    return audioItems;
+  };
+
+  const readyToUpload = () => {
+    const audioItems: Array<object> = [];
+    const allItems = rssFeedUrl.items;
+    allItems.map(async (currentItem: any) => {
+      if (parseInt(currentItem.itunes.duration) <= 600) {
         audioItems.push(currentItem);
       }
     });
@@ -45,37 +56,65 @@ const RssFeed: FC = () => {
             <Card.Body>
               <Card.Title>{clip.title}</Card.Title>
               {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
-              <Card.Link>Trim audio</Card.Link>
+              <Card.Link href={clip.enclosure.url}>Trim audio</Card.Link>
             </Card.Body>
           </Card>
         </ListGroup.Item>
       );
     }
-    return codeBlock;
+
+    var finalBlock = [<div />];
+    if (codeBlock.length > 1) {
+      finalBlock.push(
+        <div>
+          <h3 style={{ textAlign: "center" }}>
+            These clips need to be trimmed
+          </h3>
+          {codeBlock}
+        </div>
+      );
+    }
+    return finalBlock;
   };
 
-  const table = returnHTML();
+  const returnReadyHTML = () => {
+    const items = readyToUpload();
+    var codeBlock = [<div />];
+    for (let i = 0; i < items.length; i++) {
+      let clip: any = items[i];
+      codeBlock.push(
+        <ListGroup.Item as="li">
+          <Card>
+            <Card.Body>
+              <Card.Title>{clip.title}</Card.Title>
+              {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
+              <Card.Link href={clip.enclosure.url}>Trim audio</Card.Link>
+            </Card.Body>
+          </Card>
+        </ListGroup.Item>
+      );
+    }
+    var finalBlock = [<div />];
+    if (codeBlock.length > 1) {
+      debugger;
+      finalBlock.push(
+        <div>
+          <h3 style={{ textAlign: "center" }}>Ready to upload</h3>
+          {codeBlock}
+        </div>
+      );
+    }
+    return finalBlock;
+  };
+
   return (
     <section className="container">
       <div className="rss-columns">
-        <ListGroup id="needToBeTrimmed" as="ul">
-          <h3 style={{ textAlign: "center" }}>Needs to be trimmed</h3>
-          {table}
-        </ListGroup>
         <ListGroup id="readyToUpload" as="ul">
-          <h3 style={{ textAlign: "center" }}>Ready to upload</h3>
-          <ListGroup.Item as="li">
-            <Card>
-              <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
-                <Card.Link href="#">Card Link</Card.Link>
-              </Card.Body>
-            </Card>
-          </ListGroup.Item>
+          {returnReadyHTML()}
+        </ListGroup>
+        <ListGroup id="needToBeTrimmed" as="ul">
+          {returnHTML()}
         </ListGroup>
       </div>
     </section>
