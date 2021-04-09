@@ -36,22 +36,22 @@ const RssFeed: FC = () => {
 
   const returnHTML = () => {
     const items = audioClipsTooLong();
-    let i = 0;
-    items.forEach((clip: any) => {
-      // let clip: any = items[i];
-      // i += 1;
-      // console.log(i);
-
-      <ListGroup.Item as="li">
-        <Card>
-          <Card.Body>
-            <Card.Title>{clip.title}</Card.Title>
-            {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
-            <Card.Link>Trim audio</Card.Link>
-          </Card.Body>
-        </Card>
-      </ListGroup.Item>;
-    });
+    var codeBlock = [<div />];
+    for (let i = 0; i < items.length; i++) {
+      let clip: any = items[i];
+      codeBlock.push(
+        <ListGroup.Item as="li">
+          <Card>
+            <Card.Body>
+              <Card.Title>{clip.title}</Card.Title>
+              {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
+              <Card.Link>Trim audio</Card.Link>
+            </Card.Body>
+          </Card>
+        </ListGroup.Item>
+      );
+    }
+    return codeBlock;
   };
 
   const table = returnHTML();
