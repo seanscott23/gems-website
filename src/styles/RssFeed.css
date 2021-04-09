@@ -7,3 +7,11 @@
   display: inline-block;
   width: 50%;
 }
+
+.show {
+  visibility: visible;
+}
+
+.hide {
+  visibility: hidden;
+}

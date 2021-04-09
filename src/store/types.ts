@@ -22,7 +22,7 @@ export interface AuthState {
   error: string;
   needVerification: boolean;
   success: string;
-  feedUrl: {} | null;
+  rssFeedUrl: any; ///may cause issues with type any instead of object.
 }
 
 export interface SignUpData {
@@ -31,9 +31,7 @@ export interface SignUpData {
   password: string;
 }
 
-// export interface GemFormData {
-//   rssFeed: object;
-// }
+// export interface GemFormData {}
 
 export interface SignInData {
   email: string;
@@ -43,7 +41,7 @@ export interface SignInData {
 //Actions
 interface GemFormSubmitAction {
   type: typeof SET_FORM_SUCCESS;
-  payload: {};
+  payload: any;
 }
 
 interface SetUserAction {
