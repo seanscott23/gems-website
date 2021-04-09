@@ -132,6 +132,19 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
   };
 };
 
+//trimming audioo
+// export const trimAudioClip = (
+//   url: string
+// ): ThunkAction<void, RootState, null, AuthAction> => {
+//   return async (dispatch) => {
+//     try {
+        
+//     } catch (err) {
+//       console.log(error);
+//     }
+//   };
+// };
+
 //dashboard form
 export const submitGemForm = (
   data: string,

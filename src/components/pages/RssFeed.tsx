@@ -23,6 +23,9 @@ const RssFeed: FC = () => {
   //   dispatch(submitGemForm({ rssFeed }, () => setLoading(false)));
   // // };
 
+  const showModal = () => {
+    return <div>hi</div>;
+  };
   const audioClipsTooLong = () => {
     const audioItems: Array<object> = [];
     const allItems = rssFeedUrl.items;
@@ -56,7 +59,7 @@ const RssFeed: FC = () => {
             <Card.Body>
               <Card.Title>{clip.title}</Card.Title>
               {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
-              <Card.Link href={clip.enclosure.url}>Trim audio</Card.Link>
+              <Card.Link onClick={() => showModal()}>Trim audio</Card.Link>
             </Card.Body>
           </Card>
         </ListGroup.Item>
