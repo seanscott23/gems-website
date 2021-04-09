@@ -59,7 +59,7 @@ const Dashboard: FC = () => {
 
         <AudioUpload></AudioUpload>
         <Button
-          text={loading ? "Loading..." : "Upload Gem"}
+          text={loading ? "Loading..." : "Upload Rss Feed"}
           className="w-100 btn btn-primary"
           type="submit"
           disabled={loading}

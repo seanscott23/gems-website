@@ -88,7 +88,7 @@ const RssFeed: FC = () => {
             <Card.Body>
               <Card.Title>{clip.title}</Card.Title>
               {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
-              <Card.Link href={clip.enclosure.url}>Trim audio</Card.Link>
+              <Card.Link href={clip.enclosure.url}>Submit Gem</Card.Link>
             </Card.Body>
           </Card>
         </ListGroup.Item>
