@@ -1,3 +1,7 @@
 .modalBack {
   background-color: transparent;
 }
+
+#audioInput {
+  width: 100%;
+}

@@ -2,6 +2,7 @@ import "../../styles/AudioModalRipper.css";
 import React, { FC, useState } from "react";
 import { Button, Form, Media, Modal } from "react-bootstrap";
 import "../../styles/Modal.css";
+import { AudioAdjuster } from "./AudioAdjuster";
 
 interface ModalProps {
   isOpen: boolean;
@@ -34,11 +35,12 @@ const AudioModalRipper: FC<ModalProps> = ({
       <Modal.Header closeButton>
         <Modal.Title>{clip.title}</Modal.Title>
       </Modal.Header>
-      <audio controls>
+      <audio id="audioInput" controls>
         <source src={clip.enclosure?.url} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
-
+      <div>{AudioAdjuster()}</div>
+      {/* <div>{AudioAdjuster().end}</div> */}
       <Form.Group>
         <Form.Control type="text" placeholder="Title" />
         <br />
