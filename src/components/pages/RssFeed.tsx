@@ -4,16 +4,23 @@ import { setSuccess } from "../../store/actions/authActions";
 import { RootState } from "../../store";
 import { Button, Card, ListGroup } from "react-bootstrap";
 import "../../styles/RssFeed.css";
-import { AudioModalRipper } from "./AudioModalRipper";
+import { AudioModalRipper } from "../modal/AudioModalRipper";
 
 const RssFeed: FC = () => {
   const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
   const [isModalOpen, setModalState] = useState(false);
-  const toggleModal = (i: number) => {
+  const toggleModal = async (i: number) => {
+    console.log(i);
     setModalState(!isModalOpen);
+    console.log(isModalOpen);
+    if (isModalOpen) {
+      alert("hi");
+      await returnModal(i);
+    }
   };
   const handleClose = () => {
-    setModalState(!isModalOpen);
+    // setModalState(false);
+    console.log("closed modal");
   };
   const dispatch = useDispatch();
 
@@ -50,49 +57,6 @@ const RssFeed: FC = () => {
     return audioItems;
   };
 
-  const returnHTML = () => {
-    const items = audioClipsTooLong();
-    let result: any[] = [];
-    result = items.map((clip: any, i: number) => {
-      let li = (
-        <ListGroup.Item as="li">
-          <Card>
-            <Card.Body>
-              <Card.Title>{clip.title}</Card.Title>
-              {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
-              {/* <Card.Link href={clip.enclosure.url} onClick={showModal}>Trim audio</Card.Link> */}
-              <Button onClick={() => toggleModal(i)}>Trim audio</Button>
-              {returnModal(i)}
-              {/* <AudioModalRipper
-                show={isModalOpen}
-                handleClose={toggleModal}
-                title={clip.title}
-                url={clip.enclosure.url}
-                key={i}
-              ></AudioModalRipper> */}
-            </Card.Body>
-          </Card>
-        </ListGroup.Item>
-      );
-     return li;
-    });
-
-    return result;
-
-    // var finalBlock = [];
-    // if (codeBlock.length > 0) {
-    //   finalBlock.push(
-    //     <div>
-    //       <h3 style={{ textAlign: "center" }}>
-    //         These clips need to be trimmed
-    //       </h3>
-    //       {codeBlock}
-    //     </div>
-    //   );
-    // }
-    // return finalBlock;
-  };
-
   const returnReadyHTML = () => {
     const items = readyToUpload();
     var codeBlock = [];
@@ -120,24 +84,6 @@ const RssFeed: FC = () => {
       );
     }
     return finalBlock;
-  };
-
-  const returnModal = (num: number) => {
-    const items = audioClipsTooLong();
-    let modalBlocks = [];
-    for (let i = 0; i < items.length; i++) {
-      let clip: any = items[i];
-      modalBlocks.push(
-        <AudioModalRipper
-          show={isModalOpen}
-          handleClose={handleClose}
-          title={clip.title}
-          url={clip.enclosure.url}
-          id={i}
-        ></AudioModalRipper>
-      );
-    }
-    return modalBlocks[num];
   };
 
   return (

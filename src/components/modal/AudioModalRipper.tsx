@@ -3,33 +3,30 @@ import React, { FC, useState } from "react";
 import { Button, Media, Modal } from "react-bootstrap";
 
 interface ModalProps {
-  show: boolean;
+  isOpen: boolean;
   handleClose: () => void;
-  title: string;
-  url: string;
+  clip: {
+    title?: string;
+    url?: string;
+  };
+  // Make an interface for the clip and use it instead of object^cool
   id: number;
 }
-
-export const AudioModalRipper: FC<ModalProps> = ({
-  show,
-  handleClose,
-  title,
-  url,
-  id,
-}) => {
-  return show ? (
+//u can leave the notes. they're helfpul.hha all good
+const AudioModalRipper: FC<ModalProps> = ({ isOpen, handleClose, clip }) => {
+  return (
     <Modal
-      show={show}
-      id={id}
+      show={isOpen}
+      clip={clip}
       onHide={handleClose}
       backdrop="static"
       keyboard={false}
     >
       <Modal.Header closeButton>
-        <Modal.Title>{title}</Modal.Title>
+        <Modal.Title>{clip.title}</Modal.Title>
       </Modal.Header>
       <audio controls>
-        <source src={url} type="audio/mpeg" />
+        <source src={clip.url} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
       <Modal.Footer>
@@ -39,5 +36,7 @@ export const AudioModalRipper: FC<ModalProps> = ({
         <Button variant="primary">Upload Gem</Button>
       </Modal.Footer>
     </Modal>
-  ) : null;
+  );
 };
+
+export default AudioModalRipper;
