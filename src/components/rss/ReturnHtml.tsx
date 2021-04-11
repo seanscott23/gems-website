@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ListGroup, Card, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { setSuccess } from "../../store/actions/authActions";
+import { RootState } from "../../store";
 import AudioModalRipper from "../modal/AudioModalRipper";
 
-export const returnHTML = () => {
+const ReturnHTML = () => {
+  const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
   const [isModalOpen, setModalState] = React.useState(false);
-  const [activeClip, setActiveClip] = React.useState(null);
+  const [activeClip, setActiveClip] = React.useState(Object);
+  const handleClose = () => {
+    setModalState(!isModalOpen);
+  };
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (success) {
+      dispatch(setSuccess(""));
+    }
+  }, [success, dispatch]);
+
+  const audioClipsTooLong = () => {
+    const audioItems: Array<object> = [];
+    const allItems = rssFeedUrl.items;
+    allItems.map(async (currentItem: any) => {
+      if (parseInt(currentItem.itunes.duration) > 600) {
+        audioItems.push(currentItem);
+      }
+    });
+    return audioItems;
+  };
   const items = audioClipsTooLong();
   let codeBlock: any[] = [];
   codeBlock = items.map((clip: any, i: number) => {
@@ -14,22 +39,22 @@ export const returnHTML = () => {
           <Card.Body>
             <Card.Title>{clip.title}</Card.Title>
             {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
-            {/* <Button onClick={() => toggleModal(i)}>View audio</Button> */}
+
             <Button
               onClick={() => {
-                // Function that makes item active
                 setActiveClip(clip);
+                setModalState(!isModalOpen);
               }}
             >
-              View audio
+              Trim Audio
             </Button>
             {/* For the ripper, need to pass in the props its missing */}
             {!activeClip ? null : (
               <AudioModalRipper
                 isOpen={isModalOpen}
+                handleClose={handleClose}
                 clip={activeClip}
-                // title={clip.title}
-                // url={clip.enclosure.url}
+                id={i}
               />
             )}
             {/* Also, i suggest you pass in the clip entirely rather than bits of it . how?*/}
@@ -51,6 +76,4 @@ export const returnHTML = () => {
   return finalBlock;
 };
 
-// Does that makes sense so far?
-// Now in the ripper, manage the clip's data
- 
+export default ReturnHTML;

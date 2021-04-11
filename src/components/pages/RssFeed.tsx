@@ -4,24 +4,12 @@ import { setSuccess } from "../../store/actions/authActions";
 import { RootState } from "../../store";
 import { Button, Card, ListGroup } from "react-bootstrap";
 import "../../styles/RssFeed.css";
-import { AudioModalRipper } from "../modal/AudioModalRipper";
+import ReturnHTML from "../rss/ReturnHtml";
 
 const RssFeed: FC = () => {
   const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
   const [isModalOpen, setModalState] = useState(false);
-  const toggleModal = async (i: number) => {
-    console.log(i);
-    setModalState(!isModalOpen);
-    console.log(isModalOpen);
-    if (isModalOpen) {
-      alert("hi");
-      await returnModal(i);
-    }
-  };
-  const handleClose = () => {
-    // setModalState(false);
-    console.log("closed modal");
-  };
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,22 +17,6 @@ const RssFeed: FC = () => {
       dispatch(setSuccess(""));
     }
   }, [success, dispatch]);
-
-  // const submitHandler = (e: FormEvent) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   dispatch(submitGemForm({ rssFeed }, () => setLoading(false)));
-  // // };
-  const audioClipsTooLong = () => {
-    const audioItems: Array<object> = [];
-    const allItems = rssFeedUrl.items;
-    allItems.map(async (currentItem: any) => {
-      if (parseInt(currentItem.itunes.duration) > 600) {
-        audioItems.push(currentItem);
-      }
-    });
-    return audioItems;
-  };
 
   const readyToUpload = () => {
     const audioItems: Array<object> = [];
@@ -93,7 +65,7 @@ const RssFeed: FC = () => {
           {returnReadyHTML()}
         </ListGroup>
         <ListGroup id="needToBeTrimmed" as="ul">
-          {returnHTML()}
+          {ReturnHTML()}
         </ListGroup>
       </div>
     </section>
