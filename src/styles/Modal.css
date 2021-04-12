@@ -5,6 +5,11 @@
 .audioInput {
   width: 100%;
 }
+#modalBody {
+  padding: 0;
+  background: black;
+  height: 2em;
+}
 
 .player {
   max-width: 750px;
@@ -16,7 +21,6 @@
 }
 
 .player__button {
-  background: none;
   border: 0;
   line-height: 1;
   color: white;
@@ -25,6 +29,9 @@
   padding: 0;
   cursor: pointer;
   max-width: 50px;
+}
+.audioDiv {
+  background: black;
 }
 
 .player__button:focus {
@@ -39,8 +46,9 @@
 .player__controls {
   display: flex;
   position: absolute;
-  bottom: 0;
   width: 100%;
+  bottom: 30px;
+  top: 0;
   transform: translateY(100%) translateY(-5px);
   transition: all 0.3s;
   flex-wrap: wrap;

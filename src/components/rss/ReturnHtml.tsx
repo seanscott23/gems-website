@@ -5,10 +5,18 @@ import { setSuccess } from "../../store/actions/authActions";
 import { RootState } from "../../store";
 import AudioModalRipper from "../modal/AudioModalRipper";
 
+interface Clip {
+  title: string;
+  enclosure: {
+    url: string;
+  };
+}
+
 const ReturnHTML = () => {
   const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
   const [isModalOpen, setModalState] = React.useState(false);
-  const [activeClip, setActiveClip] = React.useState(Object);
+  const [activeClip, setActiveClip] = React.useState<Clip | null>(null);
+
   const handleClose = () => {
     setModalState(!isModalOpen);
   };
