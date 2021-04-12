@@ -2,7 +2,7 @@ import "../../styles/AudioModalRipper.css";
 import React, { FC, useState } from "react";
 import { Button, Form, Media, Modal } from "react-bootstrap";
 import "../../styles/Modal.css";
-import { AudioAdjuster } from "./AudioAdjuster";
+import { AudioPlayer } from "./AudioPlayer";
 
 interface ModalProps {
   isOpen: boolean;
@@ -22,6 +22,10 @@ const AudioModalRipper: FC<ModalProps> = ({
   clip,
   id,
 }) => {
+  const audioPlayer = document.querySelector(".audioPlayer");
+  const audio = audioPlayer?.querySelector(".audioClip");
+  debugger;
+  console.log(audio);
   return (
     <Modal
       show={isOpen}
@@ -35,12 +39,38 @@ const AudioModalRipper: FC<ModalProps> = ({
       <Modal.Header closeButton>
         <Modal.Title>{clip.title}</Modal.Title>
       </Modal.Header>
-      <audio id="audioInput" controls>
-        <source src={clip.enclosure?.url} type="audio/mpeg" />
-        Your browser does not support the audio element.
-      </audio>
-      <div>{AudioAdjuster()}</div>
-      {/* <div>{AudioAdjuster().end}</div> */}
+      <div className="audioPlayer">
+        <audio className="audioInput audioClip" src={clip.enclosure?.url}>
+          Your browser does not support the audio element.
+        </audio>
+        <div className="player__controls">
+          <div className="progress">
+            {/* {AudioPlayer()} */}
+            <div className="progress__filled"></div>
+          </div>
+          <button className="player__button toggle" title="Toggle Play">
+            ►
+          </button>
+          <input
+            type="range"
+            name="startTime"
+            className="player__slider"
+            min="0"
+            max="1"
+            step="0.05"
+            value="1"
+          ></input>
+          <input
+            type="range"
+            name="endTime"
+            className="player__slider"
+            min="0.5"
+            max="2"
+            step="0.1"
+            value="1"
+          ></input>
+        </div>
+      </div>
       <Form.Group>
         <Form.Control type="text" placeholder="Title" />
         <br />
