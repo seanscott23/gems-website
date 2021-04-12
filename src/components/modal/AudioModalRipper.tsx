@@ -24,7 +24,7 @@ const AudioModalRipper: FC<ModalProps> = ({
 }) => {
   const audioPlayer = document.querySelector(".audioPlayer");
   const audio = audioPlayer?.querySelector(".audioClip");
-  debugger;
+  const finalUrl = clip?.enclosure?.url;
   console.log(audio);
   return (
     <Modal
@@ -39,49 +39,8 @@ const AudioModalRipper: FC<ModalProps> = ({
       <Modal.Header closeButton>
         <Modal.Title>{clip.title}</Modal.Title>
       </Modal.Header>
-      <div className="audioPlayer">
-        <audio className="audioInput audioClip" src={clip.enclosure?.url}>
-          Your browser does not support the audio element.
-        </audio>
-        <div className="player__controls">
-          <div className="progress">
-            {/* {AudioPlayer()} */}
-            <div className="progress__filled"></div>
-          </div>
-          <button className="player__button toggle" title="Toggle Play">
-            ►
-          </button>
-          <input
-            type="range"
-            name="startTime"
-            className="player__slider"
-            min="0"
-            max="1"
-            step="0.05"
-            value="1"
-          ></input>
-          <input
-            type="range"
-            name="endTime"
-            className="player__slider"
-            min="0.5"
-            max="2"
-            step="0.1"
-            value="1"
-          ></input>
-        </div>
-      </div>
-      <Form.Group>
-        <Form.Control type="text" placeholder="Title" />
-        <br />
-        <Form.Control as="textarea" rows={3} placeholder="Description" />
-        <br />
-        <Form.Check
-          type="checkbox"
-          label="Check box if explicit"
-          id={`disabled-default-checkbox`}
-        />
-      </Form.Group>
+      {AudioPlayer(clip != null ? finalUrl : undefined)}
+
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Close

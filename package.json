@@ -27,7 +27,6 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "rss-parser": "^3.12.0",
-    "typescript": "^4.2.4",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
@@ -53,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "typescript": "^4.2.4"
   }
 }

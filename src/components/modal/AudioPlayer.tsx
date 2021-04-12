@@ -1,20 +1,31 @@
 import { FC } from "react";
 
-export const AudioPlayer = (url: string) => {
+export const AudioPlayer = (url: string | undefined) => {
   const audioPlayer = document.querySelector(".audioPlayer");
   const audio: HTMLAudioElement | null | undefined = audioPlayer?.querySelector(
     ".audioClip"
   );
-  const progress = audioPlayer?.querySelector(".progress");
-  const progressBar = audioPlayer?.querySelector(".progress__filled");
-  const toggle: HTMLButtonElement | null | undefined = audioPlayer?.querySelector(".toggle");
-  const skipButtons = audioPlayer?.querySelectorAll("[data-skip]");
-  const ranges = audioPlayer?.querySelectorAll(".player__slider");
- 
+  const progress:
+    | HTMLProgressElement
+    | null
+    | undefined = audioPlayer?.querySelector(".progress");
+  const progressBar:
+    | HTMLProgressElement
+    | null
+    | undefined = audioPlayer?.querySelector(".progress__filled");
+  const toggle:
+    | HTMLButtonElement
+    | null
+    | undefined = audioPlayer?.querySelector(".toggle");
+  const ranges: NodeList | null | undefined = audioPlayer?.querySelectorAll(
+    ".player__slider"
+  );
+
   /* Build out functions */
 
   function togglePlay() {
-    if (audio?.paused) {
+    debugger;
+    if (audio?.pause) {
       audio.play();
     } else {
       audio?.pause();
@@ -25,51 +36,56 @@ export const AudioPlayer = (url: string) => {
     const icon = this.paused ? "►" : "❚ ❚";
     console.log(icon);
     if (toggle != null) {
-    toggle.innerHTML = icon}
+      toggle.innerHTML = icon;
+    }
   }
 
   function skip(this: any) {
-    if (audio != null){
-    audio.currentTime += parseFloat(this.dataset.skip)}
+    if (audio != null) {
+      audio.currentTime += parseFloat(this.dataset.skip);
+    }
   }
 
-  function handleRangeUpdate(this: any) {
-        if (audio != null){
-    audio?[this.name] = this.value
-        }
-  }
+  // function handleRangeUpdate() {
+  //   let name:any = audio?[this.name]
+  //     if (audio != null) {
+  //     name = this.value
+  //     }
+  // }
 
   function handleProgress() {
-    const percent = (audio?.currentTime / audio?.duration) * 100;
-    progressBar.style.flexBasis = `${percent}%`;
+    if (audio != null && progressBar != null) {
+      const percent = (audio?.currentTime / audio?.duration) * 100;
+      progressBar.style.flexBasis = `${percent}%`;
+    }
   }
 
-  function scrub(e: Event) {
-    const scrubTime = (e.offsetX / progress.offsetWidth) * audio?.duration;
-    audio?.currentTime = scrubTime;
-  }
+  // function scrub(e: Event | undefined) {
+  //   Event.persist();
+  //   debugger;
+  //   // if (audio != null && progress != null) {
+  //   //   const scrubTime = (e.clientX / progress.offsetWidth) * audio?.duration;
+  //   //   audio.currentTime = scrubTime;
+  //   // }
+  // }
 
-  /* Hook up the event listeners */
-  audio.addEventListener("click", togglePlay);
+  audio?.addEventListener("click", togglePlay);
 
-  audio.addEventListener("timeupdate", handleProgress);
+  audio?.addEventListener("timeupdate", handleProgress);
 
-  toggle.addEventListener("click", togglePlay);
-  skipButtons.forEach((button) => button.addEventListener("click", skip));
-  ranges.forEach((range) =>
-    range.addEventListener("change", handleRangeUpdate)
-  );
-  ranges.forEach((range) =>
-    range.addEventListener("mousemove", handleRangeUpdate)
-  );
+  toggle?.addEventListener("click", togglePlay);
+
+  // ranges?.forEach((range) =>
+  //   range?.addEventListener("mousemove", handleRangeUpdate)
+  // );
 
   let mousedown = false;
-   audio?.addEventListener("play", updateButton);
+  audio?.addEventListener("play", updateButton);
   audio?.addEventListener("pause", updateButton);
-  progress.addEventListener("click", scrub);
-  progress.addEventListener("mousemove", (e) => mousedown && scrub(e));
-  progress.addEventListener("mousedown", () => (mousedown = true));
-  progress.addEventListener("mouseup", () => (mousedown = false));
+  // progress?.addEventListener("click", scrub);
+  // progress?.addEventListener("mousemove", (e) => mousedown && scrub(e));
+  progress?.addEventListener("mousedown", () => (mousedown = true));
+  progress?.addEventListener("mouseup", () => (mousedown = false));
 
   return (
     <div className="audioPlayer">
