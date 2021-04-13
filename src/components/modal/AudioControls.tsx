@@ -59,9 +59,10 @@ export const Controls: React.FC<{
     let startRange: HTMLDivElement | any = document.querySelector(
       ".rc-slider-handle-1"
     );
-debugger
+    // debugger
     let val = startRange.ariaValueNow;
-    console.log(val);
+   
+   
   };
 
   return audioMetaData ? (
@@ -96,4 +97,3 @@ debugger
     </div>
   ) : null;
 };
-
