@@ -10,14 +10,15 @@ export const AudioPlayer: React.FC<{
   url: string;
 }> = ({ url }) => {
   const [show, setShow] = React.useState<boolean>(false);
-  const [audioMetaData, setAudioMetaData] = useState<HTMLAudioElement | undefined>();
+  const [audioMetaData, setAudioMetaData] = useState<
+    HTMLAudioElement | undefined
+  >();
   React.useEffect(() => {
     setShow(true);
   }, []);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const onLoadedMetadata = () => {
     if (audioRef.current) {
-      console.log(audioRef.current.duration);
       setAudioMetaData(audioRef.current);
     }
   };

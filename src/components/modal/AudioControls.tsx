@@ -6,57 +6,63 @@ import { useRef } from "react";
 export const Controls: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
 }> = ({ audioMetaData }) => {
-  const duration: number | undefined = audioMetaData?.duration;
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
   const audio: HTMLAudioElement | null = document.querySelector(".audioClip");
   const toggle: HTMLButtonElement | null = document.querySelector(".toggle");
+  const startRange: HTMLDivElement | null = document.querySelector(
+    ".rc-slider-handle-1"
+  );
+  // const endRange: HTMLDivElement | null = document.querySelector(
+  //   ".rc-slider-handle-2"
+  // );
   const [startTime, setStartTime] = React.useState(0);
   const [endTime, setEndTime] = React.useState<number>(100);
   const [updateTime, setUpdateTime] = React.useState(0);
   const [show, setShow] = React.useState<boolean>(false);
-
+  const { Range } = Slider;
   React.useEffect(() => {
     setShow(true);
     if (audioMetaData?.duration != undefined) {
-      // debugger;
-      console.log(audioMetaData?.duration);
       setEndTime(audioMetaData?.duration);
     }
   }, [audioMetaData]);
 
   const calculateMinFromSec = (seconds: number) => {
     let min = seconds / 60;
-    return Math.round(min);
+    return parseFloat(min.toFixed(2));
   };
 
-  const { Range } = Slider;
-  function togglePlay() {
+  const togglePlay = () => {
     setIsPlaying(!isPlaying);
     if (audio?.paused) {
       audio.play();
     } else {
       audio?.pause();
     }
-  }
-  const log = (value: number) => {
-    console.log(value);
   };
 
-  const onMinChange = (e: Event) => {
-    // const target = e.target as HTMLTextAreaElement;
-    // if (target != null) {
-    //   setStartTime(audio?.duration / 60);
-    // }
+  //   startRange.onChange = function() {
+  //     myFunction()
+  // };
+  // }
+
+  // const getValue = () => {
+  //   let val = startRange?.getAttribute("aria-valuenow");
+  //   console.log(val);
+  // };
+
+  // const ariaFunc = (e: number) => {
+  //   console.log(e);
+  // };
+
+  const onMinChange = (e: number[]) => {
+    let startRange: HTMLDivElement | any = document.querySelector(
+      ".rc-slider-handle-1"
+    );
+debugger
+    let val = startRange.ariaValueNow;
+    console.log(val);
   };
-  // const onMaxChange = () => {
-  //   if (audio != null) {
-  //     setEndTime(Math.round(endTime / 60));
-  //   }
-  // };
-  // const onSliderChange = (value: number) => {
-  //   log(value);
-  //   setUpdateTime(value);
-  // };
 
   return audioMetaData ? (
     <div className="player__controls">
@@ -65,9 +71,10 @@ export const Controls: React.FC<{
           className="rc-slider"
           allowCross={false}
           defaultValue={[0, endTime]}
-          min={0}
-          max={100}
-          // onChange={onSliderChange}
+          min={startTime}
+          max={parseFloat((audioMetaData.duration / 60).toFixed(2))}
+          onChange={(e) => onMinChange(e)}
+          // value={(e) => ariaFunc(e)}
         />
       </div>
       <div className="control-bar">
@@ -89,3 +96,4 @@ export const Controls: React.FC<{
     </div>
   ) : null;
 };
+
