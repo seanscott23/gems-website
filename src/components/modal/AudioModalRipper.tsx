@@ -40,6 +40,7 @@ const AudioModalRipper: FC<ModalProps> = ({
       </Modal.Header>
       <Modal.Body id="modalBody">
         <div className="audioPlayer">
+       
           <AudioPlayer url={clip.enclosure.url} />
         </div>
       </Modal.Body>
