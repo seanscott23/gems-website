@@ -17,7 +17,7 @@
 }
 
 #modal-footer {
-  padding: 2em 5px 5px 0;
+  padding: 2.5em 5px 5px 0;
 }
 
 .player {
@@ -31,8 +31,10 @@
 
 .player__button {
   border: 0;
+  margin-left: 23px;
   line-height: 1.4;
   color: blue;
+  width: 100%;
   text-align: center;
   outline: 0;
   padding-top: 5px;
@@ -41,8 +43,16 @@
   cursor: pointer;
   max-width: 50px;
 }
-.audioDiv {
-  /* background: black; */
+
+.start-end-time {
+  justify-content: space-around;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.startTime {
+}
+.endTime {
 }
 
 .player__button:focus {
@@ -95,7 +105,8 @@
   flex-basis: 50%;
 }
 
-.style_play_btn {
+.control-bar {
+  display: flex;
   background-color: lightyellow;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }

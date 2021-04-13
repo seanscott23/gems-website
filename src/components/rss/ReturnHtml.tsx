@@ -54,7 +54,7 @@ const ReturnHTML = () => {
                 setModalState(!isModalOpen);
               }}
             >
-              Trim Audio
+              Crop Audio
             </Button>
             {/* For the ripper, need to pass in the props its missing */}
             {!activeClip ? null : (
