@@ -7,12 +7,17 @@
 }
 #modalBody {
   padding: 0;
-  background: white;
-  height: 4em;
+  background: lightyellow;
+  height: 3em;
 }
-.rc-slider {
+
+#rc-sliderDiv {
   width: 90%;
-  padding: 0 5%;
+  padding: 0 0% 0 8%;
+}
+
+#modal-footer {
+  padding: 2em 5px 5px 0;
 }
 
 .player {
@@ -26,16 +31,18 @@
 
 .player__button {
   border: 0;
-  line-height: 1;
-  color: white;
+  line-height: 1.4;
+  color: blue;
   text-align: center;
   outline: 0;
-  padding: 0;
+  padding-top: 5px;
+  font-size: 2em;
+  background-color: lightyellow;
   cursor: pointer;
   max-width: 50px;
 }
 .audioDiv {
-  background: black;
+  /* background: black; */
 }
 
 .player__button:focus {
@@ -56,7 +63,6 @@
   transform: translateY(100%) translateY(-5px);
   transition: all 0.3s;
   flex-wrap: wrap;
-  background: rgba(0, 0, 0, 0.1);
 }
 
 .player:hover .player__controls {
@@ -89,68 +95,7 @@
   flex-basis: 50%;
 }
 
-/* unholy css to style input type="range" */
-
-input[type="range"] {
-  -webkit-appearance: none;
-  background: transparent;
-  width: 100%;
-  margin: 0 5px;
-}
-
-input[type="range"]:focus {
-  outline: none;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 1.3px;
-  border: 0.2px solid rgba(1, 1, 1, 0);
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  height: 15px;
-  width: 15px;
-  border-radius: 50px;
-  background: #ffc600;
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -3.5px;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-}
-
-input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: #bada55;
-}
-
-input[type="range"]::-moz-range-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
-  background: #ffffff;
-  border-radius: 1.3px;
-  border: 0.2px solid rgba(1, 1, 1, 0);
-}
-
-input[type="range"]::-moz-range-thumb {
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(13, 13, 13, 0);
-  height: 15px;
-  width: 15px;
-  border-radius: 50px;
-  background: #ffc600;
-  cursor: pointer;
-}
-
-.rc-slider {
-  margin: 10px !important;
-}
-
 .style_play_btn {
-  text-align: center;
-  margin-bottom: 1px;
+  background-color: lightyellow;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }

@@ -22,7 +22,6 @@ export const AudioPlayer: React.FC<{
       <audio className="audioInput audioClip" src={url}>
         Your browser does not support the audio element.
       </audio>
-
       {show ? <Controls /> : null}
     </div>
   );
@@ -66,21 +65,22 @@ const Controls = () => {
 
   return (
     <div className="player__controls">
-      <Range
-        className="rc-slider"
-        allowCross={false}
-        defaultValue={[0, 100]}
-        min={startTime}
-        max={endTime}
-        // onChange={onSliderChange}
-      />
-
+      <div id="rc-sliderDiv">
+        <Range
+          className="rc-slider"
+          allowCross={false}
+          defaultValue={[0, 100]}
+          min={0}
+          max={endTime}
+          // onChange={onSliderChange}
+        />
+      </div>
       <div className="style_play_btn">
         <button
           className="player__button toggle"
           title="Toggle Play"
           onClick={togglePlay}
-          style={{ background: "black" }}
+         
         >
           {!isPlaying ? "►" : "❚ ❚"}
         </button>
