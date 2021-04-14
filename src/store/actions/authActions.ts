@@ -133,17 +133,20 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
 };
 
 //trimming audioo
-// export const trimAudioClip = (
-//   url: string
-// ): ThunkAction<void, RootState, null, AuthAction> => {
-//   return async (dispatch) => {
-//     try {
-        
-//     } catch (err) {
-//       console.log(error);
-//     }
-//   };
-// };
+
+export const trimAudioClip = (
+  audioMetaData: HTMLMediaElement
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      const audioContext = new AudioContext();
+      const audio = audioContext.createMediaElementSource(audioMetaData);
+      audio.connect(audioContext.destination)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 //dashboard form
 export const submitGemForm = (

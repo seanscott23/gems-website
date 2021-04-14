@@ -35,7 +35,7 @@ const Dashboard: FC = () => {
       history.push("/rssFeed");
     }
   };
-
+ 
   return (
     <section className="container">
       <div>

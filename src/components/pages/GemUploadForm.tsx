@@ -30,6 +30,17 @@ const ItemsIndex = () => {
         <br />
         <Form.Control as="textarea" rows={3} placeholder="Description" />
         <br />
+        <Form.Group controlId="exampleForm.ControlSelect2">
+          <Form.Label>Select Categories</Form.Label>
+          <Form.Control as="select" multiple>
+            <option>Comedy</option>
+            <option>News</option>
+            <option>History</option>
+            <option>Science</option>
+            <option>Music</option>
+          </Form.Control>
+        </Form.Group>
+        <br />
         <Form.Check
           type="checkbox"
           label="Check box if explicit"

@@ -25,6 +25,7 @@ const AudioModalRipper: FC<ModalProps> = ({
   id,
 }) => {
   if (!clip) return null;
+  
   return (
     <Modal
       show={isOpen}
