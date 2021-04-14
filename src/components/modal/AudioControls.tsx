@@ -56,13 +56,24 @@ export const Controls: React.FC<{
   // };
 
   const onMinChange = (e: number[]) => {
-    let startRange: HTMLDivElement | any = document.querySelector(
-      ".rc-slider-handle-1"
+    const dragSlider: HTMLDivElement | any = document.querySelector(
+      ".rc-slider-handle-dragging"
     );
-    // debugger
-    let val = startRange.ariaValueNow;
-   
-   
+    if (dragSlider != null) {
+      // debugger;
+
+      let freshStartTime =
+        parseFloat(dragSlider.ariaValueMax) *
+        (parseFloat(dragSlider.style.left) / 100);
+      console.log(freshStartTime);
+    }
+  };
+
+  const onClickChange = (e: number[]) => {
+    // const clickSlider1 = HTMLDivElement | any = document.querySelector(
+    //   ".rc-slider-handle-1"
+    // );
+    console.log(e);
   };
 
   return audioMetaData ? (
@@ -74,6 +85,7 @@ export const Controls: React.FC<{
           defaultValue={[0, endTime]}
           min={startTime}
           max={parseFloat((audioMetaData.duration / 60).toFixed(2))}
+          onBeforeChange={(e) => onClickChange(e)}
           onChange={(e) => onMinChange(e)}
           // value={(e) => ariaFunc(e)}
         />
