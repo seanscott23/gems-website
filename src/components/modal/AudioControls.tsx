@@ -15,22 +15,21 @@ export const Controls: React.FC<{
   // const endRange: HTMLDivElement | null = document.querySelector(
   //   ".rc-slider-handle-2"
   // );
-  const [startTime, setStartTime] = React.useState(0);
+  const [startTime, setStartTime] = React.useState<number>(0);
   const [endTime, setEndTime] = React.useState<number>(100);
   const [updateTime, setUpdateTime] = React.useState(0);
   const [show, setShow] = React.useState<boolean>(false);
   const { Range } = Slider;
-  React.useEffect(() => {
-    setShow(true);
-    if (audioMetaData?.duration != undefined) {
-      setEndTime(audioMetaData?.duration);
-    }
-  }, [audioMetaData]);
-
   const calculateMinFromSec = (seconds: number) => {
     let min = seconds / 60;
     return parseFloat(min.toFixed(2));
   };
+  React.useEffect(() => {
+    setShow(true);
+    if (audioMetaData?.duration != undefined) {
+      setEndTime(calculateMinFromSec(audioMetaData?.duration));
+    }
+  }, [audioMetaData]);
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
@@ -41,40 +40,57 @@ export const Controls: React.FC<{
     }
   };
 
-  //   startRange.onChange = function() {
-  //     myFunction()
-  // };
-  // }
+  const onMinChange = (e: number[]) => {
+    setStartTime(e[0]);
+    setEndTime(e[1]);
+    // const leftDragSlider: HTMLCollectionOf<Element> = document.getElementsByClassName(
+    //   "rc-slider-handle-dragging rc-slider-handle-1"
+    // );
+    // const rightDragSlider: HTMLCollectionOf<Element> = document.getElementsByClassName(
+    //   "rc-slider-handle-dragging rc-slider-handle-2"
+    // );
+    // if (rightDragSlider.length != 0) {
+    //   let currentSlider: HTMLDivElement = rightDragSlider[0] as HTMLDivElement;
+    //   let valueMoved = currentSlider.style.left;
+    //   let moved = parseFloat(
+    //     (
+    //       parseFloat(valueMoved.substring(0, valueMoved.length - 1)) / 100
+    //     ).toFixed(2)
+    //   );
+    //   let stringValue = currentSlider.getAttribute("aria-valuemax");
+    //   if (stringValue != null) {
+    //     let maxValue = parseFloat(stringValue);
 
-  // const getValue = () => {
-  //   let val = startRange?.getAttribute("aria-valuenow");
-  //   console.log(val);
-  // };
+    //     let freshEndTime = parseFloat((maxValue * moved).toFixed(2));
+    //     console.log(freshEndTime);
+    //     setEndTime(freshEndTime);
+    //   }
+    // }
+    // if (leftDragSlider.length != 0) {
+    //   let currentSlider: HTMLDivElement = leftDragSlider[0] as HTMLDivElement;
+    //   let valueMoved = currentSlider.style.left;
+    //   let moved = parseFloat(
+    //     (
+    //       parseFloat(valueMoved.substring(0, valueMoved.length - 1)) / 100
+    //     ).toFixed(2)
+    //   );
+    //   let stringValue = currentSlider.getAttribute("aria-valuemax");
+    //   if (stringValue != null) {
+    //     let maxValue = parseFloat(stringValue);
 
-  // const ariaFunc = (e: number) => {
+    //     let freshStartTime = parseFloat((maxValue * moved).toFixed(2));
+    //     console.log(freshStartTime);
+    //     setStartTime(freshStartTime);
+    //   }
+    // }
+  };
+
+  // const onClickChange = (e: number[]) => {
+  //   // const clickSlider1 = HTMLDivElement | any = document.querySelector(
+  //   //   ".rc-slider-handle-1"
+  //   // );
   //   console.log(e);
   // };
-
-  const onMinChange = (e: number[]) => {
-    const dragSlider: HTMLDivElement | any = document.querySelector(
-      ".rc-slider-handle-dragging"
-    );
-    if (dragSlider != null) {
-      // debugger;
-
-      let freshStartTime =
-        parseFloat(dragSlider.ariaValueMax) *
-        (parseFloat(dragSlider.style.left) / 100);
-      console.log(freshStartTime);
-    }
-  };
-
-  const onClickChange = (e: number[]) => {
-    // const clickSlider1 = HTMLDivElement | any = document.querySelector(
-    //   ".rc-slider-handle-1"
-    // );
-    console.log(e);
-  };
 
   return audioMetaData ? (
     <div className="player__controls">
@@ -83,11 +99,10 @@ export const Controls: React.FC<{
           className="rc-slider"
           allowCross={false}
           defaultValue={[0, endTime]}
-          min={startTime}
+          step={0.01}
+          min={0}
           max={parseFloat((audioMetaData.duration / 60).toFixed(2))}
-          onBeforeChange={(e) => onClickChange(e)}
           onChange={(e) => onMinChange(e)}
-          // value={(e) => ariaFunc(e)}
         />
       </div>
       <div className="control-bar">
@@ -101,9 +116,7 @@ export const Controls: React.FC<{
 
         <div className="start-end-time">
           <div className="startTime">Start time: {startTime}</div>
-          <div className="endTime">
-            End time: {calculateMinFromSec(endTime)}
-          </div>
+          <div className="endTime">End time: {endTime}</div>
         </div>
       </div>
     </div>
