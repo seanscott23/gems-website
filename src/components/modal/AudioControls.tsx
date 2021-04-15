@@ -85,7 +85,6 @@ export const Controls: React.FC<{
     }
   };
 
-  // debugger;
   return audioMetaData ? (
     <div className="player__controls">
       <div id="rc-sliderDiv">
