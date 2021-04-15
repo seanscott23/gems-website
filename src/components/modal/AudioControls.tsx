@@ -13,77 +13,115 @@ export const Controls: React.FC<{
   const toggle: HTMLButtonElement | null = document.querySelector(".toggle");
   const [startTime, setStartTime] = React.useState<number>(0);
   const [endTime, setEndTime] = React.useState<number>(100);
-  const rightProgressBar:
+  const leftProgressCircle:
     | HTMLCollectionOf<Element>
     | any = document.getElementsByClassName(
-    "rc-slider-handle rc-slider-handle-1 rc-slider-handle-dragging rc-slider-handle-click-focused"
+    "rc-slider-handle rc-slider-handle-1"
   );
-  const { Range } = Slider;
-  // let timeStamp = useRef(audioMetaData);
-  // const {duration} = timeStamp.current
+  const rightProgressCircle:
+    | HTMLCollectionOf<Element>
+    | any = document.getElementsByClassName(
+    "rc-slider-handle rc-slider-handle-2"
+  );
+  const sliderBar:
+    | HTMLCollectionOf<Element>
+    | any = document.getElementsByClassName(
+    "rc-slider-track rc-slider-track-1"
+  );
 
-  const calculateMinFromSec = (seconds: number) => {
-    let min = seconds / 60;
-    return parseFloat(min.toFixed(2));
+  const { Range } = Slider;
+
+  const calculateTimeStamp = (seconds: number) => {
+    let h = Math.floor(seconds / 3600);
+    let m = Math.floor((seconds % 3600) / 60);
+    let s = Math.floor((seconds % 3600) % 60);
+
+    let hDisplay = h > 0 ? h : 0;
+    let mDisplay = m > 0 ? m : 0;
+    let sDisplay = s >= 0 ? s : 0;
+
+    if (mDisplay == 0) {
+      return sDisplay;
+    } else {
+      if (sDisplay <= 9) {
+        return parseFloat(mDisplay + ".0" + sDisplay);
+      }
+      return parseFloat(mDisplay + "." + sDisplay);
+    }
   };
 
   React.useEffect(() => {
     if (audioMetaData?.duration != undefined) {
-      setEndTime(calculateMinFromSec(audioMetaData?.duration));
+      setEndTime(calculateTimeStamp(audioMetaData.duration) as number);
     }
-    let timer: ReturnType<typeof setTimeout>;
-    if (isPlaying) {
-      timer = setInterval(() => setStartTime(startTime + 1), 1000);
-    } else {
-      return () => clearInterval(timer);
+    if (audio) {
+      audio.ontimeupdate = function () {
+        updateProgressBar(startTime, endTime);
+      };
     }
-  }, [audioMetaData, startTime]);
+  }, [audioMetaData, audio?.ontimeupdate]);
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
     if (audio?.paused) {
       audio.play();
+      audio.muted = true;
     } else {
       audio?.pause();
     }
   };
 
-  // const playNew = (source: string, time: number) => {
-  //   let newAudio = new Audio(source);
-  //   newAudio.loop = true;
-  //   newAudio.play();
-  //   setTimeout(() => {
-  //     newAudio.pause();
-  //   }, time);
-  // };
-
-  const onMinChange = (e: number[]) => {
-    setStartTime(e[0]);
-    setEndTime(e[1]);
-    // if (rightProgressBar[0]) {
-    //   rightProgressBar[0].ariaValueNow = e[1];
-    // }
-
-    // parseFloat(rightProgressBar[0].getAttribute("aria-valuenow"))
-  };
-  // let currentTime: number = 0;
-  // if (audio) {
-  //   currentTime = audio.currentTime;
-  // }
-  const updateScrubTime = (e: number[]) => {
-    console.log(e[0]);
-
+  const updateProgressBar = (startTime: number, endTime: number) => {
     if (audio) {
-      audio.oncanplay = () => {
-        // result = audio.src.split("#t=");
-        // final = result[0] + "#t=" + startTime;
-        // let newAudio = new Audio(final);
-        // newAudio.loop = true;
-        // newAudio.play();
-        audio.currentTime = startTime;
-      };
+      let cTime = audio.currentTime as number;
+      let audioCurrentTime = calculateTimeStamp(cTime) as number;
+      setStartTime(audioCurrentTime);
+
+      //   let rightPercent = (parseFloat((rightProgressCircle[3].style.left).slice(0, -1)) / 100)
+      //  let finalEnd = audio.duration * rightPercent
+      //   let endTime = calculateTimeStamp(finalEnd)
+      //   setEndTime(endTime)
+    }
+
+    if (leftProgressCircle[0] && audio) {
+      let amountMoved = (audio.currentTime / audio.duration) * 100;
+      let rightMoved = parseFloat(
+        rightProgressCircle[3].style.left.slice(0, -1)
+      );
+      let rightPercent = parseFloat(rightMoved.toFixed(2));
+      let percent = parseFloat(amountMoved.toFixed(2));
+      let widthPercent = 100 - percent - rightPercent;
+      leftProgressCircle[3].style.left = percent + "%";
+      sliderBar[3].style.left = percent + "%";
+      sliderBar[3].style.width = widthPercent + "%";
+    }
+    checkStartStop();
+  };
+
+  const checkStartStop = () => {
+    if (audio) {
+      let rightPercent =
+        parseFloat(rightProgressCircle[3].style.left.slice(0, -1)) / 100;
+      let finalEnd = audio.duration * rightPercent;
+      let endTime = calculateTimeStamp(finalEnd);
+      let startTime = calculateTimeStamp(audio.currentTime);
+      console.log(startTime);
+      console.log(endTime);
+      if (startTime === endTime) {
+        audio.pause();
+      }
     }
   };
+
+  const onMinChange = (e: number[]) => {
+    setStartTime(calculateTimeStamp(e[0] * 60));
+    setEndTime(calculateTimeStamp(e[1] * 60));
+    if (audio) {
+      audio.currentTime = e[0] * 60;
+    }
+  };
+
+  const updateScrubTime = (e: number[]) => {};
 
   return audioMetaData ? (
     <div className="player__controls">
@@ -96,7 +134,7 @@ export const Controls: React.FC<{
           min={0}
           max={parseFloat((audioMetaData.duration / 60).toFixed(2))}
           onChange={(e) => onMinChange(e)}
-          onAfterChange={(e) => updateScrubTime(e)}
+          // onAfterChange={(e) => updateScrubTime(e)}
         />
       </div>
       <div className="control-bar">
