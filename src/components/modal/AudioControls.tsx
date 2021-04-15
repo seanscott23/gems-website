@@ -56,16 +56,14 @@ export const Controls: React.FC<{
 
   React.useEffect(() => {
     if (audioMetaData?.duration != undefined) {
-      setEndTime(calculateTimeStamp(audioMetaData.duration) as number);
-      audioMetaData.ontimeupdate = function() {updateProgressBar()};
-    }
-    // if(audio){
+      setEndTime(calculateTimeStamp(audioMetaData.duration) as number); 
       
-
-
-    // }
+    }
+    if(audio){
+      audio.ontimeupdate = function() {updateProgressBar(startTime, endTime)};
+    }
     
-  }, [audioMetaData, audio?.ontimeupdate, startTime, endTime]);
+  }, [audioMetaData, audio?.ontimeupdate]);
 
   
   const togglePlay = () => {
@@ -76,39 +74,47 @@ export const Controls: React.FC<{
     } else {
       audio?.pause();
     }
-  };
+  }; 
 
-  const updateProgressBar = () => {
+  const updateProgressBar = (startTime: number, endTime: number) => {
    
-    //  if (startTime == endTime) {
-    //   togglePlay()
-    // }
-    if(audioMetaData){
-      
-      let cTime =  audioMetaData.currentTime as number 
+    if(audio){
+      let cTime =  audio.currentTime as number 
       let audioCurrentTime = calculateTimeStamp(cTime) as number
       setStartTime(audioCurrentTime)
       
-      let rightPercent = (parseFloat((rightProgressCircle[3].style.left).slice(0, -1)) / 100)
-      let rightPos = audioMetaData.duration * rightPercent
-      setEndTime(calculateTimeStamp(rightPos)) 
-      //  debugger
+    //   let rightPercent = (parseFloat((rightProgressCircle[3].style.left).slice(0, -1)) / 100)
+    //  let finalEnd = audio.duration * rightPercent
+    //   let endTime = calculateTimeStamp(finalEnd)
+    //   setEndTime(endTime)
+     
     }
 
-   if(leftProgressCircle[0] && audioMetaData){ 
-      let amountMoved = (audioMetaData.currentTime / audioMetaData.duration) * 100
+   if(leftProgressCircle[0] && audio){ 
+      let amountMoved = (audio.currentTime / audio.duration) * 100
+      let rightMoved = (parseFloat((rightProgressCircle[3].style.left).slice(0, -1)))
+      let rightPercent = parseFloat(rightMoved.toFixed(2))
       let percent = parseFloat(amountMoved.toFixed(2))
-      let widthPercent = 100 - percent
+      let widthPercent = 100 - percent - rightPercent
       leftProgressCircle[3].style.left = percent + "%"
       sliderBar[3].style.left = percent + "%"
       sliderBar[3].style.width = widthPercent + "%"
     }
-    
-   
+    checkStartStop()
   }
 
   const checkStartStop = () => {
-    // debugger
+    if(audio){
+     let rightPercent = (parseFloat((rightProgressCircle[3].style.left).slice(0, -1)) / 100)
+     let finalEnd = audio.duration * rightPercent
+      let endTime = calculateTimeStamp(finalEnd)
+      let startTime = calculateTimeStamp(audio.currentTime)
+      console.log(startTime)
+      console.log(endTime)
+    if(startTime === endTime){
+        audio.pause()
+    }
+  }
    
   }
 
@@ -118,7 +124,7 @@ export const Controls: React.FC<{
      if (audio) {
       audio.currentTime = e[0] * 60
     }
-    // checkStartStop()
+
   };
  
   const updateScrubTime = (e: number[]) => {
