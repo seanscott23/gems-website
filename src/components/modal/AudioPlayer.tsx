@@ -10,18 +10,23 @@ export const AudioPlayer: React.FC<{
   url: string;
 }> = ({ url }) => {
   const [show, setShow] = React.useState<boolean>(false);
-  const [audioMetaData, setAudioMetaData] = useState<
-    HTMLAudioElement | undefined
-  >();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [audioMetaData, setAudioMetaData] = useState<HTMLAudioElement | undefined>();
+  
   React.useEffect(() => {
     setShow(true);
-  }, []);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  }, [audioMetaData]);
+
+  // const audioRef = useRef<HTMLAudioElement | null>(null);
   const onLoadedMetadata = () => {
     if (audioRef.current) {
       setAudioMetaData(audioRef.current);
     }
   };
+
+  // const playing = () => {
+  //   console.log(audioRef.current?.currentTime)
+  // }
 
   return show ? (
     <div className="audioDiv">
@@ -31,6 +36,8 @@ export const AudioPlayer: React.FC<{
         onLoadedMetadata={onLoadedMetadata}
         src={url}
         preload="metadata"
+        // mute={true}
+        // onTimeUpdate={() => playing()}
       >
         Your browser does not support the audio element.
       </audio>
