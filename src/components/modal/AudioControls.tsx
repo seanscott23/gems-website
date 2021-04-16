@@ -89,11 +89,13 @@ export const Controls: React.FC<{
         rightProgressCircle[3].style.left.slice(0, -1)
       );
       let rightPercent = parseFloat(rightMoved.toFixed(2));
+      let rightMovedPct = 100 - rightPercent;
       let percent = parseFloat(amountMoved.toFixed(2));
-      let widthPercent = 100 - percent - rightPercent;
+      let widthPercent = 100 - percent - rightMovedPct;
       leftProgressCircle[3].style.left = percent + "%";
       sliderBar[3].style.left = percent + "%";
       sliderBar[3].style.width = widthPercent + "%";
+      // debugger;
     }
     checkStartStop();
   };
