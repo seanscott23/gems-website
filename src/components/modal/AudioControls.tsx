@@ -7,7 +7,8 @@ import { ProgressBar } from "react-bootstrap";
 
 export const Controls: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
-}> = ({ audioMetaData }) => {
+  isOpen: boolean;
+}> = ({ audioMetaData, isOpen }) => {
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
   const audio: HTMLAudioElement | null = document.querySelector(".audioClip");
   const toggle: HTMLButtonElement | null = document.querySelector(".toggle");
@@ -56,7 +57,7 @@ export const Controls: React.FC<{
     }
     if (audio) {
       audio.ontimeupdate = function () {
-        updateProgressBar(startTime, endTime);
+        updateProgressBar();
       };
     }
   }, [audioMetaData, audio?.ontimeupdate]);
@@ -65,22 +66,16 @@ export const Controls: React.FC<{
     setIsPlaying(!isPlaying);
     if (audio?.paused) {
       audio.play();
-      audio.muted = true;
     } else {
       audio?.pause();
     }
   };
 
-  const updateProgressBar = (startTime: number, endTime: number) => {
+  const updateProgressBar = () => {
     if (audio) {
       let cTime = audio.currentTime as number;
       let audioCurrentTime = calculateTimeStamp(cTime) as number;
       setStartTime(audioCurrentTime);
-
-      //   let rightPercent = (parseFloat((rightProgressCircle[3].style.left).slice(0, -1)) / 100)
-      //  let finalEnd = audio.duration * rightPercent
-      //   let endTime = calculateTimeStamp(finalEnd)
-      //   setEndTime(endTime)
     }
 
     if (leftProgressCircle[0] && audio) {
@@ -95,23 +90,26 @@ export const Controls: React.FC<{
       leftProgressCircle[3].style.left = percent + "%";
       sliderBar[3].style.left = percent + "%";
       sliderBar[3].style.width = widthPercent + "%";
-      // debugger;
     }
     checkStartStop();
   };
 
   const checkStartStop = () => {
-    if (audio) {
-      let rightPercent =
-        parseFloat(rightProgressCircle[3].style.left.slice(0, -1)) / 100;
-      let finalEnd = audio.duration * rightPercent;
-      let endTime = calculateTimeStamp(finalEnd);
-      let startTime = calculateTimeStamp(audio.currentTime);
-      console.log(startTime);
-      console.log(endTime);
-      if (startTime === endTime) {
-        audio.pause();
+    if (isOpen) {
+      if (audio) {
+        let rightPercent =
+          parseFloat(rightProgressCircle[3].style.left.slice(0, -1)) / 100;
+        let finalEnd = audio.duration * rightPercent;
+        let endTime = calculateTimeStamp(finalEnd);
+        let startTime = calculateTimeStamp(audio.currentTime);
+        console.log(startTime);
+        console.log(endTime);
+        if (startTime === endTime) {
+          audio.pause();
+        }
       }
+    } else if (audio) {
+      audio.pause();
     }
   };
 
@@ -122,8 +120,6 @@ export const Controls: React.FC<{
       audio.currentTime = e[0] * 60;
     }
   };
-
-  const updateScrubTime = (e: number[]) => {};
 
   return audioMetaData ? (
     <div className="player__controls">
