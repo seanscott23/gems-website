@@ -35,14 +35,23 @@ const Dashboard: FC = () => {
       history.push("/rssFeed");
     }
   };
- 
+  const getName = () => {
+    if (user) {
+      let chars = user.firstName.split("");
+      let first = chars[0].toUpperCase();
+      chars.shift();
+      let name = first + chars.join("");
+      return name;
+    }
+  };
+
   return (
     <section className="container">
       <div>
         {needVerification && (
           <Message type="success" msg="Please verify your email address." />
         )}
-        <h1 className="is-size-1">Welcome {user?.firstName}</h1>
+        <h1 className="is-size-1">Welcome {getName()}</h1>
       </div>
 
       <Form onSubmit={submitHandler}>
