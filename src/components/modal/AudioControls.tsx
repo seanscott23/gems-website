@@ -1,9 +1,7 @@
 import React from "react";
 import Slider, { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
-import { useRef } from "react";
-import { debug } from "webpack";
-import { ProgressBar } from "react-bootstrap";
+import { start } from "node:repl";
 
 export const Controls: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
@@ -11,9 +9,9 @@ export const Controls: React.FC<{
 }> = ({ audioMetaData, isOpen }) => {
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
   const audio: HTMLAudioElement | null = document.querySelector(".audioClip");
-  const toggle: HTMLButtonElement | null = document.querySelector(".toggle");
   const [startTime, setStartTime] = React.useState<number>(0);
   const [endTime, setEndTime] = React.useState<number>(100);
+
   const leftProgressCircle:
     | HTMLCollectionOf<Element>
     | any = document.getElementsByClassName(
@@ -33,21 +31,24 @@ export const Controls: React.FC<{
   const { Range } = Slider;
 
   const calculateTimeStamp = (seconds: number) => {
-    let h = Math.floor(seconds / 3600);
-    let m = Math.floor((seconds % 3600) / 60);
-    let s = Math.floor((seconds % 3600) % 60);
-
+    let h = parseFloat((seconds / 3600).toFixed(0));
+    let m = parseFloat(((seconds % 3600) / 60).toFixed(0));
+    let s = parseFloat(((seconds % 3600) % 60).toFixed(0));
     let hDisplay = h > 0 ? h : 0;
     let mDisplay = m > 0 ? m : 0;
     let sDisplay = s >= 0 ? s : 0;
-
-    if (mDisplay == 0) {
-      return sDisplay;
+    // debugger;
+    if (mDisplay == 0 && sDisplay >= 10) {
+      return parseFloat("0." + sDisplay);
+    }
+    if (mDisplay == 0 && sDisplay < 10) {
+      return parseFloat("0.0" + sDisplay);
     } else {
       if (sDisplay <= 9) {
         return parseFloat(mDisplay + ".0" + sDisplay);
+      } else {
+        return parseFloat(mDisplay + "." + sDisplay);
       }
-      return parseFloat(mDisplay + "." + sDisplay);
     }
   };
 
@@ -60,7 +61,7 @@ export const Controls: React.FC<{
         updateProgressBar();
       };
     }
-  }, [audioMetaData, audio?.ontimeupdate]);
+  }, [audioMetaData, audio?.ontimeupdate, startTime, endTime]);
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
@@ -79,15 +80,20 @@ export const Controls: React.FC<{
     }
 
     if (leftProgressCircle[0] && audio) {
-      let amountMoved = (audio.currentTime / audio.duration) * 100;
+      setStartTime(calculateTimeStamp(audio.currentTime));
+      setEndTime(calculateTimeStamp(audio.duration));
+      let amountMoved = (startTime / endTime) * 100;
+      // debugger;
       let rightMoved = parseFloat(
         rightProgressCircle[3].style.left.slice(0, -1)
       );
-      let rightPercent = parseFloat(rightMoved.toFixed(2));
+      let rightPercent = parseFloat(rightMoved.toFixed(3));
       let rightMovedPct = 100 - rightPercent;
-      let percent = parseFloat(amountMoved.toFixed(2));
+      let percent = parseFloat(amountMoved.toFixed(3));
+      // debugger;
       let widthPercent = 100 - percent - rightMovedPct;
       leftProgressCircle[3].style.left = percent + "%";
+      // console.log(leftProgressCircle[3].style.left);
       sliderBar[3].style.left = percent + "%";
       sliderBar[3].style.width = widthPercent + "%";
     }
@@ -120,6 +126,23 @@ export const Controls: React.FC<{
       audio.currentTime = e[0] * 60;
     }
   };
+  const checkKey = (e: KeyboardEvent) => {
+    // e = e || window.event;
+    if (audio && isOpen) {
+      if (e.code == "ArrowLeft" && startTime > 0.15) {
+        // audio.currentTime = audio.currentTime + 0.15;
+        // setStartTime(audio.currentTime);
+      } else if (e.code == "ArrowRight" && startTime < endTime - 0.15) {
+        debugger;
+        audio.currentTime = audio.currentTime + 0.15 * 60;
+        // setStartTime(startTime);
+      }
+    } else if (audio) {
+      audio.pause();
+    }
+  };
+
+  // .addEventListener("keyup", (e) => checkKey(e));
 
   return audioMetaData ? (
     <div className="player__controls">
@@ -128,11 +151,10 @@ export const Controls: React.FC<{
           className="rc-slider"
           allowCross={false}
           defaultValue={[0, endTime]}
-          step={0.01}
+          step={0.1}
           min={0}
           max={parseFloat((audioMetaData.duration / 60).toFixed(2))}
           onChange={(e) => onMinChange(e)}
-          // onAfterChange={(e) => updateScrubTime(e)}
         />
       </div>
       <div className="control-bar">
