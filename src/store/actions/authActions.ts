@@ -134,14 +134,22 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
 
 //trimming audioo
 
-export const trimAudioClip = (
-  audioMetaData: HTMLMediaElement
+export const submitNewClip = (
+  url: string
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
+      let audio: any;
+      const reader = new FileReader();
       const audioContext = new AudioContext();
-      const audio = audioContext.createMediaElementSource(audioMetaData);
-      audio.connect(audioContext.destination)
+
+      fetch(url)
+        .then((data) => data.arrayBuffer())
+        .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer))
+        .then((decodedAudio) => {
+          audio = decodedAudio;
+          console.log(audio);
+        });
     } catch (err) {
       console.log(err);
     }

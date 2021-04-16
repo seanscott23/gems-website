@@ -67,6 +67,7 @@ export const Controls: React.FC<{
     setIsPlaying(!isPlaying);
     if (audio?.paused) {
       audio.play();
+      audio.muted = true;
     } else {
       audio?.pause();
     }
@@ -151,7 +152,7 @@ export const Controls: React.FC<{
           className="rc-slider"
           allowCross={false}
           defaultValue={[0, endTime]}
-          step={0.1}
+          step={0.01}
           min={0}
           max={parseFloat((audioMetaData.duration / 60).toFixed(2))}
           onChange={(e) => onMinChange(e)}

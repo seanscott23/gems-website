@@ -3,6 +3,10 @@ import React, { FC, useState } from "react";
 import { Button, Form, Media, Modal } from "react-bootstrap";
 import "../../styles/Modal.css";
 import { AudioPlayer } from "./AudioPlayer";
+import { setLoading, submitNewClip } from "../../store/actions/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { RootState } from "../../store";
 
 interface Clip {
   title: string;
@@ -24,8 +28,24 @@ const AudioModalRipper: FC<ModalProps> = ({
   clip,
   id,
 }) => {
+  // const { user, needVerification, success } = useSelector(
+  //   (state: RootState) => state.auth
+  // );
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const submitHandler = async (
+    e: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    setLoading(true);
+    await dispatch(submitNewClip(clip.enclosure.url));
+    setLoading(false);
+    // history.push("/library");
+  };
+
   if (!clip) return null;
-  
+
   return (
     <Modal
       show={isOpen}
@@ -48,7 +68,9 @@ const AudioModalRipper: FC<ModalProps> = ({
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary">Crop Audio</Button>
+        <Button variant="primary" onClick={(e) => submitHandler(e)}>
+          {loading ? "Loading..." : "Crop Audio"}
+        </Button>
       </Modal.Footer>
     </Modal>
   );

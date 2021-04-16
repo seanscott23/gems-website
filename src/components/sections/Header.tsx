@@ -22,7 +22,7 @@ const Header: FC = () => {
   // };
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" id="navbar">
       <Navbar.Brand>
         <Link className="navbar-item" to={!authenticated ? "/" : "/dashboard"}>
           Gems
