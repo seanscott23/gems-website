@@ -12,7 +12,7 @@ const ClipSchema = new mongoose.Schema<ClipPropsModel>(
       type: String,
       required: false,
     },
-    password: {
+    url: {
       type: String,
       required: true,
     },

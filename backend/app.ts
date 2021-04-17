@@ -13,6 +13,7 @@ const options: ConnectOptions = {
 };
 mongoose.connect(uri, options);
 app.use(decodeIDToken);
+app.use(express.json());
 app.use(cors());
 app.use("/api/users", users);
 app.use("/api/clips", clips);

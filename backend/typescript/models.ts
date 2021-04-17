@@ -10,6 +10,7 @@ export interface UserPropsModel extends Document {
 
 export interface ClipPropsModel extends Document {
   ownerId?: string;
+  id?: string;
   title?: string;
   description?: string;
   url?: string;

@@ -7,15 +7,23 @@ import multer from "multer";
 const router = express.Router();
 const upload = multer();
 
-router.get(
-  "/:userId/clips",
-  upload.single("file"),
-  // passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Clip.find({ ownerId: req.params.userId })
-      .then((clips: ClipPropsModel[]) => res.json(clips))
-      .catch((err: {}) => res.status(400).json(err));
+router.get("/:userId/clips", async (req, res) => {
+  const auth = req.currentUser;
+  if (auth) {
+    const clips = await Clip.find({ ownerId: req.params.userId });
+    return res.json(clips);
   }
-);
+  return res.status(403).send("Not authorized");
+});
+
+router.post("/signup", (req, res) => {
+  const auth = req.currentUser;
+  if (auth) {
+    const user = new User(req.body);
+    const savedUser = user.save();
+    return res.status(201).json(savedUser);
+  }
+  return res.status(403).send("Not authorized");
+});
 
 export default router;
