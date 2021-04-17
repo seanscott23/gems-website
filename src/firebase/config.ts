@@ -14,9 +14,6 @@ firebase.initializeApp({
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 });
 
-// export const Providers = {
-//   google: new firebase.auth.GoogleAuthProvider(),
-// };
-// export const auth = app.auth();
+
 
 export default firebase;

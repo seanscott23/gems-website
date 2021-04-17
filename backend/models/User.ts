@@ -8,6 +8,10 @@ const UserSchema = new mongoose.Schema<UserPropsModel>(
       type: String,
       required: true,
     },
+    profilePhoto: {
+      type: String,
+      required: false,
+    },
     email: {
       type: String,
       required: true,
