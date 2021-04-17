@@ -1,4 +1,5 @@
 import firebase from "firebase/app";
+var admin = require("firebase-admin");
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/database";
@@ -24,10 +25,14 @@ const createToken = async () => {
 export const login = async (userData) => {
   const header = await createToken();
   try {
-    const res = await axios.post(url, userData, header);
-    return res.data;
-  } catch (e) {
-    console.error(e);
+    await admin
+      .auth()
+      .signInWithEmailAndPassword(userData.email, userData.password)
+      .then((userCredential) => {
+        console.log(userCredential);
+      });
+  } catch (err) {
+    console.log(err);
   }
 };
 
@@ -40,4 +45,3 @@ export const signup = async (userData) => {
     console.error(e);
   }
 };
-
