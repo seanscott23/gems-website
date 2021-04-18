@@ -16,24 +16,24 @@ router.get("/:userId/clips", async (req, res) => {
   return res.status(403).send("Not authorized");
 });
 
-// router.post("/login", (req, res) => {
-//   // const { errors, isValid } = validateLoginInput(req.body);
-//   // if (!isValid) return res.status(400).json(errors);
-
-//   const email: string = req.body.email;
-//   const password: string | any = req.body.password;
-
-//   User.findOne({ email }).then((user) => {
-//     if (!user)
-//       return res.status(404).json({ email: "This user does not exist" });
-
-//    else {
-//         errors.password = "Incorrect password";
-//         return res.status(400).json(errors);
-//       }
-//     });
-//   });
-// });
+router.post("/login", (req, res) => {
+  // const { errors, isValid } = validateLoginInput(req.body);
+  // if (!isValid) return res.status(400).json(errors);
+  const idToken = req.body.idToken.toString();
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+  admin
+    .auth()
+    .createSessionCookie(idToken, { expiresIn })
+    .then((sessionCookie) => {
+      const options = { maxAge: expiresIn, httpOnly: true };
+      res.cookie("session", sessionCookie, options);
+      res.end(JSON.stringify({ status: "success" }));
+    },
+    (error) => {
+      res.status(401).send("Unauthorized Request");
+    };
+    )
+});
 
 router.post("/signup", (req, res) => {
   const auth = req.currentUser;
@@ -44,5 +44,22 @@ router.post("/signup", (req, res) => {
   }
   return res.status(403).send("Not authorized");
 });
+
+router.get("/logout", (req, res) => {
+  res.clearCookie("session");
+  res.redirect("/login");
+});
+
+router.get("/library", (req, res) => {
+  const sessionCookie = req.cookies.session || ""
+   admin
+    .auth()
+    .verifySessionCookie(sessionCookie, true)
+    .then(() => {
+      res.render("library.tsx")
+    }).catch((error) => {
+      res.redirect("login")
+    })
+})
 
 export default router;

@@ -11,7 +11,7 @@ const url =
     : `${process.env.NEXT_PUBLIC_LOCAL_HOST_SERVER}/users/login`;
 
 const createToken = async () => {
-  const user = firebase.auth().currentUser;
+  const user = admin.auth().currentUser;
   const token = user && (await user.getIdToken());
   const payloadHeader = {
     headers: {
@@ -22,18 +22,13 @@ const createToken = async () => {
   return payloadHeader;
 };
 
-export const login = async (userData) => {
-  const header = await createToken();
-  try {
-    await admin
-      .auth()
-      .signInWithEmailAndPassword(userData.email, userData.password)
-      .then((userCredential) => {
-        console.log(userCredential);
-      });
-  } catch (err) {
-    console.log(err);
-  }
+export const login = (userData) => {
+  return axios.post(
+    process.env.NODE_ENV === "production"
+      ? `${process.env.NEXT_PUBLIC_DEPLOYED_HOST_SERVER}/users/login`
+      : `${process.env.NEXT_PUBLIC_LOCAL_HOST_SERVER}/users/login`,
+    userData
+  );
 };
 
 export const signup = async (userData) => {

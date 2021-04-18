@@ -31,7 +31,6 @@ export const signup = (
         .auth()
         .createUserWithEmailAndPassword(data.email, data.password);
       if (res.user) {
-        // userSessionRef.update({createdAt: firebase.database.ServerValue.TIMESTAMP})
         const userData: User = {
           email: data.email,
           firstName: data.firstName,
@@ -70,10 +69,8 @@ export const getUserById = (
   return async (dispatch) => {
     try {
       const user = await firebase.database().ref("users").child(id).get();
-      // firebase.database().goOnline();
       if (user.exists()) {
         const userData = user.val() as User;
-        // console.log(userData);
         dispatch({
           type: SET_USER,
           payload: userData,
