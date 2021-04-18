@@ -4,6 +4,7 @@ import { ClipPropsModel, UserPropsModel } from "../../typescript/models";
 import User from "../../models/User";
 import Clip from "../../models/Clip";
 import multer from "multer";
+var admin = require("firebase-admin");
 const router = express.Router();
 const upload = multer();
 
@@ -28,11 +29,10 @@ router.post("/login", (req, res) => {
       const options = { maxAge: expiresIn, httpOnly: true };
       res.cookie("session", sessionCookie, options);
       res.end(JSON.stringify({ status: "success" }));
-    },
-    (error) => {
-      res.status(401).send("Unauthorized Request");
-    };
-    )
+    })
+    .catch((error) => {
+      return res.status(401).send("Unauthorized Request");
+    });
 });
 
 router.post("/signup", (req, res) => {
@@ -51,15 +51,16 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/library", (req, res) => {
-  const sessionCookie = req.cookies.session || ""
-   admin
+  const sessionCookie = req.cookies.session || "";
+  admin
     .auth()
     .verifySessionCookie(sessionCookie, true)
     .then(() => {
-      res.render("library.tsx")
-    }).catch((error) => {
-      res.redirect("login")
+      res.render("library.tsx");
     })
-})
+    .catch((error) => {
+      res.redirect("login");
+    });
+});
 
 export default router;
