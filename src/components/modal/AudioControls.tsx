@@ -53,7 +53,7 @@ export const Controls: React.FC<{
   };
 
   React.useEffect(() => {
-    if (audioMetaData?.duration != undefined) {
+    if (audioMetaData?.duration != undefined && endTime == 100) {
       setEndTime(calculateTimeStamp(audioMetaData.duration) as number);
     }
     if (audio) {
@@ -80,24 +80,26 @@ export const Controls: React.FC<{
       setStartTime(audioCurrentTime);
     }
 
-    if (leftProgressCircle[0] && audio) {
+    if (leftProgressCircle[leftProgressCircle.length - 1] && audio) {
+      if(endTime > startTime){
       setStartTime(calculateTimeStamp(audio.currentTime));
-      setEndTime(calculateTimeStamp(audio.duration));
-      let amountMoved = (startTime / endTime) * 100;
-      // debugger;
+      let leftAmountMoved = (startTime / calculateTimeStamp(audio.duration)) * 100;
       let rightMoved = parseFloat(
-        rightProgressCircle[3].style.left.slice(0, -1)
+        rightProgressCircle[4].style.left.slice(0, -1)
       );
-      let rightPercent = parseFloat(rightMoved.toFixed(3));
-      let rightMovedPct = 100 - rightPercent;
-      let percent = parseFloat(amountMoved.toFixed(3));
-      // debugger;
-      let widthPercent = 100 - percent - rightMovedPct;
-      leftProgressCircle[3].style.left = percent + "%";
-      // console.log(leftProgressCircle[3].style.left);
-      sliderBar[3].style.left = percent + "%";
-      sliderBar[3].style.width = widthPercent + "%";
-    }
+      let rightPercent = parseFloat(rightMoved.toFixed(2));
+      let rightMovedPct = parseFloat((100 - rightPercent).toFixed(2))
+      let leftPercent = parseFloat(leftAmountMoved.toFixed(2));
+      let widthPercent = 100 - leftPercent - rightMovedPct;
+      console.log(leftPercent)
+      console.log(rightMovedPct)
+      console.log(widthPercent)
+    // debugger
+      leftProgressCircle[leftProgressCircle.length - 1].style.left = leftPercent + "%";
+  
+      sliderBar[leftProgressCircle.length - 1].style.left = leftPercent + "%";
+      sliderBar[leftProgressCircle.length - 1].style.width = widthPercent + "%";
+    }}
     checkStartStop();
   };
 
@@ -105,12 +107,12 @@ export const Controls: React.FC<{
     if (isOpen) {
       if (audio) {
         let rightPercent =
-          parseFloat(rightProgressCircle[3].style.left.slice(0, -1)) / 100;
+          parseFloat(rightProgressCircle[rightProgressCircle.length - 1].style.left.slice(0, -1)) / 100;
         let finalEnd = audio.duration * rightPercent;
         let endTime = calculateTimeStamp(finalEnd);
         let startTime = calculateTimeStamp(audio.currentTime);
-        console.log(startTime);
-        console.log(endTime);
+        // console.log(startTime);
+        // console.log(endTime);
         if (startTime === endTime) {
           audio.pause();
         }
@@ -122,7 +124,9 @@ export const Controls: React.FC<{
 
   const onMinChange = (e: number[]) => {
     setStartTime(calculateTimeStamp(e[0] * 60));
+    console.log(e[1] * 60)
     setEndTime(calculateTimeStamp(e[1] * 60));
+    // debugger
     if (audio) {
       audio.currentTime = e[0] * 60;
     }
@@ -143,7 +147,7 @@ export const Controls: React.FC<{
     }
   };
 
-  // .addEventListener("keyup", (e) => checkKey(e));
+  // document.addEventListener("keyup", (e) => checkKey(e));
 
   return audioMetaData ? (
     <div className="player__controls">
