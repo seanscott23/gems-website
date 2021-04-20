@@ -6,6 +6,7 @@ import Message from "../UI/Message";
 import { signup, setError } from "../../store/actions/authActions";
 import { Form, Card } from "react-bootstrap";
 import { RootState } from "../../store";
+import "../../styles/Signup.css";
 
 const SignUp: FC = () => {
   const [firstName, setFirstName] = useState("");
@@ -30,40 +31,46 @@ const SignUp: FC = () => {
   };
 
   return (
-    <Card className="section">
-      <div className="container">
-        <h2 className="has-tex-centered is-size-2 mb-3">Sign Up</h2>
-        <Form className="form" onSubmit={submitHandler}>
-          {error && <Message type="danger" msg={error} />}
+    <Card className="sign-up-container">
+      {/* <div className="container"> */}
+      <h2 className="has-tex-centered is-size-2 mb-3">Sign Up</h2>
+      <Form className="form" onSubmit={submitHandler}>
+        {error && <Message type="danger" msg={error} />}
+        <Form.Group>
           <Input
             name="firstName"
             value={firstName}
             onChange={(e) => setFirstName(e.currentTarget.value)}
             placeholder="First name"
-            label="First name"
+            label=""
           />
+        </Form.Group>
+        <Form.Group>
           <Input
             name="email"
             value={email}
             onChange={(e) => setEmail(e.currentTarget.value)}
             placeholder="Email address"
-            label="Email address"
+            label=""
           />
+        </Form.Group>
+        <Form.Group>
           <Input
             name="password"
             value={password}
             onChange={(e) => setPassword(e.currentTarget.value)}
             placeholder="Password"
-            label="Password"
+            label=""
           />
-          <Button
-            text={loading ? "Loading..." : "Sign Up"}
-            className="w-100 btn btn-primary"
-            type="submit"
-            disabled={loading}
-          />
-        </Form>
-      </div>
+        </Form.Group>
+        <Button
+          text={loading ? "Loading..." : "Sign Up"}
+          className="w-100 btn btn-primary"
+          type="submit"
+          disabled={loading}
+        />
+      </Form>
+      {/* </div> */}
     </Card>
   );
 };

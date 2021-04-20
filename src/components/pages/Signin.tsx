@@ -31,7 +31,7 @@ const Signin: FC = () => {
   };
 
   return (
-    <Card className="container">
+    <Card className="sign-in-container">
       <h2 className="text-center">Sign In</h2>
       <Form onSubmit={submitHandler}>
         <div>
@@ -42,7 +42,7 @@ const Signin: FC = () => {
               value={email}
               onChange={(e) => setEmail(e.currentTarget.value)}
               placeholder="Email address"
-              label="Email address"
+              label=""
             />
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
@@ -50,9 +50,9 @@ const Signin: FC = () => {
               name="password"
               value={password}
               type="passowrd"
+              label=""
               onChange={(e) => setPassword(e.currentTarget.value)}
               placeholder="Password"
-              label="Password"
             />
           </Form.Group>
           <p>

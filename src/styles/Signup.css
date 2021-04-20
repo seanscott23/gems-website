@@ -1,12 +1,4 @@
-.container {
-  width: 40%;
-
-  align-items: center;
-  margin-top: 20%;
-  height: 100%;
-}
-
-.sign-in-container {
+.sign-up-container {
   width: 40%;
   margin: 0 auto;
   align-items: center;
@@ -15,11 +7,11 @@
   padding: 5px;
 }
 
-.sign-in-container .button {
+.sign-up-container .button {
   margin-bottom: 10px;
 }
 
-.sign-in-container > form {
+.sign-up-container > form {
   width: 80%;
 }
 
