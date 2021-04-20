@@ -50,10 +50,6 @@
   align-items: center;
   width: 100%;
 }
-.startTime {
-}
-.endTime {
-}
 
 .player__button:focus {
   border-color: #ffc600;

@@ -7,6 +7,8 @@ admin.initializeApp({
   databaseURL: "https://gems-website-30276-default-rtdb.firebaseio.com",
 });
 
+admin.resotre("data.json");
+
 async function decodeIDToken(req, res, next) {
   const header = req.headers?.authorization;
   if (

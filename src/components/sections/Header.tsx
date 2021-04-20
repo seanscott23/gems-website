@@ -17,6 +17,7 @@ const Header: FC = () => {
     dispatch(signout());
   };
 
+
   // const libraryClickHandler = () => {
   //   dispatch(goToLibrary());
   // };
@@ -28,9 +29,9 @@ const Header: FC = () => {
           Gems
         </Link>
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Toggle aria-controls="basic-navbar-nav"  />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
+        <Nav className="ml-auto navupdate">
           {!authenticated ? (
             <div className="loggedOut-buttons">
               <Button

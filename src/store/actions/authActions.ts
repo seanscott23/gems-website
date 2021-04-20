@@ -20,6 +20,8 @@ import Parser from "rss-parser";
 import fs from "fs";
 import { RootState } from "..";
 import firebase from "../../firebase/config";
+import authReducer from "../reducers/authReducer";
+const auth = firebase.auth();
 
 export const signup = (
   data: SignUpData,
@@ -129,6 +131,7 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
   };
 };
 
+
 //trimming audioo
 
 export const submitNewClip = (
@@ -139,6 +142,7 @@ export const submitNewClip = (
       let audio: any;
       const reader = new FileReader();
       const audioContext = new AudioContext();
+      const db = firebase.firestore();
 
       fetch(url)
         .then((data) => data.arrayBuffer())

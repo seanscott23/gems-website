@@ -91,10 +91,6 @@ export const Controls: React.FC<{
       let rightMovedPct = parseFloat((100 - rightPercent).toFixed(2))
       let leftPercent = parseFloat(leftAmountMoved.toFixed(2));
       let widthPercent = 100 - leftPercent - rightMovedPct;
-      console.log(leftPercent)
-      console.log(rightMovedPct)
-      console.log(widthPercent)
-    // debugger
       leftProgressCircle[leftProgressCircle.length - 1].style.left = leftPercent + "%";
   
       sliderBar[leftProgressCircle.length - 1].style.left = leftPercent + "%";

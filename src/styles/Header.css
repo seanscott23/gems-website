@@ -1,13 +1,20 @@
 .loggedIn-buttons > button {
   margin: 10px;
+  background-color: #057dcd;
 }
 
 .loggedOut-buttons > button {
   margin: 10px;
+  background-color: #057dcd;
+}
+
+.loggedIn-buttons > .btn-secondary {
+  background-color: #43b0f1;
 }
 
 .navbar-item {
   font-size: 1.4em;
+  color: #057dcd;
 }
 
 #navbar {
@@ -15,4 +22,9 @@
   position: fixed;
   width: 100%;
   top: 0;
+  background-color: #e8eef1 !important;
+}
+
+.navupdate {
+  float: right;
 }

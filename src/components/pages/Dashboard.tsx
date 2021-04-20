@@ -7,6 +7,7 @@ import { RootState } from "../../store";
 import { Alert, Form, FormControl } from "react-bootstrap";
 import Button from "../UI/Button";
 import AudioUpload from "../sections/AudioUpload";
+import "../../styles/Dashboard.css";
 
 const Dashboard: FC = () => {
   const history = useHistory();
@@ -51,12 +52,12 @@ const Dashboard: FC = () => {
         {needVerification && (
           <Message type="success" msg="Please verify your email address." />
         )}
-        <h1 className="is-size-1">Welcome {getName()}</h1>
+        <h1 className="is-size-1 dash-name">Welcome {getName()}</h1>
       </div>
 
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="exampleForm.ControlInput1">
-          <Form.Label>RSS Feed</Form.Label>
+          <Form.Label>Trim or upload your audio from your RSS Feed:</Form.Label>
           <Form.Control
             name="rssFeed"
             value={rssFeed}
@@ -66,13 +67,18 @@ const Dashboard: FC = () => {
           />
         </Form.Group>
 
-        <AudioUpload></AudioUpload>
         <Button
           text={loading ? "Loading..." : "Upload Rss Feed"}
           className="w-100 btn btn-primary"
           type="submit"
           disabled={loading}
         ></Button>
+
+        <Form.Label className="dashboard-p">
+          OR upload clips individually from you computer:
+        </Form.Label>
+
+        <AudioUpload></AudioUpload>
       </Form>
     </section>
   );

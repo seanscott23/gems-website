@@ -15,3 +15,7 @@
 .hide {
   visibility: hidden;
 }
+
+.form-group > input {
+  background-color: #e8eef1;
+}
