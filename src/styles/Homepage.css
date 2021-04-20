@@ -1,0 +1,9 @@
+.homepage-buttons {
+  display: flex;
+  margin-top: 30px;
+}
+
+.homepage-buttons > button {
+  margin: 20px;
+  font-size: 1.5em;
+}

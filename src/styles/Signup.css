@@ -3,12 +3,13 @@
   margin: 0 auto;
   align-items: center;
   margin-top: 20%;
-  height: 100%;
-  padding: 5px;
+  height: 50%;
+  padding: 10px 5px 5px 5px;
 }
 
 .sign-up-container .button {
   margin-bottom: 10px;
+  font-size: 1.5em;
 }
 
 .sign-up-container > form {
@@ -18,4 +19,5 @@
 .allInputs > input {
   width: 100%;
   border: 1px solid #e8eef1;
+  height: 3em;
 }

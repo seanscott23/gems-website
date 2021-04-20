@@ -6,17 +6,21 @@
   height: 100%;
 }
 
+.text-center {
+  margin-bottom: 15px;
+}
 .sign-in-container {
   width: 40%;
   margin: 0 auto;
   align-items: center;
   margin-top: 20%;
-  height: 100%;
-  padding: 5px;
+  height: 50%;
+  padding: 10px 5px 5px 5px;
 }
 
 .sign-in-container .button {
   margin-bottom: 10px;
+  font-size: 1.5em;
 }
 
 .sign-in-container > form {
@@ -25,5 +29,11 @@
 
 .allInputs > input {
   width: 100%;
+  height: 3em;
   border: 1px solid #e8eef1;
+}
+
+.homeLink {
+  margin-top: 5px;
+  text-align: center;
 }

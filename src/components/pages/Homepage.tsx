@@ -1,6 +1,27 @@
 import React, { FC } from "react";
+import { useState } from "react";
+import { useHistory, Link } from "react-router-dom";
+import Button from "../UI/Button";
+import "../../styles/Homepage.css";
 
 const Homepage: FC = () => {
+  const history = useHistory();
+  const [loading, setLoading] = useState(false);
+
+  const clickHandler = async (e: React.FormEvent<HTMLButtonElement>) => {
+    if (e.currentTarget.innerHTML === "Sign in") {
+      e.preventDefault();
+      setLoading(true);
+      history.push("/signin");
+      setLoading(true);
+    } else {
+      e.preventDefault();
+      setLoading(true);
+      history.push("/signup");
+      setLoading(true);
+    }
+  };
+
   return (
     <section className="section">
       <div className="container">
@@ -21,6 +42,22 @@ const Homepage: FC = () => {
           existing creators with a platform exclusivly for focused material they
           can share with the world.
         </p>
+        <div className="homepage-buttons">
+          <Button
+            className="w-100 btn btn-primary"
+            type="submit"
+            disabled={loading}
+            text="Sign in"
+            onClick={(e) => clickHandler(e)}
+          ></Button>
+          <Button
+            className="w-100 btn btn-primary"
+            type="submit"
+            disabled={loading}
+            text="Sign up"
+            onClick={(e) => clickHandler(e)}
+          ></Button>
+        </div>
       </div>
     </section>
   );
