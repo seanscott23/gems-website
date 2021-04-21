@@ -143,7 +143,7 @@ export const submitNewClip = (
     try {
       await fetch("http://localhost:8000/api/deliver/song/", {
         method: "POST",
-        mode: "no-cors",
+        // mode: 'no-cors',
         headers: new Headers({
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -151,12 +151,14 @@ export const submitNewClip = (
         }),
         body: JSON.stringify({
           url: url,
-          begin: begin ? begin : 60,
-          end: end ? end : 60,
+          begin: begin,
+          end: end,
         }),
       })
         .then((response) => response.json())
-        .then((data) => console.log(data));
+        .then((data) => {
+          console.log(data);
+        });
     } catch (err) {
       console.log(err);
     }
