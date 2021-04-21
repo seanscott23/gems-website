@@ -56,6 +56,7 @@ export const Controls: React.FC<{
   // };
 
   const secondsToDecimal = (seconds: number) => {
+    // console.log(parseFloat((seconds / 60).toFixed(2)));
     return parseFloat((seconds / 60).toFixed(2));
   };
   React.useEffect(() => {
@@ -73,24 +74,23 @@ export const Controls: React.FC<{
     setIsPlaying(!isPlaying);
     if (audio?.paused) {
       audio.play();
-      // audio.muted = true;
+      audio.muted = true;
     } else {
       audio?.pause();
     }
   };
 
   const updateProgressBar = () => {
-    if (audio) {
-      let cTime = audio.currentTime as number;
+    // if (audio) {
+    //   let cTime = audio.currentTime as number;
 
-      let audioCurrentTime = secondsToDecimal(cTime) as number;
-      setStartTime(audioCurrentTime);
-    }
+    //   let audioCurrentTime = secondsToDecimal(cTime) as number;
+    //   setStartTime(audioCurrentTime);
+    // }
 
     if (leftProgressCircle[leftProgressCircle.length - 1] && audio) {
       if (endTime > startTime) {
         handleTimeUpdate(startTime, endTime);
-
         setStartTime(secondsToDecimal(audio.currentTime));
         let leftAmountMoved =
           (startTime / secondsToDecimal(audio.duration)) * 100;
@@ -106,8 +106,8 @@ export const Controls: React.FC<{
         let widthPercent = 100 - leftPercent - rightMovedPct;
         leftProgressCircle[leftProgressCircle.length - 1].style.left =
           leftPercent + "%";
-
         sliderBar[leftProgressCircle.length - 1].style.left = leftPercent + "%";
+        // debugger;
         sliderBar[leftProgressCircle.length - 1].style.width =
           widthPercent + "%";
       }
@@ -125,11 +125,10 @@ export const Controls: React.FC<{
             ].style.left.slice(0, -1)
           ) / 100;
         let finalEnd = audio.duration * rightPercent;
-        let endTime = secondsToDecimal(finalEnd);
-        let startTime = secondsToDecimal(audio.currentTime);
-        // console.log(startTime);
-        // console.log(endTime);
-        if (startTime === endTime) {
+        let end = secondsToDecimal(finalEnd);
+        let start = secondsToDecimal(audio.currentTime);
+
+        if (start === end) {
           audio.pause();
         }
       }
@@ -139,11 +138,30 @@ export const Controls: React.FC<{
   };
 
   const onMinChange = (e: number[]) => {
-    // debugger;
     setStartTime(e[0]);
     setEndTime(e[1]);
     if (audio) {
       audio.currentTime = e[0] * 60;
+    }
+  };
+
+  const showTime = (decimal: number) => {
+    let string = decimal.toString().split(".");
+    if (decimal != 0) {
+      let min = string[0];
+      let seconds;
+      if (string[1]) {
+        seconds = (parseFloat("." + string[1]) * 60).toFixed(0);
+      } else {
+        seconds = "0";
+      }
+      if (seconds.length == 2) {
+        return min + ":" + seconds;
+      } else {
+        return min + ":" + 0 + seconds;
+      }
+    } else {
+      return 0;
     }
   };
   // const checkKey = (e: KeyboardEvent) => {
@@ -163,7 +181,7 @@ export const Controls: React.FC<{
   // };
 
   // document.addEventListener("keyup", (e) => checkKey(e));
-
+  // console.log(startTime);
   return audioMetaData ? (
     <div className="player__controls">
       <div id="rc-sliderDiv">
@@ -187,8 +205,8 @@ export const Controls: React.FC<{
         </button>
 
         <div className="start-end-time">
-          <div className="startTime">Start time: {startTime}</div>
-          <div className="endTime">End time: {endTime}</div>
+          <div className="startTime">Start time: {showTime(startTime)}</div>
+          <div className="endTime">End time: {showTime(endTime)}</div>
         </div>
       </div>
     </div>
