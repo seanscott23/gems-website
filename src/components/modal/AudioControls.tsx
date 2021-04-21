@@ -33,31 +33,34 @@ export const Controls: React.FC<{
 
   const { Range } = Slider;
 
-  const calculateTimeStamp = (seconds: number) => {
-    let h = parseFloat((seconds / 3600).toFixed(0));
-    let m = parseFloat(((seconds % 3600) / 60).toFixed(0));
-    let s = parseFloat(((seconds % 3600) % 60).toFixed(0));
-    let hDisplay = h > 0 ? h : 0;
-    let mDisplay = m > 0 ? m : 0;
-    let sDisplay = s >= 0 ? s : 0;
-    // debugger;
-    if (mDisplay == 0 && sDisplay >= 10) {
-      return parseFloat("0." + sDisplay);
-    }
-    if (mDisplay == 0 && sDisplay < 10) {
-      return parseFloat("0.0" + sDisplay);
-    } else {
-      if (sDisplay <= 9) {
-        return parseFloat(mDisplay + ".0" + sDisplay);
-      } else {
-        return parseFloat(mDisplay + "." + sDisplay);
-      }
-    }
-  };
+  // const calculateTimeStamp = (seconds: number) => {
+  //   let h = parseFloat((seconds / 3600).toFixed(0));
+  //   let m = parseFloat(((seconds % 3600) / 60).toFixed(0));
+  //   let s = parseFloat(((seconds % 3600) % 60).toFixed(0));
+  //   let hDisplay = h > 0 ? h : 0;
+  //   let mDisplay = m > 0 ? m : 0;
+  //   let sDisplay = s >= 0 ? s : 0;
+  //   debugger;
+  //   if (mDisplay == 0 && sDisplay >= 10) {
+  //     return parseFloat("0." + sDisplay);
+  //   }
+  //   if (mDisplay == 0 && sDisplay < 10) {
+  //     return parseFloat("0.0" + sDisplay);
+  //   } else {
+  //     if (sDisplay <= 9) {
+  //       return parseFloat(mDisplay + ".0" + sDisplay);
+  //     } else {
+  //       return parseFloat(mDisplay + "." + sDisplay);
+  //     }
+  //   }
+  // };
 
+  const secondsToDecimal = (seconds: number) => {
+    return parseFloat((seconds / 60).toFixed(2));
+  };
   React.useEffect(() => {
     if (audioMetaData?.duration != undefined && endTime == 100) {
-      setEndTime(calculateTimeStamp(audioMetaData.duration) as number);
+      setEndTime(secondsToDecimal(audioMetaData.duration) as number);
     }
     if (audio) {
       audio.ontimeupdate = function () {
@@ -79,19 +82,23 @@ export const Controls: React.FC<{
   const updateProgressBar = () => {
     if (audio) {
       let cTime = audio.currentTime as number;
-      let audioCurrentTime = calculateTimeStamp(cTime) as number;
+
+      let audioCurrentTime = secondsToDecimal(cTime) as number;
       setStartTime(audioCurrentTime);
     }
 
     if (leftProgressCircle[leftProgressCircle.length - 1] && audio) {
       if (endTime > startTime) {
         handleTimeUpdate(startTime, endTime);
-        // end = endTime;
-        setStartTime(calculateTimeStamp(audio.currentTime));
+
+        setStartTime(secondsToDecimal(audio.currentTime));
         let leftAmountMoved =
-          (startTime / calculateTimeStamp(audio.duration)) * 100;
+          (startTime / secondsToDecimal(audio.duration)) * 100;
         let rightMoved = parseFloat(
-          rightProgressCircle[4].style.left.slice(0, -1)
+          rightProgressCircle[rightProgressCircle.length - 1].style.left.slice(
+            0,
+            -1
+          )
         );
         let rightPercent = parseFloat(rightMoved.toFixed(2));
         let rightMovedPct = parseFloat((100 - rightPercent).toFixed(2));
@@ -118,8 +125,8 @@ export const Controls: React.FC<{
             ].style.left.slice(0, -1)
           ) / 100;
         let finalEnd = audio.duration * rightPercent;
-        let endTime = calculateTimeStamp(finalEnd);
-        let startTime = calculateTimeStamp(audio.currentTime);
+        let endTime = secondsToDecimal(finalEnd);
+        let startTime = secondsToDecimal(audio.currentTime);
         // console.log(startTime);
         // console.log(endTime);
         if (startTime === endTime) {
@@ -132,10 +139,9 @@ export const Controls: React.FC<{
   };
 
   const onMinChange = (e: number[]) => {
-    setStartTime(calculateTimeStamp(e[0] * 60));
-    console.log(e[1] * 60);
-    setEndTime(calculateTimeStamp(e[1] * 60));
-    // debugger
+    // debugger;
+    setStartTime(e[0]);
+    setEndTime(e[1]);
     if (audio) {
       audio.currentTime = e[0] * 60;
     }
@@ -167,7 +173,7 @@ export const Controls: React.FC<{
           defaultValue={[0, endTime]}
           step={0.01}
           min={0}
-          max={parseFloat((audioMetaData.duration / 60).toFixed(2))}
+          max={secondsToDecimal(audioMetaData.duration)}
           onChange={(e) => onMinChange(e)}
         />
       </div>
