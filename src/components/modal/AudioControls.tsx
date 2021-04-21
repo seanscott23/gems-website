@@ -6,16 +6,15 @@ import { start } from "node:repl";
 export const Controls: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
   isOpen: boolean;
-  begin:number;
-  end:number;
-}> = ({ audioMetaData, isOpen, begin, end }) => {
+  begin: number;
+  end: number;
+  handleTimeUpdate: (num1: number, num2: number) => void;
+}> = ({ audioMetaData, isOpen, begin, end, handleTimeUpdate }) => {
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
   const audio: HTMLAudioElement | null = document.querySelector(".audioClip");
   const [startTime, setStartTime] = React.useState<number>(0);
   const [endTime, setEndTime] = React.useState<number>(100);
-  begin = startTime
-  end = endTime
-  
+
   const leftProgressCircle:
     | HTMLCollectionOf<Element>
     | any = document.getElementsByClassName(
@@ -86,6 +85,9 @@ export const Controls: React.FC<{
 
     if (leftProgressCircle[leftProgressCircle.length - 1] && audio) {
       if (endTime > startTime) {
+        
+        handleTimeUpdate(startTime, endTime);
+        // end = endTime;
         setStartTime(calculateTimeStamp(audio.currentTime));
         let leftAmountMoved =
           (startTime / calculateTimeStamp(audio.duration)) * 100;

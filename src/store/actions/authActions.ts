@@ -141,24 +141,22 @@ export const submitNewClip = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-     await fetch('http://localhost:8000/api/deliver/song/',{
-        method: 'POST',
-        mode: 'no-cors',
-        // headers: new Headers(
-        //   {
-        //     "Content-Type": "application/json",
-        //     "Accept":"application/json",
-        //     "Access-Control-Allow-Origin": "*"
-        //   }
-        // ),
+      await fetch("http://localhost:8000/api/deliver/song/", {
+        method: "POST",
+        mode: "no-cors",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        }),
         body: JSON.stringify({
-          "url": url,
-          "begin": begin ? begin : 60,
-          "end": end ? end : 60
-        })
+          url: url,
+          begin: begin ? begin : 60,
+          end: end ? end : 60,
+        }),
       })
-      .then(response => response.json())
-      .then(data => console.log(data))
+        .then((response) => response.json())
+        .then((data) => console.log(data));
     } catch (err) {
       console.log(err);
     }
@@ -209,7 +207,6 @@ export const submitNewClip = (
 //       //   audio = decodedAudio;
 //       //   console.log(audio);
 //       // });
-
 
 // var options = {
 //   mimeType: "audio/webm",

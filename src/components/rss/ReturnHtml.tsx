@@ -21,6 +21,10 @@ const ReturnHTML = () => {
   const handleClose = () => {
     setModalState(!isModalOpen);
   };
+  const handleTimeUpdate = (startPoint: number, endPoint: number) => {
+    setBegin(startPoint);
+    setEnd(endPoint);
+  };
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -66,6 +70,7 @@ const ReturnHTML = () => {
                 id={i}
                 begin={begin}
                 end={end}
+                handleTimeUpdate={handleTimeUpdate}
               />
             )}
             {/* Also, i suggest you pass in the clip entirely rather than bits of it . how?*/}

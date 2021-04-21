@@ -22,6 +22,7 @@ interface ModalProps {
   id: number;
   begin: number;
   end: number;
+  handleTimeUpdate: (arg1: number, arg2: number) => void;
 }
 //u can leave the notes. they're helfpul.hha all good
 const AudioModalRipper: FC<ModalProps> = ({
@@ -30,7 +31,8 @@ const AudioModalRipper: FC<ModalProps> = ({
   clip,
   id,
   begin,
-  end
+  end,
+  handleTimeUpdate,
 }) => {
   // const { user, needVerification, success } = useSelector(
   //   (state: RootState) => state.auth
@@ -38,13 +40,12 @@ const AudioModalRipper: FC<ModalProps> = ({
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
-  // const [begin, setBegin] = useState(0)
-  // const [end, setEnd] = useState(0)
 
   const submitHandler = async (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.preventDefault();
+    // debugger;
     setLoading(true);
     await dispatch(submitNewClip(clip.enclosure.url, begin, end));
     setLoading(false);
@@ -52,7 +53,7 @@ const AudioModalRipper: FC<ModalProps> = ({
   };
 
   if (!clip) return null;
-  
+
   return (
     <Modal
       show={isOpen}
@@ -70,7 +71,13 @@ const AudioModalRipper: FC<ModalProps> = ({
       </Modal.Header>
       <Modal.Body id="modalBody">
         <div className="audioPlayer">
-          <AudioPlayer url={clip.enclosure.url} isOpen={isOpen} begin={begin} end={end} />
+          <AudioPlayer
+            url={clip.enclosure.url}
+            isOpen={isOpen}
+            begin={begin}
+            end={end}
+            handleTimeUpdate={handleTimeUpdate}
+          />
         </div>
       </Modal.Body>
       <Modal.Footer id="modal-footer">
