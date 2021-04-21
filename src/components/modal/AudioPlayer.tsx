@@ -9,7 +9,9 @@ import { Controls } from "./AudioControls";
 export const AudioPlayer: React.FC<{
   url: string;
   isOpen: boolean;
-}> = ({ url, isOpen }) => {
+  begin: number;
+  end: number;
+}> = ({ url, isOpen, begin, end }) => {
   const [show, setShow] = React.useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [audioMetaData, setAudioMetaData] = useState<
@@ -26,7 +28,7 @@ export const AudioPlayer: React.FC<{
       setAudioMetaData(audioRef.current);
     }
   };
-
+  debugger
 
   return show ? (
     <div className="audioDiv">
@@ -39,7 +41,7 @@ export const AudioPlayer: React.FC<{
       >
         Your browser does not support the audio element.
       </audio>
-      {show ? <Controls audioMetaData={audioMetaData} isOpen={isOpen} /> : null}
+      {show ? <Controls audioMetaData={audioMetaData} isOpen={isOpen} begin={begin} end={end} /> : null}
     </div>
   ) : null;
 };

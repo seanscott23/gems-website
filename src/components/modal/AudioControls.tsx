@@ -6,12 +6,16 @@ import { start } from "node:repl";
 export const Controls: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
   isOpen: boolean;
-}> = ({ audioMetaData, isOpen }) => {
+  begin:number;
+  end:number;
+}> = ({ audioMetaData, isOpen, begin, end }) => {
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
   const audio: HTMLAudioElement | null = document.querySelector(".audioClip");
   const [startTime, setStartTime] = React.useState<number>(0);
   const [endTime, setEndTime] = React.useState<number>(100);
-
+  begin = startTime
+  end = endTime
+  
   const leftProgressCircle:
     | HTMLCollectionOf<Element>
     | any = document.getElementsByClassName(

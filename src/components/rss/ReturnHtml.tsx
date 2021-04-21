@@ -16,7 +16,8 @@ const ReturnHTML = () => {
   const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
   const [isModalOpen, setModalState] = React.useState(false);
   const [activeClip, setActiveClip] = React.useState<Clip | null>(null);
-
+  const [begin, setBegin] = React.useState(0);
+  const [end, setEnd] = React.useState(0);
   const handleClose = () => {
     setModalState(!isModalOpen);
   };
@@ -63,6 +64,8 @@ const ReturnHTML = () => {
                 handleClose={handleClose}
                 clip={activeClip}
                 id={i}
+                begin={begin}
+                end={end}
               />
             )}
             {/* Also, i suggest you pass in the clip entirely rather than bits of it . how?*/}
