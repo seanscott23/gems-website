@@ -135,50 +135,52 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
 //trimming audioo
 
 export const submitNewClip = (
-  url: string
+  url: string,
+  begin: number,
+  end: number
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      var options = {
-        mimeType: "audio/webm",
-        headers: new Headers({
-          "Content-Type": "audio/mpeg",
-          Accept: "application/json",
-        }),
-      };
-
-      let url =
-        "https://www.buzzsprout.com/1506739/8342249-wild-parrots-and-consciousness-with-mark-bittner.mp3?blob_id=37916052";
-      const audio = new Audio(url + "#t=" + 10 + "," + 20);
-
-      // audio.crossOrigin = "use-credentials";
-      // navigator.mediaDevices
-      //   .getUserMedia({ audio: true })
-      //   .then((stream) => new MediaRecorder(stream, options))
-      //   .then((result) => {
-      //     console.log(result);
-      //   });
-      const ctx = new AudioContext();
-      const stream_dest = ctx.createMediaStreamDestination();
-      const source = ctx.createMediaElementSource(audio);
-      source.connect(stream_dest);
-      const stream = stream_dest.stream;
-      let mediaRecorder = new MediaRecorder(stream, options);
-
-      let chunks: any = [];
-      var blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
-
-      var audioURL = URL.createObjectURL(blob);
-      audio.src = audioURL;
-      mediaRecorder.ondataavailable = (e) => {
-        chunks.push(e.data);
-      };
-
     } catch (err) {
       console.log(err);
     }
   };
 };
+// var options = {
+//   mimeType: "audio/webm",
+//   headers: new Headers({
+//     "Content-Type": "audio/mpeg",
+//     Accept: "application/json",
+//   }),
+// };
+
+// let url =
+//   "https://www.buzzsprout.com/1506739/8342249-wild-parrots-and-consciousness-with-mark-bittner.mp3?blob_id=37916052";
+// const audio = new Audio(url + "#t=" + 10 + "," + 20);
+
+// // audio.crossOrigin = "use-credentials";
+// // navigator.mediaDevices
+// //   .getUserMedia({ audio: true })
+// //   .then((stream) => new MediaRecorder(stream, options))
+// //   .then((result) => {
+// //     console.log(result);
+// //   });
+// const ctx = new AudioContext();
+// const stream_dest = ctx.createMediaStreamDestination();
+// const source = ctx.createMediaElementSource(audio);
+// source.connect(stream_dest);
+// const stream = stream_dest.stream;
+// let mediaRecorder = new MediaRecorder(stream, options);
+
+// let chunks: any = [];
+// var blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
+
+// var audioURL = URL.createObjectURL(blob);
+// audio.src = audioURL;
+// mediaRecorder.ondataavailable = (e) => {
+//   chunks.push(e.data);
+// };
+
 // const mp3cutter = require("mp3-cutter");
 // const getMyMp3Cut = (blob: Blob) => {
 //   let cutter = new mp3cutter();

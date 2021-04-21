@@ -39,7 +39,7 @@ const AudioModalRipper: FC<ModalProps> = ({
   ) => {
     e.preventDefault();
     setLoading(true);
-    await dispatch(submitNewClip(clip.enclosure.url));
+    await dispatch(submitNewClip(clip.enclosure.url), begin, end);
     setLoading(false);
     // history.push("/library");
   };
