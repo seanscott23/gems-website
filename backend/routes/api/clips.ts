@@ -13,17 +13,17 @@ router.get("/", (req, res) => {
     .catch((err: any) => res.status(402).json(err));
 });
 
-router.post("/", upload.single("file"), (req, res) => {
+router.post("/", (req, res) => {
   const auth = req.currentUser;
   if (auth) {
     // const { isValid, errors } = validateBookingInput(req.body);
     // if (!isValid) return res.status(400).json(errors);
 
     const newClip: ClipPropsModel = new Clip({
-      ownerId: req.body.ownerId,
-      clipId: req.body.clipId,
-      title: req.body.title,
-      description: req.body.decription,
+      // ownerId: req.body.ownerId,
+      // clipId: req.body.clipId,
+      // title: req.body.title,
+      // description: req.body.decription,
       url: req.body.url,
     });
 

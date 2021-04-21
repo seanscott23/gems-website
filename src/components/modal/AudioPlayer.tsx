@@ -8,7 +8,7 @@ import { Controls } from "./AudioControls";
 
 export const AudioPlayer: React.FC<{
   url: string;
-  isOpen: boolean
+  isOpen: boolean;
 }> = ({ url, isOpen }) => {
   const [show, setShow] = React.useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -43,4 +43,3 @@ export const AudioPlayer: React.FC<{
     </div>
   ) : null;
 };
-

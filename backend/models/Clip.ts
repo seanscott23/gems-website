@@ -3,15 +3,15 @@ import { ClipPropsModel } from "../typescript/models";
 
 const ClipSchema = new mongoose.Schema<ClipPropsModel>(
   {
-    ownerId: { type: Schema.Types.ObjectId, ref: "User" },
-    title: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: false,
-    },
+    // ownerId: { type: Schema.Types.ObjectId, ref: "User" },
+    // title: {
+    //   type: String,
+    //   required: true,
+    // },
+    // description: {
+    //   type: String,
+    //   required: false,
+    // },
     url: {
       type: String,
       required: true,

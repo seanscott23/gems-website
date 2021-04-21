@@ -81,21 +81,25 @@ export const Controls: React.FC<{
     }
 
     if (leftProgressCircle[leftProgressCircle.length - 1] && audio) {
-      if(endTime > startTime){
-      setStartTime(calculateTimeStamp(audio.currentTime));
-      let leftAmountMoved = (startTime / calculateTimeStamp(audio.duration)) * 100;
-      let rightMoved = parseFloat(
-        rightProgressCircle[4].style.left.slice(0, -1)
-      );
-      let rightPercent = parseFloat(rightMoved.toFixed(2));
-      let rightMovedPct = parseFloat((100 - rightPercent).toFixed(2))
-      let leftPercent = parseFloat(leftAmountMoved.toFixed(2));
-      let widthPercent = 100 - leftPercent - rightMovedPct;
-      leftProgressCircle[leftProgressCircle.length - 1].style.left = leftPercent + "%";
-  
-      sliderBar[leftProgressCircle.length - 1].style.left = leftPercent + "%";
-      sliderBar[leftProgressCircle.length - 1].style.width = widthPercent + "%";
-    }}
+      if (endTime > startTime) {
+        setStartTime(calculateTimeStamp(audio.currentTime));
+        let leftAmountMoved =
+          (startTime / calculateTimeStamp(audio.duration)) * 100;
+        let rightMoved = parseFloat(
+          rightProgressCircle[4].style.left.slice(0, -1)
+        );
+        let rightPercent = parseFloat(rightMoved.toFixed(2));
+        let rightMovedPct = parseFloat((100 - rightPercent).toFixed(2));
+        let leftPercent = parseFloat(leftAmountMoved.toFixed(2));
+        let widthPercent = 100 - leftPercent - rightMovedPct;
+        leftProgressCircle[leftProgressCircle.length - 1].style.left =
+          leftPercent + "%";
+
+        sliderBar[leftProgressCircle.length - 1].style.left = leftPercent + "%";
+        sliderBar[leftProgressCircle.length - 1].style.width =
+          widthPercent + "%";
+      }
+    }
     checkStartStop();
   };
 
@@ -103,7 +107,11 @@ export const Controls: React.FC<{
     if (isOpen) {
       if (audio) {
         let rightPercent =
-          parseFloat(rightProgressCircle[rightProgressCircle.length - 1].style.left.slice(0, -1)) / 100;
+          parseFloat(
+            rightProgressCircle[
+              rightProgressCircle.length - 1
+            ].style.left.slice(0, -1)
+          ) / 100;
         let finalEnd = audio.duration * rightPercent;
         let endTime = calculateTimeStamp(finalEnd);
         let startTime = calculateTimeStamp(audio.currentTime);
@@ -120,7 +128,7 @@ export const Controls: React.FC<{
 
   const onMinChange = (e: number[]) => {
     setStartTime(calculateTimeStamp(e[0] * 60));
-    console.log(e[1] * 60)
+    console.log(e[1] * 60);
     setEndTime(calculateTimeStamp(e[1] * 60));
     // debugger
     if (audio) {
