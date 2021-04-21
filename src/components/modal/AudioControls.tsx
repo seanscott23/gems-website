@@ -71,7 +71,7 @@ export const Controls: React.FC<{
     setIsPlaying(!isPlaying);
     if (audio?.paused) {
       audio.play();
-      audio.muted = true;
+      // audio.muted = true;
     } else {
       audio?.pause();
     }
