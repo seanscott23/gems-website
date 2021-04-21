@@ -7,6 +7,7 @@ export const SET_FORM_SUCCESS = "SET_FORM_SUCCESS";
 export const SET_SUCCESS = "SET_SUCCESS";
 export const IS_VERIFIED = "IS_VERIFIED";
 export const SET_SIGNED_IN = "SET_SIGNED_IN";
+export const CLIP_AUDIO = "CLIP_AUDIO";
 
 export interface User {
   firstName: string;
@@ -22,7 +23,8 @@ export interface AuthState {
   error: string;
   needVerification: boolean;
   success: string;
-  rssFeedUrl: any; ///may cause issues with type any instead of object.
+  rssFeedUrl: any;
+  gemURL: any;
 }
 
 export interface SignUpData {
@@ -59,6 +61,11 @@ interface SetLoadingAction {
   payload: boolean;
 }
 
+interface SetClipAudioAction {
+  type: typeof CLIP_AUDIO;
+  payload: any;
+}
+
 interface SignOutAction {
   type: typeof SIGN_OUT;
 }
@@ -85,4 +92,5 @@ export type AuthAction =
   | SetIsVerifiedAction
   | NeedVerificationAction
   | GemFormSubmitAction
+  | SetClipAudioAction
   | SetSuccessAction;

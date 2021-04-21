@@ -9,6 +9,7 @@ import {
   SIGN_OUT,
   IS_VERIFIED,
   SET_FORM_SUCCESS,
+  CLIP_AUDIO,
 } from "../types";
 
 const initialState: AuthState = {
@@ -19,6 +20,7 @@ const initialState: AuthState = {
   needVerification: false,
   success: "",
   rssFeedUrl: {},
+  gemURL: {},
 };
 
 const authReducer = (state = initialState, action: AuthAction) => {
@@ -33,6 +35,11 @@ const authReducer = (state = initialState, action: AuthAction) => {
       return {
         ...state,
         rssFeedUrl: action.payload,
+      };
+    case CLIP_AUDIO:
+      return {
+        ...state,
+        gemURL: action.payload,
       };
     case SET_LOADING:
       return {

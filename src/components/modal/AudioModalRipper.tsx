@@ -34,9 +34,6 @@ const AudioModalRipper: FC<ModalProps> = ({
   end,
   handleTimeUpdate,
 }) => {
-  // const { user, needVerification, success } = useSelector(
-  //   (state: RootState) => state.auth
-  // );
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -45,11 +42,10 @@ const AudioModalRipper: FC<ModalProps> = ({
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.preventDefault();
-    // debugger;
     setLoading(true);
     await dispatch(submitNewClip(clip.enclosure.url, begin, end));
     setLoading(false);
-    // history.push("/library");
+    history.push("/library");
   };
 
   if (!clip) return null;

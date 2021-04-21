@@ -14,6 +14,7 @@ import {
   IS_VERIFIED,
   SET_SUCCESS,
   SET_FORM_SUCCESS,
+  CLIP_AUDIO,
   // GemFormData,
 } from "../types";
 import Parser from "rss-parser";
@@ -158,6 +159,10 @@ export const submitNewClip = (
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
+          dispatch({
+            type: CLIP_AUDIO,
+            payload: data,
+          });
         });
     } catch (err) {
       console.log(err);

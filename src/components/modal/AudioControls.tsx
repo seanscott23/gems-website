@@ -85,7 +85,6 @@ export const Controls: React.FC<{
 
     if (leftProgressCircle[leftProgressCircle.length - 1] && audio) {
       if (endTime > startTime) {
-        
         handleTimeUpdate(startTime, endTime);
         // end = endTime;
         setStartTime(calculateTimeStamp(audio.currentTime));
@@ -141,21 +140,21 @@ export const Controls: React.FC<{
       audio.currentTime = e[0] * 60;
     }
   };
-  const checkKey = (e: KeyboardEvent) => {
-    // e = e || window.event;
-    if (audio && isOpen) {
-      if (e.code == "ArrowLeft" && startTime > 0.15) {
-        // audio.currentTime = audio.currentTime + 0.15;
-        // setStartTime(audio.currentTime);
-      } else if (e.code == "ArrowRight" && startTime < endTime - 0.15) {
-        debugger;
-        audio.currentTime = audio.currentTime + 0.15 * 60;
-        // setStartTime(startTime);
-      }
-    } else if (audio) {
-      audio.pause();
-    }
-  };
+  // const checkKey = (e: KeyboardEvent) => {
+  //   // e = e || window.event;
+  //   if (audio && isOpen) {
+  //     if (e.code == "ArrowLeft" && startTime > 0.15) {
+  //       // audio.currentTime = audio.currentTime + 0.15;
+  //       // setStartTime(audio.currentTime);
+  //     } else if (e.code == "ArrowRight" && startTime < endTime - 0.15) {
+  //       debugger;
+  //       audio.currentTime = audio.currentTime + 0.15 * 60;
+  //       // setStartTime(startTime);
+  //     }
+  //   } else if (audio) {
+  //     audio.pause();
+  //   }
+  // };
 
   // document.addEventListener("keyup", (e) => checkKey(e));
 
