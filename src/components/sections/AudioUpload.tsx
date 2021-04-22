@@ -1,7 +1,6 @@
 import "../../styles/AudioUpload.css";
 import React, { useEffect, useState, DragEvent } from "react";
 import uploadPNG from "../../images/upload.png";
-import { useRef } from "react";
 import AudioFile from "./AudioFile";
 
 function AudioUpload() {
@@ -58,9 +57,9 @@ function AudioUpload() {
     freader.readAsDataURL(ev[0]);
   }
 
-//   const returnAudio = (url: string | ArrayBuffer) => {
-//     return url ? true : false;
-//   };
+  //   const returnAudio = (url: string | ArrayBuffer) => {
+  //     return url ? true : false;
+  //   };
 
   return (
     <div className="upload-box">
