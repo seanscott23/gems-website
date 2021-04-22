@@ -155,16 +155,17 @@ export const submitNewClip = (
           userID: auth.currentUser?.uid,
           token: await auth?.currentUser?.getIdToken(),
           url: url,
-          begin: begin,
-          end: end,
+          begin: begin * 60,
+          end: end * 60,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
+          let url = data.trimmed_audio_url;
           console.log(data);
           dispatch({
             type: CLIP_AUDIO,
-            payload: data,
+            payload: url,
           });
         });
     } catch (err) {

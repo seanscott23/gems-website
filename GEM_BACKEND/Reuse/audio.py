@@ -29,7 +29,7 @@ def post_audio(audioMeta: Audio):
     buf = BytesIO()
     section.export(buf, format="mp3")
     sendAudioToStorage(audioID, buf, audioMeta.userID, audioMeta.token)
-    json_response = jsonable_encoder({"trimmed_audio_url": get_audio(audioMeta.userID, audioID)})
+    json_response = jsonable_encoder({"trimmed_audio_url": get_audio(audioMeta.userID, audioID, audioMeta.token)})
     return json_response
 
 def sendAudioToStorage(audioID, sectionOfAudio, userID, token):
@@ -38,5 +38,5 @@ def sendAudioToStorage(audioID, sectionOfAudio, userID, token):
 
 
 @router.get("/api/receive/audio")
-def get_audio(userID, audioID):
-    return main.storage.child(userID).get_url(audioID)
+def get_audio(userID, audioID, token):
+    return main.storage.child(userID).child(audioID).get_url(token)

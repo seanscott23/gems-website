@@ -6,12 +6,14 @@ import { RootState } from "../../store";
 const GemForm = () => {
   const { gemURL } = useSelector((state: RootState) => state.auth);
   return (
-    <div>
+    <div className="gem-container">
       <h1>Upload Gem Form</h1>
+      <audio src={gemURL} controls preload="metadata"></audio>
+      <br />
       <Form.Group>
-        <audio src={gemURL}></audio>
         <Form.Control type="text" placeholder="Title" />
         <br />
+
         <Form.Control as="textarea" rows={3} placeholder="Description" />
         <br />
         <Form.Group controlId="exampleForm.ControlSelect2">
