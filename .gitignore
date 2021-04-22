@@ -18,6 +18,9 @@
 .env.test.local
 .env.production.local
 .env
+/.env
+
+GEM_BACKEND/.env
 
 npm-debug.log*
 yarn-debug.log*
