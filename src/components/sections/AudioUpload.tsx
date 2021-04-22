@@ -4,7 +4,7 @@ import uploadPNG from "../../images/upload.png"
 
 function AudioUpload() {
 
-    const [userImage, setUserImage] = useState("");
+    const [audiox, setAudiox] = useState<string | ArrayBuffer>("");
 
     function dropTargetRelease() {
         document.getElementsByClassName("signup-user-photo")[0].classList.remove("beingDraggedOver")
@@ -13,25 +13,22 @@ function AudioUpload() {
 
     const dragOverHandler = (ev: DragEvent<HTMLLabelElement>) => {
         ev.preventDefault();
-       
         document.getElementsByClassName("signup-user-photo")[0].classList.add("beingDraggedOver")
       
     }
 
     function checkIfImage(file: any) {
-        return file && file['type'].split('/')[0] === 'image';
+        return file && file['type'].split('/')[0] === 'audio';
     }
 
    const dropHandler = (ev: DragEvent<HTMLLabelElement>) => {
-       let event = ev
-      
-        event.stopPropagation();
-        event.preventDefault();
-
-        const file = event?.dataTransfer?.files[0]
+        ev.stopPropagation();
+        ev.preventDefault();
+        const file = ev?.dataTransfer?.files[0]
 
         if (checkIfImage(file)) {
-            // presentImage(file)
+           console.log(file)
+
         }else {
 
         }
@@ -39,16 +36,24 @@ function AudioUpload() {
     }
 
     function presentImage(ev: any) {
-        var reader = new FileReader();
-        var imgtag = document.getElementById("fileElem");
+        // var reader = new FileReader();
+        // var imgtag = document.getElementById("fileElem");
+        // console.log("checkmate", imgtag)
 
-        reader.onload = function(event) {
-            // imgtag.src = event?.target?.result;
-            // setUserImage(imgtag?.src)
-            // values.userImage = imgtag?.src
+        console.log(ev[0])
+        var freader = new FileReader();
+
+        freader.onload = function(e) {
+            // player.src = e.target.result;
+            if (e.target?.result != undefined) {
+                setAudiox(e.target?.result)
+                const audioPlayer = document.getElementById("audio_dropped_player")
+                console.log(audioPlayer)
+            }
+            // console.log("whhahhaha", e.target?.result)
         };
 
-        reader.readAsDataURL(ev);
+        freader.readAsDataURL(ev[0]);
     }
 
     return(
@@ -56,8 +61,11 @@ function AudioUpload() {
 
             <label htmlFor="fileElem" className="signup-user-photo"  onDrop={(ev) => dropHandler(ev)} onDragOver={ ev => dragOverHandler(ev)} onDragLeave={()=> dropTargetRelease()}> 
                 <div className="preparing-4-drag">
-                    <input type="file" name="userImage" id="fileElem" accept="audio/*"  onChange={(e) => presentImage(e?.target?.files?[0]: "")}/>
-                        <img src={userImage || uploadPNG}  width="50px" height="50px" />
+                    <input type="file" name="userImage" id="fileElem" accept="audio/*"  onChange={(e) => presentImage(e?.target?.files)}/>
+                       {!audiox ? <img src={ uploadPNG}  width="50px" height="50px" /> 
+                       : <audio id="audio_dropped_player" src={audiox as string} preload="metadata" controls >
+                            Your browser does not support the audio element.
+                        </audio> }
                         <div>
                             <p className="image-label-instruction"> Drag &amp; Drop A Gem </p>
                         </div>

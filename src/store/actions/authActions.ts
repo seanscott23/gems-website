@@ -1,4 +1,5 @@
 import { ThunkAction } from "redux-thunk";
+
 import {
   SignUpData,
   // GemFormData,
@@ -21,7 +22,7 @@ import Parser from "rss-parser";
 import fs from "fs";
 import { RootState } from "..";
 import firebase from "../../firebase/config";
-
+import admin from 'firebase-admin';
 import authReducer from "../reducers/authReducer";
 const auth = firebase.auth();
 
@@ -142,15 +143,17 @@ export const submitNewClip = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      await fetch("http://localhost:8000/api/deliver/song/", {
+      await fetch("http://localhost:8000/api/deliver/audio/", {
         method: "POST",
         // mode: 'no-cors',
         headers: new Headers({
           "Content-Type": "application/json",
-          Accept: "application/json",
+          "Accept": "application/json",
           "Access-Control-Allow-Origin": "*",
         }),
         body: JSON.stringify({
+          userID: auth.currentUser?.uid,
+          token: await auth?.currentUser?.getIdToken(),
           url: url,
           begin: begin,
           end: end,
