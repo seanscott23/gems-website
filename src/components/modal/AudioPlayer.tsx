@@ -28,7 +28,7 @@ export const AudioPlayer: React.FC<{
       setAudioMetaData(audioRef.current);
     }
   };
-  // debugger;
+
 
   return show ? (
     <div className="audioDiv">

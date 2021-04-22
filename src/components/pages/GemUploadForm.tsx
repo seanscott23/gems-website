@@ -3,27 +3,8 @@ import { Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
-const Modal: React.FC<{
-  item: {
-    name: string;
-  } | null;
-}> = ({ item }) => {
-  if (!item) return null;
-  return (
-    <div>
-      <h1>Modal</h1>
-      <div>{item.name}</div>
-    </div>
-  );
-};
-
-interface Item {
-  name: string;
-}
-
 const GemForm = () => {
   const { gemURL } = useSelector((state: RootState) => state.auth);
-  const items = [{ name: "hello" }, { name: "goodbye" }];
   return (
     <div>
       <h1>Upload Gem Form</h1>

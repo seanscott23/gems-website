@@ -20,7 +20,7 @@ const initialState: AuthState = {
   needVerification: false,
   success: "",
   rssFeedUrl: {},
-  gemURL: {},
+  gemURL: "",
 };
 
 const authReducer = (state = initialState, action: AuthAction) => {

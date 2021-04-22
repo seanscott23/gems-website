@@ -22,7 +22,7 @@ import Parser from "rss-parser";
 import fs from "fs";
 import { RootState } from "..";
 import firebase from "../../firebase/config";
-import admin from 'firebase-admin';
+import admin from "firebase-admin";
 import authReducer from "../reducers/authReducer";
 const auth = firebase.auth();
 
@@ -148,7 +148,7 @@ export const submitNewClip = (
         // mode: 'no-cors',
         headers: new Headers({
           "Content-Type": "application/json",
-          "Accept": "application/json",
+          Accept: "application/json",
           "Access-Control-Allow-Origin": "*",
         }),
         body: JSON.stringify({

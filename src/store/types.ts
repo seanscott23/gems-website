@@ -24,7 +24,7 @@ export interface AuthState {
   needVerification: boolean;
   success: string;
   rssFeedUrl: any;
-  gemURL: any;
+  gemURL: string;
 }
 
 export interface SignUpData {
@@ -63,7 +63,7 @@ interface SetLoadingAction {
 
 interface SetClipAudioAction {
   type: typeof CLIP_AUDIO;
-  payload: any;
+  payload: string;
 }
 
 interface SignOutAction {
