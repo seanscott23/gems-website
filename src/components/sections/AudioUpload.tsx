@@ -36,24 +36,18 @@ function AudioUpload() {
     }
 
     function presentImage(ev: any) {
-        // var reader = new FileReader();
-        // var imgtag = document.getElementById("fileElem");
-        // console.log("checkmate", imgtag)
+        var reader = new FileReader();
 
-        console.log(ev[0])
-        var freader = new FileReader();
-
-        freader.onload = function(e) {
+        reader.onload = function(e) {
             // player.src = e.target.result;
             if (e.target?.result != undefined) {
                 setAudiox(e.target?.result)
                 const audioPlayer = document.getElementById("audio_dropped_player")
                 console.log(audioPlayer)
             }
-            // console.log("whhahhaha", e.target?.result)
         };
 
-        freader.readAsDataURL(ev[0]);
+        reader.readAsDataURL(ev[0]);
     }
 
     return(
