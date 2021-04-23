@@ -3,7 +3,6 @@ import React, { useEffect, useState, DragEvent } from "react";
 import uploadPNG from "../../images/upload.png";
 import AudioFile from "./AudioFile";
 
-
 function AudioUpload() {
   const [audiox, setAudiox] = useState<string | ArrayBuffer>("");
 
@@ -31,15 +30,14 @@ function AudioUpload() {
     const file = ev?.dataTransfer?.files[0];
 
     if (checkIfImage(file)) {
-      presentAudio(file)
-    } 
+      presentAudio(file);
+    }
 
     dropTargetRelease();
   };
 
   function presentAudio(ev: any) {
-   
-    console.log("hehheh ",ev?.length)
+    console.log("hehheh ", ev?.length);
     if (ev?.length != 0) {
       var reader = new FileReader();
 
@@ -50,11 +48,10 @@ function AudioUpload() {
           console.log(audioPlayer);
         }
       };
-      const fileEvent = ev[0] == undefined ? ev : ev[0]
+      const fileEvent = ev[0] == undefined ? ev : ev[0];
       reader.readAsDataURL(fileEvent);
     }
   }
-
 
   return (
     <div className="upload-box">
@@ -74,13 +71,18 @@ function AudioUpload() {
             onChange={(e) => presentAudio(e?.target?.files)}
           />
           {!audiox ? (
-            <img src={uploadPNG} width="50px" height="50px" />
+            <div>
+              <img src={uploadPNG} width="50px" height="50px" />
+              <div>
+                <p className="image-label-instruction">
+                  {" "}
+                  Drag &amp; Drop A Gem{" "}
+                </p>
+              </div>
+            </div>
           ) : (
             <AudioFile file={audiox} />
           )}
-          <div>
-            <p className="image-label-instruction"> Drag &amp; Drop A Gem </p>
-          </div>
         </div>
 
         {/* <div className="uploading" hidden>

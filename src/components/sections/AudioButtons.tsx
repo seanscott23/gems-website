@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { submitNewClip } from "../../store/actions/authActions";
 import AudioModalRipper from "../modal/AudioModalRipper";
+import "../../styles/AudioButtons.css";
 
 interface Clip {
   title: string;
@@ -46,11 +47,7 @@ export const AudioButtons: React.FC<{
       e.preventDefault();
       setLoading(true);
       await dispatch(
-        submitNewClip(
-          audioMetaData?.src,
-          audioMetaData.currentTime,
-          audioMetaData?.duration
-        )
+        submitNewClip(audioMetaData.src, 0, audioMetaData.duration)
       );
       setLoading(false);
       history.push("/gem-form");
@@ -64,34 +61,60 @@ export const AudioButtons: React.FC<{
       return false;
     }
   };
-  debugger;
-  return getAudioTime() ? (
-    <Button className="upload-audio" onClick={submitHandler}>
-      Upload audio
-    </Button>
-  ) : (
-    <div>
-      <Button
-        className="crop-audio"
-        onClick={() => {
-          setModalState(!isModalOpen);
-        }}
-      >
-        Crop audio
-      </Button>
-      {clip ? (
-        <AudioModalRipper
-          isOpen={isModalOpen}
-          handleClose={handleClose}
-          clip={clip}
-          id={1}
-          begin={begin}
-          end={end}
-          handleTimeUpdate={handleTimeUpdate}
-        />
-      ) : null}
-    </div>
-  );
+  // debugger;
+  return audioMetaData ? (
+    getAudioTime() ? (
+      <div className="upload-ready">
+        <Button id="upload-audio" onClick={submitHandler}>
+          Upload audio
+        </Button>
+        <span className="button-or">Or</span>
+        <div>
+          <Button
+            id="crop-audio"
+            onClick={() => {
+              setModalState(!isModalOpen);
+            }}
+          >
+            Crop audio
+          </Button>
+          {clip ? (
+            <AudioModalRipper
+              isOpen={isModalOpen}
+              handleClose={handleClose}
+              clip={clip}
+              id={1}
+              begin={begin}
+              end={end}
+              handleTimeUpdate={handleTimeUpdate}
+            />
+          ) : null}
+        </div>
+      </div>
+    ) : (
+      <div>
+        <Button
+          className="crop-audio"
+          onClick={() => {
+            setModalState(!isModalOpen);
+          }}
+        >
+          Crop audio
+        </Button>
+        {clip ? (
+          <AudioModalRipper
+            isOpen={isModalOpen}
+            handleClose={handleClose}
+            clip={clip}
+            id={1}
+            begin={begin}
+            end={end}
+            handleTimeUpdate={handleTimeUpdate}
+          />
+        ) : null}
+      </div>
+    )
+  ) : null;
 };
 
 export default AudioButtons;
