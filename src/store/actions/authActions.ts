@@ -173,86 +173,46 @@ export const submitNewClip = (
     }
   };
 };
-// const mp3cutter = require("mp3-cutter");
-// const getMyMp3Cut = (blob: Blob) => {
-//   let cutter = new mp3cutter();
 
-//   cutter.cut(blob, 0, 30, function (cuttedBlob: any) {
-//     console.log("My blob has been cutted! ");
-//     console.log(cuttedBlob);
-//     return cuttedBlob;
-//   });
-// };
+//trimming file audioo
 
-// let urlthing =
-//   "https://www.buzzsprout.com/1506739/8342249-wild-parrots-and-consciousness-with-mark-bittner.mp3?blob_id=37916052";
-// fetch(urlthing)
-//   .then((response) => response.blob())
-//   .then((result) => console.log(getMyMp3Cut(result)));
-
-//  const audioContext = new AudioContext();
-//       fetch(
-//         "https://www.buzzsprout.com/1506739/8342249-wild-parrots-and-consciousness-with-mark-bittner.mp3?blob_id=37916052",
-//         {
-//           method: "GET",
-//           // mode: "no-cors",
-//           headers: new Headers({
-//             "Content-Type": "audio/mpeg",
-//             Accept: "application/json",
-//           }),
-//         }
-//       ).then((data) => {
-//         let result = data.clone().json();
-//         console.log(result);
-//         // const blob = new Blob([response.data], {
-//         //   type: "application/mp3",
-//         // });
-//       });
-//       // .then((result) => {
-//       //   console.log(result);
-//       //   console.log(audioContext);
-
-//       //   // audioContext.decodeAudioData(arrayBuffer);
-//       // });
-//       // .then((decodedAudio) => {
-//       //   audio = decodedAudio;
-//       //   console.log(audio);
-//       // });
-
-// var options = {
-//   mimeType: "audio/webm",
-//   headers: new Headers({
-//     "Content-Type": "audio/mpeg",
-//     Accept: "application/json",
-//   }),
-// };
-
-// let url =
-//   "https://www.buzzsprout.com/1506739/8342249-wild-parrots-and-consciousness-with-mark-bittner.mp3?blob_id=37916052";
-// const audio = new Audio(url + "#t=" + 10 + "," + 20);
-
-// audio.crossOrigin = "use-credentials";
-// navigator.mediaDevices
-//   .getUserMedia({ audio: true })
-//   .then((stream) => new MediaRecorder(stream, options))
-//   .then((result) => {
-//     console.log(result);
-//   });
-//       const ctx = new AudioContext();
-//       const stream_dest = ctx.createMediaStreamDestination();
-//       const source = ctx.createMediaElementSource(audio);
-//       source.connect(stream_dest);
-//       const stream = stream_dest.stream;
-//       let mediaRecorder = new MediaRecorder(stream, options);
-
-//       let chunks: any = [];
-//       var blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
-
-//       var audioURL = URL.createObjectURL(blob);
-//       audio.src = audioURL;
-//       mediaRecorder.ondataavailable = (e) => {
-//         chunks.push(e.data);
-//       };
+export const submitNewFile = (
+  file: any,
+  begin: number,
+  end: number
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      await fetch("http://localhost:8000/api/deliver/mp3/audio/", {
+        method: "POST",
+        // mode: 'no-cors',
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        }),
+        body: JSON.stringify({
+          userID: auth.currentUser?.uid,
+          token: await auth?.currentUser?.getIdToken(),
+          file_content: file,
+          begin: begin * 60,
+          end: end * 60,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          let url = data.trimmed_audio_url;
+          console.log(data);
+          dispatch({
+            type: CLIP_AUDIO,
+            payload: url,
+          });
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 //dashboard form
 export const submitGemForm = (

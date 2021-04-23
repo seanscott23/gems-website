@@ -61,7 +61,7 @@ export const AudioButtons: React.FC<{
       return false;
     }
   };
-  debugger;
+  // debugger;
   return audioMetaData ? (
     getAudioTime() ? (
       <div className="upload-ready">
