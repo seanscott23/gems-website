@@ -30,31 +30,28 @@ function AudioUpload() {
     const file = ev?.dataTransfer?.files[0];
 
     if (checkIfImage(file)) {
-      console.log(file);
-    } else {
-    }
+      presentAudio(file)
+    } 
+
     dropTargetRelease();
   };
 
-  function presentImage(ev: any) {
-    // var reader = new FileReader();
-    // var imgtag = document.getElementById("fileElem");
-    // console.log("checkmate", imgtag)
+  function presentAudio(ev: any) {
+   
+    console.log("hehheh ",ev?.length)
+    if (ev?.length != 0) {
+      var reader = new FileReader();
 
-    console.log(ev[0]);
-    var freader = new FileReader();
-
-    freader.onload = function (e) {
-      // player.src = e.target.result;
-      if (e.target?.result != undefined) {
-        setAudiox(e.target?.result);
-        const audioPlayer = document.getElementById("audio_dropped_player");
-        console.log(audioPlayer);
-      }
-      // console.log("whhahhaha", e.target?.result)
-    };
-
-    freader.readAsDataURL(ev[0]);
+      reader.onload = function (e) {
+        if (e.target?.result != undefined) {
+          setAudiox(e.target?.result);
+          const audioPlayer = document.getElementById("audio_dropped_player");
+          console.log(audioPlayer);
+        }
+      };
+      const fileEvent = ev[0] == undefined ? ev : ev[0]
+      reader.readAsDataURL(fileEvent);
+    }
   }
 
 
@@ -73,7 +70,7 @@ function AudioUpload() {
             name="userImage"
             id="fileElem"
             accept="audio/*"
-            onChange={(e) => presentImage(e?.target?.files)}
+            onChange={(e) => presentAudio(e?.target?.files)}
           />
           {!audiox ? (
             <img src={uploadPNG} width="50px" height="50px" />
