@@ -40,3 +40,9 @@ def sendAudioToStorage(audioID, sectionOfAudio, userID, token):
 @router.get("/api/receive/audio")
 def get_audio(userID, audioID, token):
     return main.storage.child(userID).child(audioID).get_url(token)
+
+
+@router.post("/api/deliver/mp3/audio/")
+def post_mp3_audio(file_content:UploadFile = File(...)):
+    sendAudioToStorage("12345", file_content.file, "12345", "34324")
+    return file_content.filename
