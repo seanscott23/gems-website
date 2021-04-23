@@ -61,7 +61,7 @@ export const AudioButtons: React.FC<{
       return false;
     }
   };
-  // debugger;
+  debugger;
   return audioMetaData ? (
     getAudioTime() ? (
       <div className="upload-ready">
@@ -94,7 +94,7 @@ export const AudioButtons: React.FC<{
     ) : (
       <div>
         <Button
-          className="crop-audio"
+          id="crop-audio"
           onClick={() => {
             setModalState(!isModalOpen);
           }}
