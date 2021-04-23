@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef } from "react";
-
+import AudioButtons from "./AudioButtons";
 export const AudioFile: React.FC<{
   file: any;
 }> = ({ file }) => {
@@ -20,16 +20,19 @@ export const AudioFile: React.FC<{
   }, [audioMetaData]);
 
   return show ? (
-    <audio
-      id="audio_dropped_player"
-      ref={audioRef}
-      onLoadedMetadata={onLoadedMetadata}
-      src={file as string}
-      preload="metadata"
-      controls
-    >
-      Your browser does not support the audio element.
-    </audio>
+    <div>
+      <audio
+        id="audio_dropped_player"
+        ref={audioRef}
+        onLoadedMetadata={onLoadedMetadata}
+        src={file as string}
+        preload="metadata"
+        controls
+      >
+        Your browser does not support the audio element.
+      </audio>
+      <AudioButtons audioMetaData={audioMetaData} />
+    </div>
   ) : null;
 };
 
