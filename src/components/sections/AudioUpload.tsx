@@ -57,9 +57,6 @@ function AudioUpload() {
     freader.readAsDataURL(ev[0]);
   }
 
-  //   const returnAudio = (url: string | ArrayBuffer) => {
-  //     return url ? true : false;
-  //   };
 
   return (
     <div className="upload-box">
