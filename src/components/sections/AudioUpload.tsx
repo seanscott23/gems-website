@@ -30,7 +30,9 @@ function AudioUpload() {
     const file = ev?.dataTransfer?.files[0];
 
     if (checkIfImage(file)) {
-      presentAudio(file);
+      presentAudio(file)
+    } else  {
+      alert("File must be audio!")
     }
 
     dropTargetRelease();
@@ -84,22 +86,7 @@ function AudioUpload() {
             <AudioFile file={audiox} />
           )}
         </div>
-
-        {/* <div className="uploading" hidden>
-                            <span> Uploading... </span>
-                        </div>
-                        <div className="success" hidden>
-                            <img className="dragdrop-image" src={upload}  width="50px" height="50px" />
-                            <div>
-                                <p className="dragdrop-message"> Successful upload! </p>
-                            </div>
-                        </div> 
-                        <div className="failure" hidden>
-                            <img className="dragdrop-image" src={upload}  width="50px" height="50px" />
-                            <div>
-                                <p className="dragdrop-message"> Failure uploading! </p>
-                            </div>
-                    </div>  */}
+ 
       </label>
     </div>
   );

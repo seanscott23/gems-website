@@ -10,6 +10,7 @@ export const Controls: React.FC<{
   end: number;
   handleTimeUpdate: (num1: number, num2: number) => void;
 }> = ({ audioMetaData, isOpen, begin, end, handleTimeUpdate }) => {
+  
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
   const audio: HTMLAudioElement | null = document.querySelector(".audioClip");
   const [startTime, setStartTime] = React.useState<number>(0);
@@ -63,6 +64,7 @@ export const Controls: React.FC<{
     if (audioMetaData?.duration != undefined && endTime == 100) {
       setEndTime(secondsToDecimal(audioMetaData.duration) as number);
     }
+
     if (audio) {
       audio.ontimeupdate = function () {
         updateProgressBar();
