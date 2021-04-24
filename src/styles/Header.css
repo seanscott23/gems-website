@@ -19,7 +19,7 @@
 
 #navbar {
   z-index: 1;
-  position: fixed;
+  position: relative;
   width: 100%;
   top: 0;
   background-color: #e8eef1 !important;
@@ -27,4 +27,12 @@
 
 .navupdate {
   float: right;
+}
+
+.navbar-collapse.show nav ~ div {
+  margin-bottom: 20%;
+}
+
+.sticky {
+  position: fixed;
 }

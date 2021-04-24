@@ -9,3 +9,9 @@ Form > .btn-primary {
 .dash-name {
   color: #1e3d58;
 }
+
+#container {
+  width: 60%;
+  margin: 5% auto;
+  height: 100%;
+}

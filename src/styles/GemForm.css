@@ -1,0 +1,37 @@
+.gem-container {
+  margin: 5% auto;
+  width: 60%;
+}
+
+.gem-container h1 {
+  color: #1e3d58;
+}
+
+.gem-container audio {
+  width: 100%;
+}
+
+.gem-container > .form-group {
+  margin-top: 2%;
+}
+
+.form-group > .gem-description {
+  background-color: #e8eef1;
+}
+
+#gem-categories {
+  background-color: #e8eef1;
+}
+
+.gem-form-button {
+  background-color: #057dcd;
+  border-color: #057dcd;
+  font-weight: 400;
+  margin-top: 10px;
+  color: white;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  line-height: 1.5;
+  font-size: 1.3rem;
+}
