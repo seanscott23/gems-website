@@ -14,29 +14,31 @@
 
 .navbar-item {
   font-size: 1.4em;
+  margin-left: 20px;
   color: #057dcd;
+}
+.dropdown-item > button {
+  width: 100%;
 }
 
 #navbar {
   z-index: 1;
-  position: relative;
-  width: 100%;
-  top: 0;
-  background-color: #e8eef1 !important;
-}
-
-.navupdate {
-  float: right;
-}
-
-.navbar-collapse.show nav ~ div {
-  margin-bottom: 20%;
-}
-
-.sticky {
   position: fixed;
-  z-index: 1;
   width: 100%;
   top: 0;
   background-color: #e8eef1 !important;
+}
+
+nav > .dropdown {
+  position: absolute;
+  right: 40px;
+  font-size: 1.5rem;
+}
+
+.nav-item > .dropdown-menu {
+  left: -50px;
+}
+
+.menu-button {
+  z-index: 1;
 }

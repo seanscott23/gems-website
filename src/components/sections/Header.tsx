@@ -20,19 +20,23 @@ const Header: FC = () => {
   // const handleScroll = () => {
   //   const nav = document.getElementById("navbar");
   //   const navItem = document.getElementsByClassName("navbar-item");
+  //   const navMenu = document.getElementsByClassName("navbar-toggler");
   //   const navScroll = document.getElementsByClassName("navbar-collapse");
+  //   const newNav = document.getElementById("newNav");
   //   const navHeight = nav?.offsetHeight;
+  //   const newNavHeight = newNav?.offsetHeight;
   //   let topDistance = Math.abs(document.body.getBoundingClientRect().top);
-  //   if (navHeight) {
-  //     if (topDistance >= navHeight) {
-  //       navItem[0].classList.add("sticky");
-  //       nav?.classList.add("sticky");
-  //       navScroll[0].classList.add("sticky");
-  //     } else {
-  //       navItem[0].classList.remove("sticky");
-  //       nav?.classList.remove("sticky");
-  //       navScroll[0].classList.remove("sticky");
-  //     }
+
+  //   if (navHeight && topDistance >= navHeight) {
+  //     navItem[0].classList.add("sticky");
+  //     navMenu[0].classList.add("menu-button");
+  //     nav?.setAttribute("id", "newNav");
+  //     navScroll[0].classList.add("sticky");
+  //   } else if (newNavHeight && topDistance < newNavHeight) {
+  //     navItem[0].classList.remove("sticky");
+  //     navMenu[0].classList.remove("menu-button");
+  //     newNav?.setAttribute("id", "navbar");
+  //     navScroll[0].classList.remove("sticky");
   //   }
   // };
   // window.addEventListener("scroll", handleScroll);
@@ -43,40 +47,49 @@ const Header: FC = () => {
           Gems
         </Link>
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto navupdate">
-          {!authenticated ? (
-            <div className="loggedOut-buttons">
+      <NavDropdown title="Menu" id="nav-dropdown">
+        {!authenticated ? (
+          <div className="loggedOut-buttons">
+            <NavDropdown.Item eventKey="4.1">
+              {" "}
               <Button
                 onClick={() => history.push("/signup")}
                 className="is-primary"
               >
                 Sign up
               </Button>
+            </NavDropdown.Item>
+            <NavDropdown.Item eventKey="4.2">
               <Button onClick={() => history.push("/signin")}>Sign in</Button>
-            </div>
-          ) : (
-            <div className="loggedIn-buttons">
+            </NavDropdown.Item>
+          </div>
+        ) : (
+          <div className="loggedIn-buttons">
+            <NavDropdown.Item eventKey="4.1">
               <Button
                 variant="primary"
                 onClick={() => history.push("/dashboard")}
               >
                 Upload Gem
               </Button>
+            </NavDropdown.Item>
+            <NavDropdown.Item eventKey="4.2">
               <Button
                 variant="primary"
                 onClick={() => history.push("/library")}
               >
                 Library
               </Button>
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item eventKey="4.3">
               <Button variant="secondary" onClick={logoutClickHandler}>
                 Sign out
               </Button>
-            </div>
-          )}
-        </Nav>
-      </Navbar.Collapse>
+            </NavDropdown.Item>
+          </div>
+        )}
+      </NavDropdown>
     </Navbar>
   );
 };
