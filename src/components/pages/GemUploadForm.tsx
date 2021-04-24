@@ -1,13 +1,27 @@
 import React from "react";
+import { useState } from "react";
 import { Form } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import "../../styles/GemForm.css";
+// import { setLoading, submitFinalGem } from "../../store/actions/authActions";
 import Button from "../UI/Button";
+import { useHistory } from "react-router-dom";
 const GemForm = () => {
   const { gemURL } = useSelector((state: RootState) => state.auth);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  const submitFinalGem = () => {};
+  const submitHandler = async (
+    e: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    setLoading(true);
+    // await dispatch(submitFinalGem());
+    setLoading(false);
+    // history.push("/library");
+  };
 
   return (
     <div className="gem-container">
@@ -42,7 +56,7 @@ const GemForm = () => {
         />
         <Button
           className="gem-form-button"
-          onClick={submitFinalGem}
+          onClick={(e) => submitHandler(e)}
           text="Submit Gem"
         />
       </Form.Group>
