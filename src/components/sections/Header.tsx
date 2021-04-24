@@ -17,11 +17,25 @@ const Header: FC = () => {
     dispatch(signout());
   };
 
-
-  // const libraryClickHandler = () => {
-  //   dispatch(goToLibrary());
+  // const handleScroll = () => {
+  //   const nav = document.getElementById("navbar");
+  //   const navItem = document.getElementsByClassName("navbar-item");
+  //   const navScroll = document.getElementsByClassName("navbar-collapse");
+  //   const navHeight = nav?.offsetHeight;
+  //   let topDistance = Math.abs(document.body.getBoundingClientRect().top);
+  //   if (navHeight) {
+  //     if (topDistance >= navHeight) {
+  //       navItem[0].classList.add("sticky");
+  //       nav?.classList.add("sticky");
+  //       navScroll[0].classList.add("sticky");
+  //     } else {
+  //       navItem[0].classList.remove("sticky");
+  //       nav?.classList.remove("sticky");
+  //       navScroll[0].classList.remove("sticky");
+  //     }
+  //   }
   // };
-
+  // window.addEventListener("scroll", handleScroll);
   return (
     <Navbar bg="light" expand="lg" id="navbar">
       <Navbar.Brand>
@@ -29,7 +43,7 @@ const Header: FC = () => {
           Gems
         </Link>
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav"  />
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto navupdate">
           {!authenticated ? (
