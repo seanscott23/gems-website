@@ -2,7 +2,6 @@ import { ThunkAction } from "redux-thunk";
 
 import {
   SignUpData,
-  // GemFormData,
   AuthAction,
   SET_USER,
   User,
@@ -16,7 +15,6 @@ import {
   SET_SUCCESS,
   SET_FORM_SUCCESS,
   CLIP_AUDIO,
-  // GemFormData,
 } from "../types";
 import Parser from "rss-parser";
 import fs from "fs";
