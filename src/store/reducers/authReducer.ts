@@ -10,6 +10,7 @@ import {
   IS_VERIFIED,
   SET_FORM_SUCCESS,
   CLIP_AUDIO,
+  SET_FINAL_GEM,
 } from "../types";
 
 const initialState: AuthState = {
@@ -21,6 +22,7 @@ const initialState: AuthState = {
   success: "",
   rssFeedUrl: {},
   gemURL: "",
+  FinalGem: {}
 };
 
 const authReducer = (state = initialState, action: AuthAction) => {
@@ -40,6 +42,11 @@ const authReducer = (state = initialState, action: AuthAction) => {
       return {
         ...state,
         gemURL: action.payload,
+      };
+    case SET_FINAL_GEM:
+      return {
+        ...state,
+        FinalGem: action.payload,
       };
     case SET_LOADING:
       return {

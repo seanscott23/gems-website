@@ -17,29 +17,7 @@ const Header: FC = () => {
     dispatch(signout());
   };
 
-  // const handleScroll = () => {
-  //   const nav = document.getElementById("navbar");
-  //   const navItem = document.getElementsByClassName("navbar-item");
-  //   const navMenu = document.getElementsByClassName("navbar-toggler");
-  //   const navScroll = document.getElementsByClassName("navbar-collapse");
-  //   const newNav = document.getElementById("newNav");
-  //   const navHeight = nav?.offsetHeight;
-  //   const newNavHeight = newNav?.offsetHeight;
-  //   let topDistance = Math.abs(document.body.getBoundingClientRect().top);
 
-  //   if (navHeight && topDistance >= navHeight) {
-  //     navItem[0].classList.add("sticky");
-  //     navMenu[0].classList.add("menu-button");
-  //     nav?.setAttribute("id", "newNav");
-  //     navScroll[0].classList.add("sticky");
-  //   } else if (newNavHeight && topDistance < newNavHeight) {
-  //     navItem[0].classList.remove("sticky");
-  //     navMenu[0].classList.remove("menu-button");
-  //     newNav?.setAttribute("id", "navbar");
-  //     navScroll[0].classList.remove("sticky");
-  //   }
-  // };
-  // window.addEventListener("scroll", handleScroll);
   return (
     <Navbar bg="light" expand="lg" id="navbar">
       <Navbar.Brand>

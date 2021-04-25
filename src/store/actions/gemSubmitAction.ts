@@ -1,5 +1,5 @@
 import { ThunkAction } from "redux-thunk";
-import { AuthAction, CLIP_AUDIO, SET_ERROR, SET_FORM_SUCCESS } from "../types";
+import { AuthAction, SET_ERROR, FinalGem, SET_FINAL_GEM } from "../types";
 import { RootState } from "..";
 import firebase from "../../firebase/config";
 import admin from "firebase-admin";
@@ -10,16 +10,24 @@ const auth = firebase.auth();
 
 //submit final gem with form
 export const submitFinalGem = (
-  data: string,
-  successMsg: string
+  audioURL: string,
+  title: string,
+  description: string,
+  categories: Array<string>,
+  explicit: boolean
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      const RssParser = new Parser();
-      const feed = await RssParser.parseURL(data);
+      const gem = {
+        audioURL,
+        title,
+        description,
+        categories,
+        explicit,
+      } as FinalGem;
       dispatch({
-        type: SET_FORM_SUCCESS,
-        payload: feed,
+        type: SET_FINAL_GEM,
+        payload: gem,
       });
     } catch (err) {
       console.log(err);

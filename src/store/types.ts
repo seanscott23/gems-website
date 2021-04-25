@@ -8,6 +8,7 @@ export const SET_SUCCESS = "SET_SUCCESS";
 export const IS_VERIFIED = "IS_VERIFIED";
 export const SET_SIGNED_IN = "SET_SIGNED_IN";
 export const CLIP_AUDIO = "CLIP_AUDIO";
+export const SET_FINAL_GEM = "SET_FINAL_GEM";
 
 export interface User {
   firstName: string;
@@ -25,6 +26,7 @@ export interface AuthState {
   success: string;
   rssFeedUrl: any;
   gemURL: string;
+  FinalGem: object;
 }
 
 export interface SignUpData {
@@ -33,7 +35,13 @@ export interface SignUpData {
   password: string;
 }
 
-// export interface GemFormData {}
+export interface FinalGem {
+  audioURL: string;
+  title: string;
+  description: string;
+  categories: Array<string>;
+  explicit: boolean;
+}
 
 export interface SignInData {
   email: string;
@@ -49,6 +57,11 @@ interface GemFormSubmitAction {
 interface SetUserAction {
   type: typeof SET_USER;
   payload: User;
+}
+
+interface SubmitFinalGem {
+  type: typeof SET_FINAL_GEM;
+  payload: FinalGem;
 }
 
 interface SetIsVerifiedAction {
@@ -86,6 +99,7 @@ interface SetSuccessAction {
 
 export type AuthAction =
   | SetUserAction
+  | SubmitFinalGem
   | SetLoadingAction
   | SignOutAction
   | SetErrorAction

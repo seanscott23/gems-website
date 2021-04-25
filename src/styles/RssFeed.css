@@ -2,11 +2,6 @@
   width: 70%;
   margin: 0 auto;
 }
-/* 
-#needToBeTrimmed,
-#readyToUpload {
-  width: 50%;
-} */
 
 .show {
   visibility: visible;
@@ -19,3 +14,12 @@
 .form-group > input {
   background-color: #e8eef1;
 }
+
+.rss-container {
+  margin: 10% auto;
+  width: 60%;
+}
+/* 
+body {
+  height: 100%;
+} */

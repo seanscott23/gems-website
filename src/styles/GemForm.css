@@ -4,7 +4,7 @@
 }
 
 .gem-container h1 {
-  color: #1e3d58;
+  color: #057dcd;
 }
 
 .gem-container audio {
@@ -17,6 +17,10 @@
 
 .form-group > .gem-description {
   background-color: #e8eef1;
+}
+
+audio:focus {
+  outline: none;
 }
 
 #gem-categories {
