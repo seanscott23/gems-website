@@ -75,7 +75,7 @@ const SignUp: FC = () => {
         {/* </div> */}
       </Card>
       <div className="homeLink">
-        <span>New to Gems?</span> <Link to={"/signin"}>Sign in</Link>
+        <span>Already have a login?</span> <Link to={"/signin"}>Sign in</Link>
       </div>
     </div>
   );
