@@ -39,7 +39,6 @@ function AudioUpload() {
   };
 
   function presentAudio(ev: any) {
-    console.log("hehheh ", ev?.length);
     if (ev?.length != 0) {
       var reader = new FileReader();
 
@@ -47,7 +46,6 @@ function AudioUpload() {
         if (e.target?.result != undefined) {
           setAudiox(e.target?.result);
           const audioPlayer = document.getElementById("audio_dropped_player");
-          console.log(audioPlayer);
         }
       };
       const fileEvent = ev[0] == undefined ? ev : ev[0];
