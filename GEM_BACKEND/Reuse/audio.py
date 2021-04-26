@@ -44,11 +44,8 @@ def get_audio(userID, audioID, token):
 
 
 @router.post("/api/deliver/mp3/audio/")
-async def post_mp3_audio(data:str = Form(...), file:UploadFile = Form(..., media_type='audio/*')):
-    print(file.decode('ascii'))
-    sendAudioToStorage("1234", file.file ,"hehehe", "crazy")
+async def post_mp3_audio(file:UploadFile = Form(...)):
+    # userID:str = Form(...), token:str = Form(...),
+    print(file.file)
+    sendAudioToStorage("2344", file.file.read(), "43", "454")
     return {"trimmed_audio_url": "hitting harder"}
-
-
-def get_gems_by_user(userID):
-    return main.database.child(userID)
