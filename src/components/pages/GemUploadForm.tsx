@@ -27,12 +27,12 @@ const GemForm: FC = () => {
       submitFinalGem(gemURL, title, description, categories, isChecked)
     );
     setLoading(false);
-    // history.push("/library");
+    history.push("/library");
   };
 
   const getCategories = (e: React.ChangeEvent) => {
     let target: any = e.currentTarget;
-    let array = target.value.selectedOptions;
+    let array = target.selectedOptions;
     let newArray = [];
     for (let i = 0; i < array.length; i++) {
       newArray.push(array[i].value);

@@ -34,7 +34,7 @@
   border: 0;
   margin-left: 23px;
   line-height: 1.4;
-  color: blue;
+  color: #057dcd;
   width: 100%;
   text-align: center;
   outline: 0;
@@ -43,6 +43,11 @@
   background-color: white;
   cursor: pointer;
   max-width: 50px;
+}
+
+#modal-footer > .btn-primary {
+  background-color: #057dcd;
+  border-color: #057dcd;
 }
 
 .start-end-time {

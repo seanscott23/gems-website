@@ -15,6 +15,7 @@ import {
   SET_SUCCESS,
   SET_FORM_SUCCESS,
   CLIP_AUDIO,
+  SET_USER_GEMS,
 } from "../types";
 import Parser from "rss-parser";
 import fs from "fs";
@@ -39,6 +40,7 @@ export const signup = (
           firstName: data.firstName,
           id: res.user.uid,
           createdAt: Date.now(),
+          gems: [],
         };
         console.log(userData);
         await firebase
@@ -132,23 +134,6 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
   };
 };
 
-//library page
-
-export const getUserGems = (): ThunkAction<
-  void,
-  RootState,
-  null,
-  AuthAction
-> => {
-  return async (dispatch) => {
-    try {
-    } catch (err) {
-      console.log(err);
-      dispatch(setLoading(false));
-    }
-  };
-};
-
 //trimming audioo
 
 export const submitNewClip = (
@@ -185,6 +170,31 @@ export const submitNewClip = (
         });
     } catch (err) {
       console.log(err);
+    }
+  };
+};
+
+//library page
+
+export const getUserGems = (
+  ownerId: any
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      await fetch(
+        `http://localhost:8000/api/receive/users/${ownerId}/userGems/`,
+        {
+          method: "GET",
+        }
+      ).then((response) => {
+        // dispatch({
+        //   type: SET_USER_GEMS,
+        //   payload: response,
+        // });
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch(setLoading(false));
     }
   };
 };
