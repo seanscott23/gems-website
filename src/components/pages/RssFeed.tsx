@@ -59,7 +59,7 @@ const RssFeed: FC = () => {
   };
 
   return (
-    <section className="container">
+    <section className="rss-container">
       <div className="rss-columns">
         <ListGroup id="readyToUpload" as="ul">
           {returnReadyHTML()}

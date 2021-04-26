@@ -18,10 +18,6 @@ const Header: FC = () => {
   };
 
 
-  // const libraryClickHandler = () => {
-  //   dispatch(goToLibrary());
-  // };
-
   return (
     <Navbar bg="light" expand="lg" id="navbar">
       <Navbar.Brand>
@@ -29,40 +25,49 @@ const Header: FC = () => {
           Gems
         </Link>
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav"  />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto navupdate">
-          {!authenticated ? (
-            <div className="loggedOut-buttons">
+      <NavDropdown title="Menu" id="nav-dropdown">
+        {!authenticated ? (
+          <div className="loggedOut-buttons">
+            <NavDropdown.Item eventKey="4.1">
+              {" "}
               <Button
                 onClick={() => history.push("/signup")}
                 className="is-primary"
               >
                 Sign up
               </Button>
+            </NavDropdown.Item>
+            <NavDropdown.Item eventKey="4.2">
               <Button onClick={() => history.push("/signin")}>Sign in</Button>
-            </div>
-          ) : (
-            <div className="loggedIn-buttons">
+            </NavDropdown.Item>
+          </div>
+        ) : (
+          <div className="loggedIn-buttons">
+            <NavDropdown.Item eventKey="4.1">
               <Button
                 variant="primary"
                 onClick={() => history.push("/dashboard")}
               >
                 Upload Gem
               </Button>
+            </NavDropdown.Item>
+            <NavDropdown.Item eventKey="4.2">
               <Button
                 variant="primary"
                 onClick={() => history.push("/library")}
               >
                 Library
               </Button>
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item eventKey="4.3">
               <Button variant="secondary" onClick={logoutClickHandler}>
                 Sign out
               </Button>
-            </div>
-          )}
-        </Nav>
-      </Navbar.Collapse>
+            </NavDropdown.Item>
+          </div>
+        )}
+      </NavDropdown>
     </Navbar>
   );
 };

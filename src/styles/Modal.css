@@ -7,7 +7,7 @@
 }
 #modalBody {
   padding: 0;
-  background: lightyellow;
+
   height: 3em;
 }
 
@@ -18,6 +18,7 @@
 
 #modal-footer {
   padding: 2.5em 5px 5px 0;
+  border-top: 0;
 }
 
 .player {
@@ -33,15 +34,20 @@
   border: 0;
   margin-left: 23px;
   line-height: 1.4;
-  color: blue;
+  color: #057dcd;
   width: 100%;
   text-align: center;
   outline: 0;
   padding-top: 5px;
   font-size: 2em;
-  background-color: lightyellow;
+  background-color: white;
   cursor: pointer;
   max-width: 50px;
+}
+
+#modal-footer > .btn-primary {
+  background-color: #057dcd;
+  border-color: #057dcd;
 }
 
 .start-end-time {
@@ -103,6 +109,6 @@
 
 .control-bar {
   display: flex;
-  background-color: lightyellow;
+
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }

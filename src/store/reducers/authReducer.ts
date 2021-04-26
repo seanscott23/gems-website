@@ -10,6 +10,8 @@ import {
   IS_VERIFIED,
   SET_FORM_SUCCESS,
   CLIP_AUDIO,
+  SET_FINAL_GEM,
+  SET_USER_GEMS,
 } from "../types";
 
 const initialState: AuthState = {
@@ -21,6 +23,7 @@ const initialState: AuthState = {
   success: "",
   rssFeedUrl: {},
   gemURL: "",
+  userGems: [],
 };
 
 const authReducer = (state = initialState, action: AuthAction) => {
@@ -31,6 +34,11 @@ const authReducer = (state = initialState, action: AuthAction) => {
         user: action.payload,
         authenticated: true,
       };
+    case SET_USER_GEMS:
+      return {
+        ...state,
+        userGems: action.payload,
+      };
     case SET_FORM_SUCCESS:
       return {
         ...state,
@@ -40,6 +48,11 @@ const authReducer = (state = initialState, action: AuthAction) => {
       return {
         ...state,
         gemURL: action.payload,
+      };
+    case SET_FINAL_GEM:
+      return {
+        ...state,
+        FinalGem: action.payload,
       };
     case SET_LOADING:
       return {

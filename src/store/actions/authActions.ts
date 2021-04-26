@@ -2,7 +2,6 @@ import { ThunkAction } from "redux-thunk";
 
 import {
   SignUpData,
-  // GemFormData,
   AuthAction,
   SET_USER,
   User,
@@ -16,7 +15,7 @@ import {
   SET_SUCCESS,
   SET_FORM_SUCCESS,
   CLIP_AUDIO,
-  // GemFormData,
+  SET_USER_GEMS,
 } from "../types";
 import Parser from "rss-parser";
 import fs from "fs";
@@ -41,6 +40,7 @@ export const signup = (
           firstName: data.firstName,
           id: res.user.uid,
           createdAt: Date.now(),
+          gems: [],
         };
         console.log(userData);
         await firebase
@@ -174,6 +174,31 @@ export const submitNewClip = (
   };
 };
 
+//library page
+
+export const getUserGems = (
+  ownerId: any
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      await fetch(
+        `http://localhost:8000/api/receive/users/${ownerId}/userGems/`,
+        {
+          method: "GET",
+        }
+      ).then((response) => {
+        // dispatch({
+        //   type: SET_USER_GEMS,
+        //   payload: response,
+        // });
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch(setLoading(false));
+    }
+  };
+};
+
 //trimming file audioo
 
 export const submitNewFile = (
@@ -221,7 +246,6 @@ export const submitNewFile = (
         .then((response) => response.json())
         .then((data) => {
           let url = data.trimmed_audio_url;
-          console.log(data);
           dispatch({
             type: CLIP_AUDIO,
             payload: url,

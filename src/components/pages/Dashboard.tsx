@@ -47,7 +47,7 @@ const Dashboard: FC = () => {
   };
 
   return (
-    <section className="container">
+    <section id="container">
       <div>
         {needVerification && (
           <Message type="success" msg="Please verify your email address." />
