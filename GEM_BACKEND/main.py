@@ -8,6 +8,7 @@ import config
 import pyrebase
 import pymongo
 from fastapi.middleware.cors import CORSMiddleware
+from Reuse import gems
 
 settings = config.Settings()
 app = FastAPI()
@@ -27,6 +28,7 @@ app.add_middleware(
 
 app.include_router(userinfo.router)
 app.include_router(audio.router)
+app.include_router(gems.router)
 
 firebaseConfig = {
   "apiKey": settings.API_KEY,
