@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from fastapi import APIRouter, File, UploadFile, Response
+from fastapi import APIRouter, File, UploadFile, Response, Form
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from pydub import AudioSegment
@@ -17,6 +17,7 @@ class Audio(BaseModel):
     url: str
     begin: int
     end: int
+    
 
 @router.post("/api/deliver/audio/")
 def post_audio(audioMeta: Audio):
@@ -43,10 +44,11 @@ def get_audio(userID, audioID, token):
 
 
 @router.post("/api/deliver/mp3/audio/")
-def post_mp3_audio(file_content:UploadFile = File(...)):
-    print(file_content)
-    sendAudioToStorage("12345", file_content.file, "12345", "34324")
-    return file_content.filename
+async def post_mp3_audio(data:str = Form(...), file:UploadFile = Form(..., media_type='audio/*')):
+    print(file.decode('ascii'))
+    sendAudioToStorage("1234", file.file ,"hehehe", "crazy")
+    return {"trimmed_audio_url": "hitting harder"}
 
 
-
+def get_gems_by_user(userID):
+    return main.database.child(userID)

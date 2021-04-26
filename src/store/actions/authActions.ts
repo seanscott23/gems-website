@@ -202,27 +202,46 @@ export const getUserGems = (
 //trimming file audioo
 
 export const submitNewFile = (
-  file: any,
+  file: string,
   begin: number,
   end: number
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
+
+    let encodedString = file.replace('data:audio/mpeg;base64,','')
+    console.log(encodedString)
+    let data = atob(encodedString);
+    let blob = new Blob([data],{'type':'audio/*'});
+    // console.log(data)
+    // console.log("this si the blob, ", blob)
+
+    let beginInt = begin * 60
+    let endInt = (end * 60)
+
+    const formData = new FormData()
+    formData.append("data", "checkmate")
+    formData.append("file", file)
+    // formData.append("begin", beginInt )
+    // formData.append("end", endInt)
+
     try {
       await fetch("http://localhost:8000/api/deliver/mp3/audio/", {
         method: "POST",
         // mode: 'no-cors',
-        headers: new Headers({
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        }),
-        body: JSON.stringify({
-          userID: auth.currentUser?.uid,
-          token: await auth?.currentUser?.getIdToken(),
-          file_content: file,
-          begin: begin * 60,
-          end: end * 60,
-        }),
+        // headers: new Headers({
+        //   "Content-Type": "application/json",
+        //   "Accept": "application/json",
+        //   "Access-Control-Allow-Origin": "*",
+        // }),
+        body: formData
+        
+        // JSON.stringify({
+        //   userID: auth.currentUser?.uid,
+        //   token: await auth?.currentUser?.getIdToken(),
+        //   url: blob,
+        //   begin: begin * 60,
+        //   end: end * 60,
+        // }),
       })
         .then((response) => response.json())
         .then((data) => {

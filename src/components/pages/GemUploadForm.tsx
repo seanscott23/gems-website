@@ -13,10 +13,16 @@ const GemForm: FC = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isChecked, setChecked] = useState(false);
+  const [gemID, setGemID] = useState("");
   const [categories, setCategories] = React.useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const getGemID = () => {
+    let splitURL = gemURL.split("");
+    setGemID(splitURL.join(""));
+  };
 
   const submitHandler = async (
     e: React.MouseEvent<HTMLElement, MouseEvent>
@@ -24,7 +30,7 @@ const GemForm: FC = () => {
     e.preventDefault();
     setLoading(true);
     await dispatch(
-      submitFinalGem(gemURL, title, description, categories, isChecked)
+      submitFinalGem(gemURL, title, description, categories, isChecked, gemID)
     );
     setLoading(false);
     history.push("/library");

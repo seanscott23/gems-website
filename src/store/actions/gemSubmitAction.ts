@@ -20,27 +20,38 @@ export const submitFinalGem = (
   title: string,
   description: string,
   categories: Array<any>,
-  explicit: boolean
+  explicit: boolean,
+  gemID: string
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      let gemArray = [];
       const gem = {
+        gemID,
         audioURL,
         title,
         description,
         categories,
         explicit,
       } as FinalGem;
-      gemArray.push(gem);
       dispatch({
         type: SET_FINAL_GEM,
         payload: gem,
       });
-      dispatch({
-        type: SET_USER_GEMS,
-        payload: gemArray,
-      });
+      fetch(`http://localhost:8000/api/post/gems`, {
+        method: "POST",
+        body: JSON.stringify({
+          gemID: gemID,
+          audioURL: audioURL,
+          title: title,
+          description: description,
+          categories: categories,
+          explicit: explicit,
+        }),
+      }).then((response) => {});
+      // dispatch({
+      //   type: SET_USER_GEMS,
+      //   payload: gemArray,
+      // });
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));
