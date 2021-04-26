@@ -5,17 +5,20 @@ import main
 
 router = APIRouter()
 class Gems(BaseModel):
+    gemID: str
+    # token: str
     ownerID: str
+    audioURL: str
     title: str
     description: str
-    audioUrl: str
-    isExplict: bool
-
+    categories: list
+    explicit: bool
 
 @router.post("/api/post/gems/")
-def get_gems_by_user():
-   main.database.child()
+def post_gems_(gem: Gems):
+   main.database.child("GEMS").push(gem)
+   return "GEM ADDED"
   
 @router.get("/api/get/gems/{userID}/")
-def get_gems_by_user(userID:str):
-    return main.database.child(userID)
+def get_gems_by_user(ownerID:str):
+    return main.database.child("GEMS").order_by_child("ownerID").equal_to(ownerID).get()
