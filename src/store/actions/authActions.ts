@@ -132,6 +132,23 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
   };
 };
 
+//library page
+
+export const getUserGems = (): ThunkAction<
+  void,
+  RootState,
+  null,
+  AuthAction
+> => {
+  return async (dispatch) => {
+    try {
+    } catch (err) {
+      console.log(err);
+      dispatch(setLoading(false));
+    }
+  };
+};
+
 //trimming audioo
 
 export const submitNewClip = (

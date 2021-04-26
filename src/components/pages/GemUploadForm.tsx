@@ -1,4 +1,4 @@
-import React, { FC, KeyboardEvent, ReactEventHandler } from "react";
+import React, { FC } from "react";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,6 @@ import "../../styles/GemForm.css";
 import { submitFinalGem } from "../../store/actions/gemSubmitAction";
 import Button from "../UI/Button";
 import { useHistory } from "react-router-dom";
-import { AnyARecord } from "node:dns";
 
 const GemForm: FC = () => {
   const { gemURL } = useSelector((state: RootState) => state.auth);
