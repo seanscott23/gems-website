@@ -13,7 +13,7 @@ export const submitFinalGem = (
   audioURL: string,
   title: string,
   description: string,
-  categories: Array<string>,
+  categories: Array<any>,
   explicit: boolean
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {

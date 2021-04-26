@@ -13,7 +13,6 @@ import {
   NEED_VERIFICATION,
   IS_VERIFIED,
   SET_SUCCESS,
-  
   SET_FORM_SUCCESS,
   CLIP_AUDIO,
 } from "../types";
@@ -201,7 +200,6 @@ export const submitNewFile = (
         .then((response) => response.json())
         .then((data) => {
           let url = data.trimmed_audio_url;
-          console.log(data);
           dispatch({
             type: CLIP_AUDIO,
             payload: url,
