@@ -1,5 +1,7 @@
 import React, { FC, useState, useRef } from "react";
 import AudioButtons from "./AudioButtons";
+
+
 export const AudioFile: React.FC<{
   file: any;
 }> = ({ file }) => {
@@ -25,7 +27,7 @@ export const AudioFile: React.FC<{
         id="audio_dropped_player"
         ref={audioRef}
         onLoadedMetadata={onLoadedMetadata}
-        src={file as string}
+        src={file}
         preload="metadata"
         controls
       >

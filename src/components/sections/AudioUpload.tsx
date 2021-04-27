@@ -5,7 +5,7 @@ import AudioFile from "./AudioFile";
 
 function AudioUpload() {
   const [audiox, setAudiox] = useState<string | ArrayBuffer>("");
-
+  
   function dropTargetRelease() {
     document
       .getElementsByClassName("signup-user-photo")[0]
@@ -41,14 +41,18 @@ function AudioUpload() {
   function presentAudio(ev: any) {
     if (ev?.length != 0) {
       var reader = new FileReader();
+      const fileEvent = ev[0] == undefined ? ev : ev[0];
+
+      // let blob = new Blob( [new Uint8Array(fileEvent)], {type: "audio/*" });
+      // console.log(blob);
+
 
       reader.onload = function (e) {
         if (e.target?.result != undefined) {
           setAudiox(e.target?.result);
-          const audioPlayer = document.getElementById("audio_dropped_player");
         }
       };
-      const fileEvent = ev[0] == undefined ? ev : ev[0];
+      
       reader.readAsDataURL(fileEvent);
     }
   }

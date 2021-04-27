@@ -210,19 +210,22 @@ export const submitNewFile = (
 
     let encodedString = file.replace('data:audio/mpeg;base64,','')
     console.log(encodedString)
-    let data = atob(encodedString);
-    let blob = new Blob([data],{'type':'audio/*'});
-    // console.log(data)
-    // console.log("this si the blob, ", blob)
-
-    let beginInt = begin * 60
-    let endInt = (end * 60)
-
+    
     const formData = new FormData()
-    formData.append("data", "checkmate")
-    formData.append("file", file)
-    // formData.append("begin", beginInt )
-    // formData.append("end", endInt)
+    await fetch(file)
+    .then(res => res.blob())
+    .then(blob => {
+      const mp3file = new File([blob], "simonsays",{ type: "audio/*" })
+      formData.append("file", mp3file)
+    })
+   
+    let beginInt = begin * 60
+    let endInt = end * 60
+
+    formData.append("userID", auth.currentUser?.uid as string)
+    formData.append("token", await auth?.currentUser?.getIdToken() as string)
+    formData.append("begin", beginInt.toString())
+    formData.append("end", endInt.toString())
 
     try {
       await fetch("http://localhost:8000/api/deliver/mp3/audio/", {
@@ -246,6 +249,7 @@ export const submitNewFile = (
         .then((response) => response.json())
         .then((data) => {
           let url = data.trimmed_audio_url;
+          console.log(data);
           dispatch({
             type: CLIP_AUDIO,
             payload: url,
