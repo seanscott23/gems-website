@@ -207,47 +207,33 @@ export const submitNewFile = (
   end: number
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
+    let encodedString = file.replace("data:audio/mpeg;base64,", "");
+    // console.log(encodedString)
 
-    let encodedString = file.replace('data:audio/mpeg;base64,','')
-    console.log(encodedString)
-    
-    const formData = new FormData()
+    const formData = new FormData();
     await fetch(file)
-    .then(res => res.blob())
-    .then(blob => {
-      const mp3file = new File([blob], "simonsays",{ type: "audio/*" })
-      formData.append("file", mp3file)
-    })
-   
-    let beginInt = begin * 60
-    let endInt = end * 60
+      .then((res) => res.blob())
+      .then((blob) => {
+        const mp3file = new File([blob], "simonsays", { type: "audio/*" });
+        formData.append("file", mp3file);
+      });
 
-    formData.append("userID", auth.currentUser?.uid as string)
-    formData.append("token", await auth?.currentUser?.getIdToken() as string)
-    formData.append("begin", beginInt.toString())
-    formData.append("end", endInt.toString())
+    let beginInt = begin * 60;
+    let endInt = end * 60;
+
+    formData.append("userID", auth.currentUser?.uid as string);
+    formData.append("token", (await auth?.currentUser?.getIdToken()) as string);
+    formData.append("begin", beginInt.toString());
+    formData.append("end", endInt.toString());
 
     try {
       await fetch("http://localhost:8000/api/deliver/mp3/audio/", {
         method: "POST",
-        // mode: 'no-cors',
-        // headers: new Headers({
-        //   "Content-Type": "application/json",
-        //   "Accept": "application/json",
-        //   "Access-Control-Allow-Origin": "*",
-        // }),
-        body: formData
-        
-        // JSON.stringify({
-        //   userID: auth.currentUser?.uid,
-        //   token: await auth?.currentUser?.getIdToken(),
-        //   url: blob,
-        //   begin: begin * 60,
-        //   end: end * 60,
-        // }),
+        body: formData,
       })
         .then((response) => response.json())
         .then((data) => {
+     
           let url = data.trimmed_audio_url;
           console.log(data);
           dispatch({
