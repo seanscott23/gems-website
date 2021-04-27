@@ -1,8 +1,8 @@
-import React, { FC, useState, useRef } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { submitNewClip } from "../../store/actions/authActions";
+import { submitNewFile } from "../../store/actions/authActions";
 import AudioModalRipper from "../modal/AudioModalRipper";
 import "../../styles/AudioButtons.css";
 
@@ -15,7 +15,6 @@ interface Clip {
 export const AudioButtons: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
 }> = ({ audioMetaData }) => {
-  const [show, setShow] = React.useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setModalState] = React.useState(false);
   const [begin, setBegin] = React.useState(0);
@@ -27,10 +26,7 @@ export const AudioButtons: React.FC<{
     clip = { title: "", enclosure: { url: audioMetaData.src } };
   }
 
-  React.useEffect(() => {
-    setShow(true);
-    // if(audioMetaData.duration)
-  }, [audioMetaData]);
+  React.useEffect(() => {}, [audioMetaData]);
 
   const handleTimeUpdate = (startPoint: number, endPoint: number) => {
     setBegin(startPoint);
@@ -47,7 +43,7 @@ export const AudioButtons: React.FC<{
       e.preventDefault();
       setLoading(true);
       await dispatch(
-        submitNewClip(audioMetaData.src, 0, audioMetaData.duration)
+        submitNewFile(audioMetaData.src, 0, audioMetaData.duration)
       );
       setLoading(false);
       history.push("/gem-form");
@@ -61,7 +57,7 @@ export const AudioButtons: React.FC<{
       return false;
     }
   };
-  // debugger;
+
   return audioMetaData ? (
     getAudioTime() ? (
       <div className="upload-ready">

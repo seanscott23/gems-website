@@ -38,12 +38,13 @@ export interface SignUpData {
 }
 
 export interface FinalGem {
+  gemID: string;
   audioURL: string;
   title: string;
   description: string;
   categories: Array<string>;
   explicit: boolean;
-  ownerId: number;
+  ownerId: string;
 }
 
 export interface SignInData {

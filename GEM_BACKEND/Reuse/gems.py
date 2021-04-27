@@ -6,7 +6,6 @@ import main
 router = APIRouter()
 class Gems(BaseModel):
     gemID: str
-    # token: str
     ownerID: str
     audioURL: str
     title: str

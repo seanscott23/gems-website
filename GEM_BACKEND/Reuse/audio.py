@@ -56,4 +56,5 @@ async def post_mp3_audio(file:UploadFile = Form(...), userID:str = Form(...), to
     buf = BytesIO()
     section.export(buf, format="mp3")
     sendAudioToStorage("43", buf, userID, token)
-    return {"trimmed_audio_url": get_audio(userID, "43", token)}
+    return {"trimmed_audio_url": get_audio(userID, "43", token)} 
+    #don't forget to put warning for non updated chrome browser.
