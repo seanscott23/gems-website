@@ -34,7 +34,7 @@ const GemForm: FC = () => {
       submitFinalGem(gemURL, title, description, categories, isChecked, gemID)
     );
     setLoading(false);
-    history.push("/library");
+    // history.push("/library");
   };
 
   const getCategories = (e: React.ChangeEvent) => {
