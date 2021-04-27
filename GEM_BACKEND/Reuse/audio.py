@@ -61,4 +61,4 @@ async def post_mp3_audio(file:UploadFile = Form(...), userID:str = Form(...), to
     section.export(buf, format="mp3")
     sendAudioToStorage("2344", buf, "43", "454")
 
-    return {"trimmed_audio_url": file.filename}
+    return {"trimmed_audio_url": get_audio("2344", "43", "454")}
