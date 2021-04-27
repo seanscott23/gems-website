@@ -209,8 +209,6 @@ export const submitNewFile = (
   return async (dispatch) => {
 
     let encodedString = file.replace('data:audio/mpeg;base64,','')
-    console.log(encodedString)
-    
     const formData = new FormData()
     await fetch(file)
     .then(res => res.blob())

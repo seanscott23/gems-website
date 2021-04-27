@@ -49,14 +49,10 @@ async def post_mp3_audio(file:UploadFile = Form(...), userID:str = Form(...), to
     userID = userID
     begin = float(begin) * 1000
     end = float(end) * 1000
-
-    print(type(file))
-    # print(file.file.read())
-    section = file.file
     
-    original = AudioSegment.from_file(section)
+    file_from_client = file.file
+    original = AudioSegment.from_file(file_from_client)
     section = original[begin:end]
-    print(type(section))
     buf = BytesIO()
     section.export(buf, format="mp3")
     sendAudioToStorage("43", buf, userID, token)
