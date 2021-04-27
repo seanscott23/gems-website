@@ -5,7 +5,7 @@ from fastapi.encoders import jsonable_encoder
 from pydub import AudioSegment
 import requests
 import main
-from io import BytesIO
+from io import BytesIO, StringIO
 import base64
 from Reuse.Helper import Helper
 
@@ -44,11 +44,20 @@ def get_audio(userID, audioID, token):
 
 
 @router.post("/api/deliver/mp3/audio/")
-async def post_mp3_audio(data:str = Form(...), file:UploadFile = Form(..., media_type='audio/*')):
-    print(file.decode('ascii'))
-    sendAudioToStorage("1234", file.file ,"hehehe", "crazy")
-    return {"trimmed_audio_url": "hitting harder"}
+async def post_mp3_audio(file:UploadFile = Form(...), userID:str = Form(...), token:str = Form(...), begin:str = Form(...), end:str = Form(...) ):
+    token = token
+    userID = userID
+    begin = float(begin) * 1000
+    end = float(end) * 1000
 
-
-def get_gems_by_user(userID):
-    return main.database.child(userID)
+    print(type(file))
+    # print(file.file.read())
+    section = file.file
+    
+    original = AudioSegment.from_file(section)
+    section = original[begin:end]
+    print(type(section))
+    buf = BytesIO()
+    section.export(buf, format="mp3")
+    sendAudioToStorage("43", buf, userID, token)
+    return {"trimmed_audio_url": get_audio(userID, "43", token)}
