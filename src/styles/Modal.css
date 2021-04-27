@@ -30,6 +30,10 @@
   overflow: hidden;
 }
 
+.audioError {
+  color: red;
+}
+
 .player__button {
   border: 0;
   margin-left: 23px;

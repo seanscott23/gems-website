@@ -50,7 +50,7 @@ export const submitFinalGem = (
       })
         .then((response) => response.json())
         .then((data) => {
-          debugger;
+          // debugger;
         });
       // dispatch({
       //   type: SET_USER_GEMS,
