@@ -19,9 +19,9 @@ const GemForm: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const getGemID = () => {
-    let splitURL = gemURL.split("");
-    setGemID(splitURL.join(""));
+  const getGemID = (gemURL: string) => {
+    let splitURL = gemURL.split("token=");
+    setGemID(splitURL[1]);
   };
 
   const submitHandler = async (
@@ -29,6 +29,7 @@ const GemForm: FC = () => {
   ) => {
     e.preventDefault();
     setLoading(true);
+    getGemID(gemURL);
     await dispatch(
       submitFinalGem(gemURL, title, description, categories, isChecked, gemID)
     );

@@ -207,9 +207,6 @@ export const submitNewFile = (
   end: number
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
-    let encodedString = file.replace("data:audio/mpeg;base64,", "");
-    // console.log(encodedString)
-
     const formData = new FormData();
     await fetch(file)
       .then((res) => res.blob())
@@ -233,7 +230,6 @@ export const submitNewFile = (
       })
         .then((response) => response.json())
         .then((data) => {
-     
           let url = data.trimmed_audio_url;
           console.log(data);
           dispatch({

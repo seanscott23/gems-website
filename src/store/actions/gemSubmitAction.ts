@@ -47,7 +47,11 @@ export const submitFinalGem = (
           categories: categories,
           explicit: explicit,
         }),
-      }).then((response) => {});
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          debugger;
+        });
       // dispatch({
       //   type: SET_USER_GEMS,
       //   payload: gemArray,

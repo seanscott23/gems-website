@@ -10,7 +10,6 @@ export const Controls: React.FC<{
   end: number;
   handleTimeUpdate: (num1: number, num2: number) => void;
 }> = ({ audioMetaData, isOpen, begin, end, handleTimeUpdate }) => {
-  
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
   const audio: HTMLAudioElement | null = document.querySelector(".audioClip");
   const [startTime, setStartTime] = React.useState<number>(0);
@@ -64,6 +63,7 @@ export const Controls: React.FC<{
     if (audioMetaData?.duration != undefined && endTime == 100) {
       setEndTime(secondsToDecimal(audioMetaData.duration) as number);
     }
+    handleTimeUpdate(startTime, endTime);
 
     if (audio) {
       audio.ontimeupdate = function () {
@@ -92,6 +92,7 @@ export const Controls: React.FC<{
 
     if (leftProgressCircle[leftProgressCircle.length - 1] && audio) {
       if (endTime > startTime) {
+        // debugger;
         handleTimeUpdate(startTime, endTime);
         setStartTime(secondsToDecimal(audio.currentTime));
         let leftAmountMoved =
@@ -183,7 +184,7 @@ export const Controls: React.FC<{
   // };
 
   // document.addEventListener("keyup", (e) => checkKey(e));
-  // console.log(startTime);
+
   return audioMetaData ? (
     <div className="player__controls">
       <div id="rc-sliderDiv">
