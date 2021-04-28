@@ -6,6 +6,8 @@ import { RootState } from "../../store";
 const Library: FC = () => {
   const { userGems, user } = useSelector((state: RootState) => state.auth);
 
+
+
   return (
     <section className="section">
       <h1>Library Page!</h1>

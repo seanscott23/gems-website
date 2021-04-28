@@ -25,18 +25,7 @@ export const submitFinalGem = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      // const gem = {
-      //   gemID,
-      //   audioURL,
-      //   title,
-      //   description,
-      //   categories,
-      //   explicit,
-      // } as FinalGem;
-      // dispatch({
-      //   type: SET_FINAL_GEM,
-      //   payload: gem,
-      // });
+      console.log(await auth.currentUser?.getIdToken())
       fetch('http://localhost:8000/api/post/gems', {
         method: "POST",
         body: JSON.stringify({
