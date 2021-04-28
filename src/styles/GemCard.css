@@ -1,0 +1,13 @@
+.explicitCard {
+  float: right;
+}
+
+.cardAudio {
+  width: 100%;
+}
+
+.card-footer > button {
+  margin: 10px;
+  width: 150px;
+  float: right;
+}
