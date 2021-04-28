@@ -95,3 +95,37 @@ export const getUserGems = (): ThunkAction<
     }
   };
 };
+
+export const updateGemAction = (
+  audioURL: string,
+  title: string,
+  description: string,
+  categories: Array<any>,
+  explicit: boolean,
+  gemID: string
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      await fetch("http://localhost:8000/api/update/gem/", {
+        method: "PUT",
+        body: JSON.stringify({
+          ownerID: auth.currentUser?.uid,
+          token: await auth.currentUser?.getIdToken(),
+          gemID: gemID,
+          audioURL: audioURL,
+          title: title,
+          description: description,
+          categories: categories,
+          explicit: explicit,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          getUserGems();
+        });
+    } catch (err) {
+      console.log(err);
+      dispatch(setError(err.message));
+    }
+  };
+};

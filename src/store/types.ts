@@ -42,7 +42,7 @@ export interface FinalGem {
   audioURL: string;
   title: string;
   description: string;
-  categories: Array<string>;
+  categories: Array<any>;
   explicit: boolean;
   ownerId: string;
 }
