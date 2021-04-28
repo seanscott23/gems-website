@@ -1,6 +1,11 @@
 import React, { FC, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "../../styles/DeleteModal.css";
+import {
+  deleteGemAction,
+  getUserGems,
+} from "../../store/actions/gemSubmitAction";
+import { useDispatch } from "react-redux";
 
 interface Gem {
   gemID: string;
@@ -21,11 +26,14 @@ interface ModalProps {
 
 const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
   const [loading, setLoading] = useState(false);
-  const deleteHandler = (e: React.MouseEvent) => {
+  const dispatch = useDispatch();
+
+  const deleteHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
-    setLoading(true);
-    // dispatch(deleteGemAction())
-    setLoading(false);
+    await dispatch(deleteGemAction(gem.gemID));
+
+    await dispatch(getUserGems());
+    handleClose();
   };
 
   if (!gem) return null;

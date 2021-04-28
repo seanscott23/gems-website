@@ -118,11 +118,30 @@ export const updateGemAction = (
           categories: categories,
           explicit: explicit,
         }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          getUserGems();
-        });
+      });
+      // .then((response) => response.json())
+      // .then((data) => {
+
+      // });
+    } catch (err) {
+      console.log(err);
+      dispatch(setError(err.message));
+    }
+  };
+};
+
+export const deleteGemAction = (
+  gemID: string
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      await fetch("http://localhost:8000/api/remove/gem/", {
+        method: "DELETE",
+        body: JSON.stringify({
+          token: await auth.currentUser?.getIdToken(),
+          gemID: gemID,
+        }),
+      });
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));

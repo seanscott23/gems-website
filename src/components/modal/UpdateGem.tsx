@@ -1,8 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import "../../styles/UpdateModal.css";
-import { updateGemAction } from "../../store/actions/gemSubmitAction";
+import {
+  updateGemAction,
+  getUserGems,
+} from "../../store/actions/gemSubmitAction";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 interface Gem {
   gemID: string;
@@ -10,7 +14,7 @@ interface Gem {
     audioURL: string;
     title: string;
     description: string;
-    categories: Array<any>;
+    categories: Array<string>;
     explicit: boolean;
     ownerId: string;
   };
@@ -22,17 +26,15 @@ interface ModalProps {
 }
 
 const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
-  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState<any[]>([]);
   const [explicit, setExplicit] = useState(false);
   const dispatch = useDispatch();
 
-  const updateHandler = (e: React.MouseEvent) => {
+  const updateHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
-    setLoading(true);
-    dispatch(
+    await dispatch(
       updateGemAction(
         gem.gemInfo.audioURL,
         title,
@@ -42,7 +44,8 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
         gem.gemID
       )
     );
-    setLoading(false);
+    await dispatch(getUserGems());
+    handleClose();
   };
 
   const changeTitle = (e: React.ChangeEvent) => {
@@ -63,11 +66,12 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
   useEffect(() => {
     setTitle(gem.gemInfo.title);
     setDescription(gem.gemInfo.description);
-    setCategories(gem.gemInfo.categories[0]);
+    setCategories(gem.gemInfo.categories);
     setExplicit(gem.gemInfo.explicit);
   }, []);
 
   if (!gem) return null;
+
   return (
     <Modal
       show={isOpen}

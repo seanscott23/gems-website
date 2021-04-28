@@ -30,13 +30,15 @@ def post_gems_(gem: Gems):
 def get_gems_by_user(gem:Gems):
     array_of_user_gems = []
     all_gems = main.database.child("GEMS").get(gem.token)
-    for x in all_gems.pyres:
-        if x.item[1]["ownerID"] == gem.ownerID:
-            array_of_user_gems.append(x.item)
-    return array_of_user_gems
+    print(all_gems)
+    if type(all_gems) != "NoneType": 
+        for x in all_gems.pyres:
+            if x.item[1]["ownerID"] == gem.ownerID:
+                array_of_user_gems.append(x.item)
+        return array_of_user_gems
 
 
-@router.post("/api/remove/gem/")
+@router.delete("/api/remove/gem/")
 async def remove_gem(gem: Gems):
     main.database.child("GEMS").child(gem.gemID).remove(gem.token)
     return "Gem removed"

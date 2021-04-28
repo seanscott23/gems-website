@@ -29,7 +29,7 @@ export const GemCard: React.FC<{
   const handleUpdateClose = () => {
     setUpdateModalState(!isUpdateModalOpen);
   };
-  const updateGem = () => {};
+
   const categories = gemInfo.categories;
 
   const getCategories = categories.map((category: string) => (

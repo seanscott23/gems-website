@@ -9,9 +9,8 @@ import "../../styles/Library.css";
 
 const Library: FC = () => {
   const { userGems, user } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
 
-  React.useEffect(() => {}, [userGems]);
+  React.useEffect(() => {}, []);
 
   const getGemCard = userGems.map((gem: any) => (
     <GemCard gemID={gem[0]} gemInfo={gem[1]} />
