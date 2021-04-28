@@ -1,41 +1,30 @@
 import React, { FC } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { Container, ListGroup } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { getUserGems } from "../../store/actions/gemSubmitAction";
+import GemCard from "../sections/GemCard";
 
 const Library: FC = () => {
   const { userGems, user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
+  React.useEffect(() => {}, [userGems]);
+
+  const getGemCard = userGems.map((gem: any) => (
+    <GemCard gemID={gem[0]} gemInfo={gem[1]} />
+  ));
+
+  // debugger;
   return (
     <section className="section">
       <h1>Library Page!</h1>
-      <Container className="library-container">
-        <Row>
-          <Col>
-            {/* <Card>
-              <Card.Body>
-                <Card.Title>{FinalGem.title}</Card.Title>
-                <Card.Text>{FinalGem.description}</Card.Text>
-                <audio src={FinalGem.audioURL}></audio>
-                <Card.Subtitle className="mb-2 text-muted">
-                  {FinalGem.explicit ? "E" : null}
-                </Card.Subtitle>
-              </Card.Body>
-              <Card.Footer className="text-muted">
-                {FinalGem.categories.forEach((category: string) => {
-                  return category;
-                })}
-              </Card.Footer>
-            </Card> */}
-          </Col>
-          <Col>2 of 2</Col>
-        </Row>
-        <Row>
-          <Col>1 of 3</Col>
-          <Col>2 of 3</Col>
-          <Col>3 of 3</Col>
-        </Row>
-      </Container>
+      {/* <Container className="library-container"> */}
+      <ListGroup id="allGems" as="ul">
+        {getGemCard}
+      </ListGroup>
+      {/* </Container> */}
     </section>
   );
 };

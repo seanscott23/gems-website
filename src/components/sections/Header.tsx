@@ -7,6 +7,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { RootState } from "../../store";
 import { signout } from "../../store/actions/authActions";
 import "../../styles/Header.css";
+import { getUserGems } from "../../store/actions/gemSubmitAction";
 
 const Header: FC = () => {
   const history = useHistory();
@@ -17,6 +18,13 @@ const Header: FC = () => {
     dispatch(signout());
   };
 
+  const libraryHandler = async (
+    e: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    await dispatch(getUserGems());
+    history.push("/library");
+  };
 
   return (
     <Navbar bg="light" expand="lg" id="navbar">
@@ -52,10 +60,7 @@ const Header: FC = () => {
               </Button>
             </NavDropdown.Item>
             <NavDropdown.Item eventKey="4.2">
-              <Button
-                variant="primary"
-                onClick={() => history.push("/library")}
-              >
+              <Button variant="primary" onClick={(e) => libraryHandler(e)}>
                 Library
               </Button>
             </NavDropdown.Item>

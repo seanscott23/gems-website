@@ -102,9 +102,6 @@ const AudioModalRipper: FC<ModalProps> = ({
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        {/* <Button variant="primary">
-          {loading ? "Loading..." : "Crop Audio"}
-        </Button> */}
         <Button variant="primary" onClick={(e) => submitHandler(e)}>
           {loading ? (
             <Spinner

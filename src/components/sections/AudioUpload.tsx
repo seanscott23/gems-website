@@ -42,9 +42,7 @@ function AudioUpload() {
     if (ev?.length != 0) {
       var reader = new FileReader();
       const fileEvent = ev[0] == undefined ? ev : ev[0];
-      // let blob = new Blob( [new Uint8Array(fileEvent)], {type: "audio/*" });
-      // console.log(blob);
-
+      
       reader.onload = function (e) {
         if (e.target?.result != undefined) {
           setAudiox(e.target?.result);

@@ -25,21 +25,11 @@ export const submitFinalGem = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      const gem = {
-        gemID,
-        audioURL,
-        title,
-        description,
-        categories,
-        explicit,
-      } as FinalGem;
-      dispatch({
-        type: SET_FINAL_GEM,
-        payload: gem,
-      });
-      fetch(`http://localhost:8000/api/post/gems`, {
+      fetch("http://localhost:8000/api/post/gems", {
         method: "POST",
         body: JSON.stringify({
+          ownerID: auth.currentUser?.uid,
+          token: await auth.currentUser?.getIdToken(),
           gemID: gemID,
           audioURL: audioURL,
           title: title,
@@ -50,12 +40,9 @@ export const submitFinalGem = (
       })
         .then((response) => response.json())
         .then((data) => {
-          // debugger;
+          console.log(data);
+          getUserGems();
         });
-      // dispatch({
-      //   type: SET_USER_GEMS,
-      //   payload: gemArray,
-      // });
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));
@@ -71,5 +58,40 @@ export const setError = (
       type: SET_ERROR,
       payload: msg,
     });
+  };
+};
+
+export const getUserGems = (): ThunkAction<
+  void,
+  RootState,
+  null,
+  AuthAction
+> => {
+  return async (dispatch) => {
+    try {
+      await fetch("http://localhost:8000/api/get/gems/", {
+        method: "POST",
+        body: JSON.stringify({
+          ownerID: auth.currentUser?.uid,
+          token: await auth.currentUser?.getIdToken(),
+          gemID: "",
+          audioURL: "",
+          title: "",
+          description: "",
+          categories: [],
+          explicit: false,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          dispatch({
+            type: SET_USER_GEMS,
+            payload: data,
+          });
+        });
+    } catch (err) {
+      console.log(err);
+      dispatch(setError(err.message));
+    }
   };
 };
