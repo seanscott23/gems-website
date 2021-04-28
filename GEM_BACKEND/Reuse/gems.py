@@ -42,7 +42,7 @@ async def remove_gem(gem: Gems):
     return "Gem removed"
 
 @router.put("/api/update/gem/")
-async def remove_gem(gem: Gems):
+async def update_gem(gem: Gems):
     updated_gem = main.database.child("GEMS").child(gem.gemID).update({
         "ownerID": gem.ownerID,
         "audioURL": gem.audioURL,
