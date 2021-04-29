@@ -26,17 +26,21 @@ def post_gems_(gem: Gems):
     }, gem.token)
     return "GEM ADDED"
   
-@router.get("/api/get/gems/")
+@router.post("/api/get/gems/")
 def get_gems_by_user(gem:Gems):
-    array_of_user_gems = []
-    all_gems = main.database.child("GEMS").get(gem.token)
-    for x in all_gems.pyres:
-        if x.item[1]["ownerID"] == gem.ownerID:
-            array_of_user_gems.append(x.item)
-    return array_of_user_gems
+    try:
+        array_of_user_gems = []
+        all_gems = main.database.child("GEMS").get(gem.token)
+        if type(all_gems) != 'NoneType':
+            for x in all_gems.pyres:
+                if x.item[1]["ownerID"] == gem.ownerID:
+                    array_of_user_gems.append(x.item)
+            return array_of_user_gems
+    except:
+        return "Database is empty"
 
 
-@router.post("/api/remove/gem/")
+@router.delete("/api/remove/gem/")
 async def remove_gem(gem: Gems):
     main.database.child("GEMS").child(gem.gemID).remove(gem.token)
     return "Gem removed"
