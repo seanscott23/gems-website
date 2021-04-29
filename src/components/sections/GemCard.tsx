@@ -1,5 +1,7 @@
 import React from "react";
+import { useEffect } from "react";
 import { Button, Card, ListGroup } from "react-bootstrap";
+import { getUserGems } from "../../store/actions/gemSubmitAction";
 import "../../styles/GemCard.css";
 import DeleteGemModal from "../modal/DeleteGem";
 import UpdateGemModal from "../modal/UpdateGem";
@@ -26,15 +28,19 @@ export const GemCard: React.FC<{
   const handleDeleteClose = () => {
     setDeleteModalState(!isDeleteModalOpen);
   };
+
   const handleUpdateClose = () => {
     setUpdateModalState(!isUpdateModalOpen);
   };
 
   const categories = gemInfo.categories;
 
-  const getCategories = categories.map((category: string) => (
-    <div className="gemCategory">{category}</div>
-  ));
+  const getCategories =
+    categories !== undefined
+      ? categories.map((category: string) => (
+          <div className="gemCategory">{category}</div>
+        ))
+      : [];
 
   const gem = { gemID, gemInfo } as Gem;
 
@@ -70,6 +76,7 @@ export const GemCard: React.FC<{
                 setActiveClip(gem);
                 setDeleteModalState(!isDeleteModalOpen);
               }}
+              data-target={gem.gemID}
             >
               Delete
             </Button>
@@ -78,6 +85,7 @@ export const GemCard: React.FC<{
                 isOpen={isDeleteModalOpen}
                 handleClose={handleDeleteClose}
                 gem={activeClip}
+                data-target={gem.gemID}
               />
             )}
             <Button
@@ -85,6 +93,7 @@ export const GemCard: React.FC<{
                 setActiveClip(gem);
                 setUpdateModalState(!isUpdateModalOpen);
               }}
+              data-target={gem.gemID}
             >
               Edit
             </Button>
@@ -93,6 +102,7 @@ export const GemCard: React.FC<{
                 isOpen={isUpdateModalOpen}
                 handleClose={handleUpdateClose}
                 gem={activeClip}
+                data-target={gem.gemID}
               />
             )}
           </Card.Footer>

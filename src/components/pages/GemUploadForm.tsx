@@ -19,6 +19,7 @@ const GemForm: FC = () => {
   const [gemID, setGemID] = useState("");
   const [categories, setCategories] = React.useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  // const [isInvalid, setInvalid] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -33,12 +34,13 @@ const GemForm: FC = () => {
     e.preventDefault();
     setLoading(true);
     getGemID(gemURL);
-    getUserGems();
+    // getUserGems();
     await dispatch(
       submitFinalGem(gemURL, title, description, categories, isChecked, gemID)
     );
     setLoading(false);
     history.push("/library");
+    await dispatch(getUserGems());
   };
 
   const getCategories = (e: React.ChangeEvent) => {
@@ -75,6 +77,8 @@ const GemForm: FC = () => {
           Select Categories (commmand + click to select multiple)
         </Form.Label>
         <Form.Control
+          required
+          // type={isInvalid}
           as="select"
           multiple
           id="gem-categories"
@@ -86,6 +90,11 @@ const GemForm: FC = () => {
           <option>Science</option>
           <option>Music</option>
         </Form.Control>
+        {/* {isInvalid ? (
+          <Form.Control.Feedback type="invalid">
+            Please select at least one category.
+          </Form.Control.Feedback>
+        ) : null} */}
         <br />
         <Form.Check
           type="checkbox"

@@ -174,31 +174,6 @@ export const submitNewClip = (
   };
 };
 
-//library page
-
-export const getUserGems = (
-  ownerId: any
-): ThunkAction<void, RootState, null, AuthAction> => {
-  return async (dispatch) => {
-    try {
-      await fetch(
-        `http://localhost:8000/api/receive/users/${ownerId}/userGems/`,
-        {
-          method: "GET",
-        }
-      ).then((response) => {
-        // dispatch({
-        //   type: SET_USER_GEMS,
-        //   payload: response,
-        // });
-      });
-    } catch (err) {
-      console.log(err);
-      dispatch(setLoading(false));
-    }
-  };
-};
-
 //trimming file audioo
 
 export const submitNewFile = (
@@ -207,9 +182,8 @@ export const submitNewFile = (
   end: number
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
-    
-    let encodedString = file.replace('data:audio/mpeg;base64,','')
-    const formData = new FormData()
+    let encodedString = file.replace("data:audio/mpeg;base64,", "");
+    const formData = new FormData();
     await fetch(file)
       .then((res) => res.blob())
       .then((blob) => {
@@ -233,7 +207,7 @@ export const submitNewFile = (
         .then((response) => response.json())
         .then((data) => {
           let url = data.trimmed_audio_url;
-          // debugger;
+
           console.log(data);
           dispatch({
             type: CLIP_AUDIO,

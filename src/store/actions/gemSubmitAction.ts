@@ -84,6 +84,7 @@ export const getUserGems = (): ThunkAction<
       })
         .then((response) => response.json())
         .then((data) => {
+          // debugger;
           dispatch({
             type: SET_USER_GEMS,
             payload: data,

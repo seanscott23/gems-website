@@ -44,8 +44,8 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
         gem.gemID
       )
     );
-    await dispatch(getUserGems());
     handleClose();
+    await dispatch(getUserGems());
   };
 
   const changeTitle = (e: React.ChangeEvent) => {
