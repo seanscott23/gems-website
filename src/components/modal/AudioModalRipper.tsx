@@ -1,6 +1,6 @@
 import "../../styles/AudioModalRipper.css";
 import React, { FC, useState } from "react";
-import { Button, Form, Media, Modal } from "react-bootstrap";
+import { Button, Form, Media, Modal, Spinner } from "react-bootstrap";
 import "../../styles/Modal.css";
 import { AudioPlayer } from "./AudioPlayer";
 import {
@@ -39,6 +39,7 @@ const AudioModalRipper: FC<ModalProps> = ({
   handleTimeUpdate,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [timeError, setTimeError] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -46,14 +47,22 @@ const AudioModalRipper: FC<ModalProps> = ({
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.preventDefault();
-    setLoading(true);
-    if (clip.title != "") {
-      await dispatch(submitNewClip(clip.enclosure.url, begin, end));
+    // debugger;
+    if (end - begin <= 10) {
+      if (clip.title != "") {
+        setLoading(true);
+        setTimeError(false);
+        await dispatch(submitNewClip(clip.enclosure.url, begin, end));
+      } else {
+        setLoading(true);
+        setTimeError(false);
+        await dispatch(submitNewFile(clip.enclosure.url, begin, end));
+      }
+      setLoading(false);
+      history.push("/gem-form");
     } else {
-      await dispatch(submitNewFile(clip.enclosure.url, begin, end));
+      setTimeError(true);
     }
-    setLoading(false);
-    history.push("/gem-form");
   };
 
   if (!clip) return null;
@@ -85,11 +94,26 @@ const AudioModalRipper: FC<ModalProps> = ({
         </div>
       </Modal.Body>
       <Modal.Footer id="modal-footer">
+        {timeError ? (
+          <span className="audioError">
+            Audio length must be below 10 minutes.
+          </span>
+        ) : null}
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
         <Button variant="primary" onClick={(e) => submitHandler(e)}>
-          {loading ? "Loading..." : "Crop Audio"}
+          {loading ? (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : (
+            "Crop Audio"
+          )}
         </Button>
       </Modal.Footer>
     </Modal>

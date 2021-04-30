@@ -25,8 +25,7 @@ export const submitFinalGem = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      console.log(await auth.currentUser?.getIdToken())
-      fetch('http://localhost:8000/api/post/gems', {
+      fetch("http://localhost:8000/api/post/gems", {
         method: "POST",
         body: JSON.stringify({
           ownerID: auth.currentUser?.uid,
@@ -41,13 +40,9 @@ export const submitFinalGem = (
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
-          debugger;
+          console.log(data);
+          getUserGems();
         });
-      // dispatch({
-      //   type: SET_USER_GEMS,
-      //   payload: gemArray,
-      // });
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));
@@ -63,5 +58,94 @@ export const setError = (
       type: SET_ERROR,
       payload: msg,
     });
+  };
+};
+
+export const getUserGems = (): ThunkAction<
+  void,
+  RootState,
+  null,
+  AuthAction
+> => {
+  return async (dispatch) => {
+    try {
+      await fetch("http://localhost:8000/api/get/gems/", {
+        method: "POST",
+        body: JSON.stringify({
+          ownerID: auth.currentUser?.uid,
+          token: await auth.currentUser?.getIdToken(),
+          gemID: "",
+          audioURL: "",
+          title: "",
+          description: "",
+          categories: [],
+          explicit: false,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // debugger;
+          dispatch({
+            type: SET_USER_GEMS,
+            payload: data.reverse(),
+          });
+        });
+    } catch (err) {
+      console.log(err);
+      dispatch(setError(err.message));
+    }
+  };
+};
+
+export const updateGemAction = (
+  audioURL: string,
+  title: string,
+  description: string,
+  categories: Array<any>,
+  explicit: boolean,
+  gemID: string
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      await fetch("http://localhost:8000/api/update/gem/", {
+        method: "PUT",
+        body: JSON.stringify({
+          ownerID: auth.currentUser?.uid,
+          token: await auth.currentUser?.getIdToken(),
+          gemID: gemID,
+          audioURL: audioURL,
+          title: title,
+          description: description,
+          categories: categories,
+          explicit: explicit,
+        }),
+      });
+      // .then((response) => response.json())
+      // .then((data) => {
+
+      // });
+    } catch (err) {
+      console.log(err);
+      dispatch(setError(err.message));
+    }
+  };
+};
+
+export const deleteGemAction = (
+  gemID: string
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      await fetch("http://localhost:8000/api/remove/gem/", {
+        method: "DELETE",
+        body: JSON.stringify({
+          token: await auth.currentUser?.getIdToken(),
+          gemID: gemID,
+        }),
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch(setError(err.message));
+    }
   };
 };

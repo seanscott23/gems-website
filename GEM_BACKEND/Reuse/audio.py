@@ -49,7 +49,6 @@ async def post_mp3_audio(file:UploadFile = Form(...), userID:str = Form(...), to
     userID = userID
     begin = float(begin) * 1000
     end = float(end) * 1000
-    
     file_from_client = file.file
     original = AudioSegment.from_file(file_from_client)
     section = original[begin:end]

@@ -5,7 +5,7 @@ import AudioFile from "./AudioFile";
 
 function AudioUpload() {
   const [audiox, setAudiox] = useState<string | ArrayBuffer>("");
-  
+
   function dropTargetRelease() {
     document
       .getElementsByClassName("signup-user-photo")[0]
@@ -30,9 +30,9 @@ function AudioUpload() {
     const file = ev?.dataTransfer?.files[0];
 
     if (checkIfImage(file)) {
-      presentAudio(file)
-    } else  {
-      alert("File must be audio!")
+      presentAudio(file);
+    } else {
+      alert("File must be audio!");
     }
 
     dropTargetRelease();
@@ -48,7 +48,6 @@ function AudioUpload() {
           setAudiox(e.target?.result);
         }
       };
-      
       reader.readAsDataURL(fileEvent);
     }
   }
@@ -84,7 +83,6 @@ function AudioUpload() {
             <AudioFile file={audiox} />
           )}
         </div>
- 
       </label>
     </div>
   );

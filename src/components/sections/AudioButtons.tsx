@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { submitNewFile } from "../../store/actions/authActions";
@@ -62,7 +62,17 @@ export const AudioButtons: React.FC<{
     getAudioTime() ? (
       <div className="upload-ready">
         <Button id="upload-audio" onClick={submitHandler}>
-          Upload audio
+          {loading ? (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : (
+            "Upload audio"
+          )}
         </Button>
         <span className="button-or">Or</span>
         <div>

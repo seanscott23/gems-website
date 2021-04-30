@@ -61,7 +61,7 @@ const ReturnHTML = () => {
             >
               Crop audio
             </Button>
-            {/* For the ripper, need to pass in the props its missing */}
+
             {!activeClip ? null : (
               <AudioModalRipper
                 isOpen={isModalOpen}
@@ -73,7 +73,6 @@ const ReturnHTML = () => {
                 handleTimeUpdate={handleTimeUpdate}
               />
             )}
-            {/* Also, i suggest you pass in the clip entirely rather than bits of it . how?*/}
           </Card.Body>
         </Card>
       </ListGroup.Item>
