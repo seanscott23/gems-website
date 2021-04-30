@@ -35,7 +35,7 @@ const GemForm: FC = () => {
     setLoading(true);
     getGemID(gemURL);
     dispatch(
-       submitFinalGem(
+      await submitFinalGem(
         gemURL,
         title,
         description,

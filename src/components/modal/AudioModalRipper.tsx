@@ -46,19 +46,16 @@ const AudioModalRipper: FC<ModalProps> = ({
   const submitHandler = async (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
-    e.preventDefault();
-    // debugger;
     if (end - begin <= 10) {
+      e.preventDefault();
+      setLoading(true);
+      setTimeError(false);
       if (clip.title != "") {
-        setLoading(true);
-        setTimeError(false);
         await dispatch(submitNewClip(clip.enclosure.url, begin, end));
       } else {
-        setLoading(true);
-        setTimeError(false);
         await dispatch(submitNewFile(clip.enclosure.url, begin, end));
+        setLoading(false);
       }
-      setLoading(false);
       history.push("/gem-form");
     } else {
       setTimeError(true);

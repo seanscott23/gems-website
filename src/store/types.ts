@@ -17,6 +17,7 @@ export interface User {
   id: string;
   createdAt: any;
   gems: Array<any>;
+  profilePhoto?: File | null;
 }
 
 export interface AuthState {
@@ -29,12 +30,14 @@ export interface AuthState {
   rssFeedUrl: any;
   gemURL: string;
   userGems: Array<any>;
+  profilePhoto?: File | null;
 }
 
 export interface SignUpData {
   firstName: string;
   email: string;
   password: string;
+  profilePhoto?: File | null;
 }
 
 export interface FinalGem {

@@ -41,6 +41,7 @@ export const signup = (
           id: res.user.uid,
           createdAt: Date.now(),
           gems: [],
+          profilePhoto: data.profilePhoto ? data.profilePhoto : null,
         };
         console.log(userData);
         await firebase
@@ -182,15 +183,34 @@ export const submitNewFile = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     let encodedString = file.replace("data:audio/mpeg;base64,", "");
+    // let base64 = file.split(",")[1];
     const formData = new FormData();
+    const b64toBlob = (file: string) => {
+      var byteString = atob(file.split(",")[1]);
+      var ab = new ArrayBuffer(byteString.length);
+      var ia = new Uint8Array(ab);
 
-    await fetch(file)
-      .then((res) => res.blob())
-      .then((blob) => {
-        // debugger;
-        const mp3file = new File([blob], "simonsays", { type: "audio/*" });
-        formData.append("file", mp3file);
-      });
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ab], { type: "image/jpeg" });
+    };
+    // await fetch(file, {
+    //   credentials: "same-origin",
+    //   method: "POST",
+    //   headers: new Headers({
+    //     "Content-Type": "text/plain",
+    //     Accept: "text/plain",
+    //     "Access-Control-Allow-Origin": "*",
+    //   }),
+    // })
+    let blob = b64toBlob(file);
+    // .then((res) => res.blob())
+    // .then((blob) => {
+
+    const mp3file = new File([blob], "simonsays", { type: "audio/*" });
+    formData.append("file", mp3file);
+    // });
 
     let beginInt = begin * 60;
     let endInt = end * 60;
@@ -216,6 +236,7 @@ export const submitNewFile = (
         });
     } catch (err) {
       console.log(err);
+      dispatch(setError(err.message));
     }
   };
 };
