@@ -174,8 +174,7 @@ export const submitNewClip = (
   };
 };
 
-//trimming file audioo
-
+//trimming file audio
 export const submitNewFile = (
   file: string,
   begin: number,
@@ -184,9 +183,11 @@ export const submitNewFile = (
   return async (dispatch) => {
     let encodedString = file.replace("data:audio/mpeg;base64,", "");
     const formData = new FormData();
+
     await fetch(file)
       .then((res) => res.blob())
       .then((blob) => {
+        // debugger;
         const mp3file = new File([blob], "simonsays", { type: "audio/*" });
         formData.append("file", mp3file);
       });
@@ -207,7 +208,6 @@ export const submitNewFile = (
         .then((response) => response.json())
         .then((data) => {
           let url = data.trimmed_audio_url;
-
           console.log(data);
           dispatch({
             type: CLIP_AUDIO,

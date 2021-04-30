@@ -8,24 +8,23 @@ import GemCard from "../sections/GemCard";
 import "../../styles/Library.css";
 
 const Library: FC = () => {
-  const { userGems, user } = useSelector((state: RootState) => state.auth);
+  const { userGems } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(getUserGems());
+  }, []);
 
-  React.useEffect(() => {}, [userGems]);
-
-  const getGemCard = userGems.map((gem: any) => (
-    <GemCard gemID={gem[0]} gemInfo={gem[1]} />
-  ));
-
-  // debugger;
   return (
     <section className="library-section">
-      <h1>Your gem library!</h1>
+      {/* <h1>Your gem library!</h1>
       <h6>
         This page is linked directly with your account on our app. Update or
         delete any gem within this page.
-      </h6>
+      </h6> */}
       <ListGroup id="allGems" as="ul">
-        {getGemCard}
+        {userGems.map((gem: any) => (
+          <GemCard gemID={gem[0]} gemInfo={gem[1]} />
+        ))}
       </ListGroup>
     </section>
   );

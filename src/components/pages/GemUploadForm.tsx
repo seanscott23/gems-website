@@ -34,13 +34,18 @@ const GemForm: FC = () => {
     e.preventDefault();
     setLoading(true);
     getGemID(gemURL);
-    // getUserGems();
-    await dispatch(
-      submitFinalGem(gemURL, title, description, categories, isChecked, gemID)
+    dispatch(
+       submitFinalGem(
+        gemURL,
+        title,
+        description,
+        categories,
+        isChecked,
+        gemID
+      )
     );
     setLoading(false);
     history.push("/library");
-    await dispatch(getUserGems());
   };
 
   const getCategories = (e: React.ChangeEvent) => {

@@ -42,7 +42,7 @@ export const GemCard: React.FC<{
         ))
       : [];
 
-  const gem = { gemID, gemInfo } as Gem;
+  let gem = { gemID, gemInfo } as Gem;
 
   return (
     <div>

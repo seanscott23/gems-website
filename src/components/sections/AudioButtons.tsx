@@ -42,11 +42,9 @@ export const AudioButtons: React.FC<{
     if (audioMetaData) {
       e.preventDefault();
       setLoading(true);
-      await dispatch(
-        submitNewFile(audioMetaData.src, 0, audioMetaData.duration)
-      );
+      dispatch(submitNewFile(audioMetaData.src, 0, audioMetaData.duration));
       setLoading(false);
-      history.push("/gem-form");
+      // history.push("/gem-form");
     }
   };
 

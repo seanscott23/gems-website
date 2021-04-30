@@ -1,3 +1,4 @@
+import { getUserGems } from "../actions/gemSubmitAction";
 import {
   AuthAction,
   AuthState,
@@ -34,7 +35,18 @@ const authReducer = (state = initialState, action: AuthAction) => {
         user: action.payload,
         authenticated: true,
       };
+
+    // case SET_NEW_GEM:
+    //   const newGems = Object.assign({}, state.userGems);
+    //   newGems[Object.keys(userGems)[Object.keys(userGems).length]] =
+    //     action.payload;
+    //   return {
+    //     ...state,
+    //     ...newGems
+    //   };
     case SET_USER_GEMS:
+      // const newGems = state.userGems;
+      // newGems.push(action.payload);
       return {
         ...state,
         userGems: action.payload,

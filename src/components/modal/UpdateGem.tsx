@@ -44,6 +44,7 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
         gem.gemID
       )
     );
+
     handleClose();
     await dispatch(getUserGems());
   };
@@ -68,7 +69,7 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
     setDescription(gem.gemInfo.description);
     setCategories(gem.gemInfo.categories);
     setExplicit(gem.gemInfo.explicit);
-  }, []);
+  }, [gem]);
 
   if (!gem) return null;
 

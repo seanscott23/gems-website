@@ -40,8 +40,10 @@ export const submitFinalGem = (
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-          getUserGems();
+          // dispatch({
+          //   type: "SET_NEW_GEM",
+          //   payload: data
+          // })
         });
     } catch (err) {
       console.log(err);
@@ -84,7 +86,6 @@ export const getUserGems = (): ThunkAction<
       })
         .then((response) => response.json())
         .then((data) => {
-          // debugger;
           dispatch({
             type: SET_USER_GEMS,
             payload: data,
