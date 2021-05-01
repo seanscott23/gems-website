@@ -1,11 +1,15 @@
-.signup-user-audio {
-  /* border: 1px solid #ced4da; */
-  width: 100%;
-  height: 130px;
+.upload-box-photo {
+  margin-top: 5%;
+  width: 200px;
+  position: absolute;
+  height: 200px;
   padding: 20px;
   border-radius: 0.25rem;
   background-color: #057dcd;
   font-weight: 400;
+  cursor: pointer;
+}
+.signup-user-photo {
   cursor: pointer;
 }
 
@@ -22,7 +26,7 @@
   display: none;
 }
 
-.audio-label-instruction {
+.image-label-instruction {
   margin-top: 20px;
   color: white;
 }

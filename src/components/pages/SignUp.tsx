@@ -67,7 +67,7 @@ const SignUp: FC = () => {
           </Form.Group>
           <Form.Group>
             <Form.File
-              accept=".jpg,.gif,.png"
+              accept=".jpg,.png"
               id="exampleFormControlFile1"
               label="Your gem profile image(optional)"
             />

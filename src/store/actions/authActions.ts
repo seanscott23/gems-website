@@ -41,7 +41,7 @@ export const signup = (
           id: res.user.uid,
           createdAt: Date.now(),
           gems: [],
-          profilePhoto: data.profilePhoto ? data.profilePhoto : null,
+          profilePhoto: data.profilePhoto,
         };
         console.log(userData);
         await firebase
