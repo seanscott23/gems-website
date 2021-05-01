@@ -9,9 +9,19 @@ import "../../styles/Library.css";
 
 const Library: FC = () => {
   const { userGems } = useSelector((state: RootState) => state.auth);
+
+  // const [gems, setGems] = React.useState(userGems);
   const dispatch = useDispatch();
 
+  // React.useEffect(() => {
+  //   const result = window.localStorage.getItem("all-gems");
+  //   if (result) {
+  //     setGems(JSON.parse(result));
+  //   }
+  // }, []);
+
   React.useEffect(() => {
+    // localStorage.setItem("all-gems", JSON.stringify(userGems));
     dispatch(getUserGems());
   }, [userGems]);
 

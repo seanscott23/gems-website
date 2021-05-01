@@ -53,8 +53,14 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
     let cTarget: any = e.currentTarget;
     setTitle(cTarget.value);
   };
+  useEffect(() => {
+    setTitle(gem.gemInfo.title);
+    setDescription(gem.gemInfo.description);
+    setCategories(gem.gemInfo.categories);
+    setExplicit(gem.gemInfo.explicit);
+  }, [gem]);
 
-  const getCategories = (e: React.ChangeEvent) => {
+  const getCategories = (e: React.ChangeEvent<HTMLElement>) => {
     let target: any = e.currentTarget;
     let array = target.selectedOptions;
     let newArray = [];
@@ -63,13 +69,6 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
     }
     setCategories(newArray);
   };
-
-  useEffect(() => {
-    setTitle(gem.gemInfo.title);
-    setDescription(gem.gemInfo.description);
-    setCategories(gem.gemInfo.categories);
-    setExplicit(gem.gemInfo.explicit);
-  }, [gem]);
 
   if (!gem) return null;
 
@@ -109,8 +108,8 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
               as="select"
               multiple
               id="gem-categories"
-              value={categories}
-              onChange={(e: any) => getCategories(e)}
+              // value={categories}
+              onChange={(e) => getCategories(e)}
             >
               <option>Comedy</option>
               <option>News</option>
