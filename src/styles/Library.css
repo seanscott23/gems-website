@@ -3,3 +3,7 @@
   width: 60%;
   height: 100%;
 }
+
+.library-section > h1 {
+  color: #1e3d58;
+}

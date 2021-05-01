@@ -21,7 +21,8 @@ interface Gem {
 export const GemCard: React.FC<{
   gemID: string;
   gemInfo: any;
-}> = ({ gemID, gemInfo }) => {
+  index: number;
+}> = ({ gemID, gemInfo, index }) => {
   const [isDeleteModalOpen, setDeleteModalState] = React.useState(false);
   const [isUpdateModalOpen, setUpdateModalState] = React.useState(false);
   const [activeClip, setActiveClip] = React.useState<Gem | null>(null);
@@ -41,9 +42,8 @@ export const GemCard: React.FC<{
           <div className="gemCategory">{category}</div>
         ))
       : [];
-
+  // console.log(key);
   let gem = { gemID, gemInfo } as Gem;
-
   return (
     <div>
       <ListGroup.Item as="li">
@@ -71,6 +71,7 @@ export const GemCard: React.FC<{
             </audio>
           </Card.Body>
           <Card.Footer>
+            <div>Episode: #{index}</div>
             <Button
               onClick={() => {
                 setActiveClip(gem);

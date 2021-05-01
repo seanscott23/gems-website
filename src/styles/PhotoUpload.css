@@ -1,7 +1,10 @@
 .photo-section {
-  margin-top: 5%;
+  margin-top: 2.5%;
   position: absolute;
   margin-left: 20px;
+}
+.photo-section > h2 {
+  color: #1e3d58;
 }
 
 .upload-box-photo {

@@ -28,8 +28,10 @@ const Library: FC = () => {
     dispatch(getUserGems());
   }, [userGems]);
 
-  // const updatePhoto = () => {};
-
+  const getIndex = (index: number) => {
+    let num = userGems.length - 1;
+    return num - index;
+  };
   return (
     <div>
       <div>
@@ -43,8 +45,8 @@ const Library: FC = () => {
         </h6>
         <ListGroup id="allGems" as="ul">
           {userGems !== undefined
-            ? userGems.map((gem: any) => (
-                <GemCard gemID={gem[0]} gemInfo={gem[1]} key={gem[0]} />
+            ? userGems.map((gem: any, i: number) => (
+                <GemCard gemID={gem[0]} gemInfo={gem[1]} index={getIndex(i)} />
               ))
             : null}
         </ListGroup>
