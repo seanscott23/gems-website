@@ -1,9 +1,17 @@
-.upload-box-photo {
+.photo-section {
   margin-top: 5%;
-  width: 200px;
   position: absolute;
+  margin-left: 20px;
+}
+
+.upload-box-photo {
+  /* margin-top: 5%; */
+  width: 200px;
+  /* position: absolute; */
   height: 200px;
-  padding: 20px;
+
+  text-align: center;
+  padding: 5px;
   border-radius: 0.25rem;
   background-color: #057dcd;
   font-weight: 400;
@@ -47,4 +55,9 @@
   display: grid;
   justify-self: center;
   margin-bottom: 15px;
+}
+
+.profileImage {
+  width: 190px;
+  height: 190px;
 }

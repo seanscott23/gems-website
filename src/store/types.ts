@@ -10,6 +10,7 @@ export const SET_SIGNED_IN = "SET_SIGNED_IN";
 export const CLIP_AUDIO = "CLIP_AUDIO";
 export const SET_FINAL_GEM = "SET_FINAL_GEM";
 export const SET_USER_GEMS = "SET_USER_GEMS";
+export const SET_USER_PHOTO = "SET_USER_PHOTO";
 
 export interface User {
   firstName: string;
@@ -71,6 +72,11 @@ interface SetUserAction {
   payload: User;
 }
 
+interface SetUserPhoto {
+  type: typeof SET_USER_PHOTO;
+  payload: string;
+}
+
 interface SubmitFinalGem {
   type: typeof SET_FINAL_GEM;
   payload: FinalGem;
@@ -113,6 +119,7 @@ export type AuthAction =
   | SetUserAction
   | SubmitFinalGem
   | GetUserGems
+  | SetUserPhoto
   | SetLoadingAction
   | SignOutAction
   | SetErrorAction

@@ -16,6 +16,7 @@ import {
   SET_FORM_SUCCESS,
   CLIP_AUDIO,
   SET_USER_GEMS,
+  SET_USER_PHOTO,
 } from "../types";
 import Parser from "rss-parser";
 import fs from "fs";
@@ -234,6 +235,22 @@ export const submitNewFile = (
             payload: url,
           });
         });
+    } catch (err) {
+      console.log(err);
+      dispatch(setError(err.message));
+    }
+  };
+};
+
+export const submitPhoto = (
+  photoUrl: string
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: SET_USER_PHOTO,
+        payload: photoUrl,
+      });
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));

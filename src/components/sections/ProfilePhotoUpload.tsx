@@ -1,9 +1,20 @@
 import "../../styles/PhotoUpload.css";
 import React, { useEffect, useState, DragEvent } from "react";
 import uploadPNG from "../../images/upload.png";
+import { submitPhoto } from "../../store/actions/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 function ProfilePhotoUpload() {
+  const { profilePhoto } = useSelector((state: RootState) => state.auth);
   const [photo, setPhoto] = useState<string | ArrayBuffer>("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (profilePhoto?.length !== 0 && profilePhoto !== undefined) {
+      setPhoto(profilePhoto);
+    }
+  }, []);
 
   function dropTargetRelease() {
     document
@@ -45,43 +56,53 @@ function ProfilePhotoUpload() {
       reader.onload = function (e) {
         if (e.target?.result != undefined) {
           setPhoto(e.target?.result);
+          submitPhotoHandler(e.target?.result);
         }
       };
       reader.readAsDataURL(fileEvent);
     }
   }
 
+  const submitPhotoHandler = async (photoUrl: string | ArrayBuffer) => {
+    if (typeof photoUrl === "string") {
+      await dispatch(submitPhoto(photoUrl));
+    }
+  };
+
   return (
-    <div className="upload-box-photo">
-      <label
-        htmlFor="fileElem"
-        className="signup-user-photo"
-        onDrop={(ev) => dropHandler(ev)}
-        onDragOver={(ev) => dragOverHandler(ev)}
-        onDragLeave={() => dropTargetRelease()}
-      >
-        <div className="preparing-4-drag">
-          <input
-            type="file"
-            name="userImage"
-            id="fileElem"
-            accept="image/*"
-            onChange={(e) => presentPhoto(e?.target?.files)}
-          />
-          {!photo ? (
-            <div>
-              <img src={uploadPNG} width="50px" height="50px" />
+    <div className="photo-section">
+      <h2>Profile Photo</h2>
+      <div className="upload-box-photo">
+        <label
+          htmlFor="fileElem"
+          className="signup-user-photo"
+          onDrop={(ev) => dropHandler(ev)}
+          onDragOver={(ev) => dragOverHandler(ev)}
+          onDragLeave={() => dropTargetRelease()}
+        >
+          <div className="preparing-4-drag">
+            <input
+              type="file"
+              name="userImage"
+              id="fileElem"
+              accept="image/*"
+              onChange={(e) => presentPhoto(e?.target?.files)}
+            />
+            {!photo ? (
               <div>
-                <p className="image-label-instruction">
-                  {" "}
-                  Update Profile Photo{" "}
-                </p>
+                <img src={uploadPNG} width="50px" height="50px" />
+                <div>
+                  <p className="image-label-instruction">
+                    Update Profile Photo
+                  </p>
+                </div>
               </div>
-            </div>
-          ) : ///add codde here to convert image
-          null}
-        </div>
-      </label>
+            ) : typeof photo == "string" ? (
+              <img src={photo} className="profileImage" />
+            ) : null}
+          </div>
+        </label>
+      </div>
     </div>
   );
 }
