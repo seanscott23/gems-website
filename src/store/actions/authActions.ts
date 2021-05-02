@@ -183,6 +183,7 @@ export const submitNewFile = (
   end: number
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
+    debugger;
     let encodedString = file.replace("data:audio/mpeg;base64,", "");
     // let base64 = file.split(",")[1];
     const formData = new FormData();
