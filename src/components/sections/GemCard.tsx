@@ -15,6 +15,7 @@ interface Gem {
     categories: Array<any>;
     explicit: boolean;
     ownerId: string;
+    episodeNum: number;
   };
 }
 
@@ -41,9 +42,8 @@ export const GemCard: React.FC<{
           <div className="gemCategory">{category}</div>
         ))
       : [];
-
-  const gem = { gemID, gemInfo } as Gem;
-
+  // console.log(key);
+  let gem = { gemID, gemInfo } as Gem;
   return (
     <div>
       <ListGroup.Item as="li">
@@ -71,6 +71,7 @@ export const GemCard: React.FC<{
             </audio>
           </Card.Body>
           <Card.Footer>
+            <div>Episode: #{gemInfo.episodeNum}</div>
             <Button
               onClick={() => {
                 setActiveClip(gem);

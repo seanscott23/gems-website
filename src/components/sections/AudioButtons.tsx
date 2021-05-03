@@ -43,7 +43,7 @@ export const AudioButtons: React.FC<{
       e.preventDefault();
       setLoading(true);
       await dispatch(
-        submitNewFile(audioMetaData.src, 0, audioMetaData.duration)
+        submitNewFile(audioMetaData.src, 0, audioMetaData.duration / 60)
       );
       setLoading(false);
       history.push("/gem-form");

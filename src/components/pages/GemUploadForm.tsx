@@ -12,12 +12,13 @@ import Button from "../UI/Button";
 import { useHistory } from "react-router-dom";
 
 const GemForm: FC = () => {
-  const { gemURL } = useSelector((state: RootState) => state.auth);
+  const { gemURL, userGems } = useSelector((state: RootState) => state.auth);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isChecked, setChecked] = useState(false);
   const [gemID, setGemID] = useState("");
   const [categories, setCategories] = React.useState<any[]>([]);
+  const [episodeNum, setEpisodeNum] = useState(0);
   const [loading, setLoading] = useState(false);
   // const [isInvalid, setInvalid] = useState("");
   const dispatch = useDispatch();
@@ -28,19 +29,29 @@ const GemForm: FC = () => {
     setGemID(splitURL[1]);
   };
 
+  const getEpisodeNum = () => {
+    setEpisodeNum(userGems.length + 1);
+  };
+
   const submitHandler = async (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.preventDefault();
     setLoading(true);
     getGemID(gemURL);
-    // getUserGems();
-    await dispatch(
-      submitFinalGem(gemURL, title, description, categories, isChecked, gemID)
+    dispatch(
+      await submitFinalGem(
+        gemURL,
+        title,
+        description,
+        categories,
+        isChecked,
+        gemID,
+        episodeNum
+      )
     );
     setLoading(false);
     history.push("/library");
-    await dispatch(getUserGems());
   };
 
   const getCategories = (e: React.ChangeEvent) => {

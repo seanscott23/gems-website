@@ -8,14 +8,14 @@ function AudioUpload() {
 
   function dropTargetRelease() {
     document
-      .getElementsByClassName("signup-user-photo")[0]
+      .getElementsByClassName("signup-user-audio")[0]
       .classList.remove("beingDraggedOver");
   }
 
   const dragOverHandler = (ev: DragEvent<HTMLLabelElement>) => {
     ev.preventDefault();
     document
-      .getElementsByClassName("signup-user-photo")[0]
+      .getElementsByClassName("signup-user-audio")[0]
       .classList.add("beingDraggedOver");
   };
 
@@ -42,7 +42,7 @@ function AudioUpload() {
     if (ev?.length != 0) {
       var reader = new FileReader();
       const fileEvent = ev[0] == undefined ? ev : ev[0];
-      
+
       reader.onload = function (e) {
         if (e.target?.result != undefined) {
           setAudiox(e.target?.result);
@@ -56,7 +56,7 @@ function AudioUpload() {
     <div className="upload-box">
       <label
         htmlFor="fileElem"
-        className="signup-user-photo"
+        className="signup-user-audio"
         onDrop={(ev) => dropHandler(ev)}
         onDragOver={(ev) => dragOverHandler(ev)}
         onDragLeave={() => dropTargetRelease()}
@@ -64,7 +64,7 @@ function AudioUpload() {
         <div className="preparing-4-drag">
           <input
             type="file"
-            name="userImage"
+            name="userAudio"
             id="fileElem"
             accept="audio/*"
             onChange={(e) => presentAudio(e?.target?.files)}
@@ -73,7 +73,7 @@ function AudioUpload() {
             <div>
               <img src={uploadPNG} width="50px" height="50px" />
               <div>
-                <p className="image-label-instruction">
+                <p className="audio-label-instruction">
                   {" "}
                   Drag &amp; Drop A Gem{" "}
                 </p>

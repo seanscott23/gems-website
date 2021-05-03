@@ -21,7 +21,8 @@ export const submitFinalGem = (
   description: string,
   categories: Array<any>,
   explicit: boolean,
-  gemID: string
+  gemID: string,
+  episodeNum: number
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
@@ -36,12 +37,15 @@ export const submitFinalGem = (
           description: description,
           categories: categories,
           explicit: explicit,
+          episodeNum: episodeNum,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-          getUserGems();
+          // dispatch({
+          //   type: "SET_NEW_GEM",
+          //   payload: data
+          // })
         });
     } catch (err) {
       console.log(err);
@@ -80,14 +84,15 @@ export const getUserGems = (): ThunkAction<
           description: "",
           categories: [],
           explicit: false,
+          episodeNum: 0,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          // debugger;
+          let newData = data.reverse();
           dispatch({
             type: SET_USER_GEMS,
-            payload: data,
+            payload: newData,
           });
         });
     } catch (err) {

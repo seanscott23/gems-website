@@ -1,3 +1,4 @@
+import { getUserGems } from "../actions/gemSubmitAction";
 import {
   AuthAction,
   AuthState,
@@ -12,6 +13,7 @@ import {
   CLIP_AUDIO,
   SET_FINAL_GEM,
   SET_USER_GEMS,
+  SET_USER_PHOTO,
 } from "../types";
 
 const initialState: AuthState = {
@@ -24,6 +26,7 @@ const initialState: AuthState = {
   rssFeedUrl: {},
   gemURL: "",
   userGems: [],
+  profilePhoto: "",
 };
 
 const authReducer = (state = initialState, action: AuthAction) => {
@@ -34,10 +37,26 @@ const authReducer = (state = initialState, action: AuthAction) => {
         user: action.payload,
         authenticated: true,
       };
+
+    // case SET_NEW_GEM:
+    //   const newGems = Object.assign({}, state.userGems);
+    //   newGems[Object.keys(userGems)[Object.keys(userGems).length]] =
+    //     action.payload;
+    //   return {
+    //     ...state,
+    //     ...newGems
+    //   };
     case SET_USER_GEMS:
+      // const newGems = state.userGems;
+      // newGems.push(action.payload);
       return {
         ...state,
         userGems: action.payload,
+      };
+    case SET_USER_PHOTO:
+      return {
+        ...state,
+        profilePhoto: action.payload,
       };
     case SET_FORM_SUCCESS:
       return {

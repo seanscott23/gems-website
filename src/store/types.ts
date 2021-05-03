@@ -10,6 +10,7 @@ export const SET_SIGNED_IN = "SET_SIGNED_IN";
 export const CLIP_AUDIO = "CLIP_AUDIO";
 export const SET_FINAL_GEM = "SET_FINAL_GEM";
 export const SET_USER_GEMS = "SET_USER_GEMS";
+export const SET_USER_PHOTO = "SET_USER_PHOTO";
 
 export interface User {
   firstName: string;
@@ -17,6 +18,7 @@ export interface User {
   id: string;
   createdAt: any;
   gems: Array<any>;
+  profilePhoto?: string;
 }
 
 export interface AuthState {
@@ -29,12 +31,14 @@ export interface AuthState {
   rssFeedUrl: any;
   gemURL: string;
   userGems: Array<any>;
+  profilePhoto?: string;
 }
 
 export interface SignUpData {
   firstName: string;
   email: string;
   password: string;
+  profilePhoto?: string;
 }
 
 export interface FinalGem {
@@ -66,6 +70,11 @@ interface GetUserGems {
 interface SetUserAction {
   type: typeof SET_USER;
   payload: User;
+}
+
+interface SetUserPhoto {
+  type: typeof SET_USER_PHOTO;
+  payload: string;
 }
 
 interface SubmitFinalGem {
@@ -110,6 +119,7 @@ export type AuthAction =
   | SetUserAction
   | SubmitFinalGem
   | GetUserGems
+  | SetUserPhoto
   | SetLoadingAction
   | SignOutAction
   | SetErrorAction

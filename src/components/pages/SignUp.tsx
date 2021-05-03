@@ -65,6 +65,13 @@ const SignUp: FC = () => {
               label=""
             />
           </Form.Group>
+          <Form.Group>
+            <Form.File
+              accept=".jpg,.png"
+              id="exampleFormControlFile1"
+              label="Your gem profile image(optional)"
+            />
+          </Form.Group>
           <Button
             text={loading ? "Loading..." : "Sign Up"}
             className="w-100 btn btn-primary"

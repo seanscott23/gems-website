@@ -1,33 +1,53 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useEffect } from "react";
-import { Container, ListGroup } from "react-bootstrap";
+import { Form, ListGroup, Pagination } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { getUserGems } from "../../store/actions/gemSubmitAction";
 import GemCard from "../sections/GemCard";
 import "../../styles/Library.css";
+import ProfilePhotoUpload from "../sections/ProfilePhotoUpload";
+import GemPagination from "../sections/GemPagination";
+import PaginationBar from "../sections/PaginationBar";
 
 const Library: FC = () => {
-  const { userGems, user } = useSelector((state: RootState) => state.auth);
+  const { userGems, profilePhoto } = useSelector(
+    (state: RootState) => state.auth
+  );
+  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useDispatch();
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = userGems.slice(indexOfFirstPost, indexOfLastPost);
 
-  React.useEffect(() => {}, [userGems]);
+  React.useEffect(() => {}, [profilePhoto, currentPosts]);
 
-  const getGemCard = userGems.map((gem: any) => (
-    <GemCard gemID={gem[0]} gemInfo={gem[1]} />
-  ));
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  // debugger;
   return (
-    <section className="library-section">
-      <h1>Your gem library!</h1>
-      <h6>
-        This page is linked directly with your account on our app. Update or
-        delete any gem within this page.
-      </h6>
-      <ListGroup id="allGems" as="ul">
-        {getGemCard}
-      </ListGroup>
-    </section>
+    <div>
+      <div>
+        <ProfilePhotoUpload></ProfilePhotoUpload>
+      </div>
+      <section className="library-section">
+        <h1>Your gem library!</h1>
+        <h6>
+          This page is linked directly with your account on our app. Update or
+          delete any gem within this page.
+        </h6>
+        <ListGroup id="allGems" as="ul">
+          <GemPagination posts={currentPosts}></GemPagination>
+          <PaginationBar
+            postsPerPage={postsPerPage}
+            totalPosts={userGems.length}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            paginate={paginate}
+          ></PaginationBar>
+        </ListGroup>
+      </section>
+    </div>
   );
 };
 

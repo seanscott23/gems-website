@@ -16,6 +16,7 @@ import {
   SET_FORM_SUCCESS,
   CLIP_AUDIO,
   SET_USER_GEMS,
+  SET_USER_PHOTO,
 } from "../types";
 import Parser from "rss-parser";
 import fs from "fs";
@@ -41,6 +42,7 @@ export const signup = (
           id: res.user.uid,
           createdAt: Date.now(),
           gems: [],
+          profilePhoto: data.profilePhoto,
         };
         console.log(userData);
         await firebase
@@ -174,8 +176,7 @@ export const submitNewClip = (
   };
 };
 
-//trimming file audioo
-
+//trimming file audio
 export const submitNewFile = (
   file: string,
   begin: number,
@@ -183,13 +184,34 @@ export const submitNewFile = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     let encodedString = file.replace("data:audio/mpeg;base64,", "");
+    // let base64 = file.split(",")[1];
     const formData = new FormData();
-    await fetch(file)
-      .then((res) => res.blob())
-      .then((blob) => {
-        const mp3file = new File([blob], "simonsays", { type: "audio/*" });
-        formData.append("file", mp3file);
-      });
+    const b64toBlob = (file: string) => {
+      var byteString = atob(file.split(",")[1]);
+      var ab = new ArrayBuffer(byteString.length);
+      var ia = new Uint8Array(ab);
+
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ab], { type: "image/jpeg" });
+    };
+    // await fetch(file, {
+    //   credentials: "same-origin",
+    //   method: "POST",
+    //   headers: new Headers({
+    //     "Content-Type": "text/plain",
+    //     Accept: "text/plain",
+    //     "Access-Control-Allow-Origin": "*",
+    //   }),
+    // })
+    let blob = b64toBlob(file);
+    // .then((res) => res.blob())
+    // .then((blob) => {
+
+    const mp3file = new File([blob], "simonsays", { type: "audio/*" });
+    formData.append("file", mp3file);
+    // });
 
     let beginInt = begin * 60;
     let endInt = end * 60;
@@ -207,7 +229,6 @@ export const submitNewFile = (
         .then((response) => response.json())
         .then((data) => {
           let url = data.trimmed_audio_url;
-
           console.log(data);
           dispatch({
             type: CLIP_AUDIO,
@@ -216,6 +237,23 @@ export const submitNewFile = (
         });
     } catch (err) {
       console.log(err);
+      dispatch(setError(err.message));
+    }
+  };
+};
+
+export const submitPhoto = (
+  photoUrl: string
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: SET_USER_PHOTO,
+        payload: photoUrl,
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch(setError(err.message));
     }
   };
 };
