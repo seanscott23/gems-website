@@ -87,7 +87,7 @@ export const getUserGems = (): ThunkAction<
           // debugger;
           dispatch({
             type: SET_USER_GEMS,
-            payload: data.reverse(),
+            payload: data,
           });
         });
     } catch (err) {
