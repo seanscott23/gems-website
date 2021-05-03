@@ -14,7 +14,7 @@ function ProfilePhotoUpload() {
     if (profilePhoto?.length !== 0 && profilePhoto !== undefined) {
       setPhoto(profilePhoto);
     }
-  }, []);
+  }, [profilePhoto]);
 
   function dropTargetRelease() {
     document

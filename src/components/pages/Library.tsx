@@ -16,68 +16,12 @@ const Library: FC = () => {
   );
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-
-  // const [gems, setGems] = React.useState(userGems);
   const dispatch = useDispatch();
-
-  // React.useEffect(() => {
-  //   const result = window.localStorage.getItem("all-gems");
-  //   if (result) {
-  //     setGems(JSON.parse(result));
-  //   }
-  // }, []);
-
-  React.useEffect(() => {
-    // localStorage.setItem("all-gems", JSON.stringify(userGems));
-    dispatch(getUserGems());
-  }, [userGems, profilePhoto]);
-
-  // const getIndex = (index: number) => {
-  //   let num = userGems.length - 1;
-  //   return num - index;
-  // };
-
-  // const numPages = () => {
-  //   let total;
-  //   if (userGems.length > 0) {
-  //     if (userGems.length <= 10) {
-  //       total = 1;
-  //     } else if (userGems.length > 10 && userGems.length < 100) {
-  //       let length = userGems.length.toString();
-  //       let splitNum = length.split("")[0];
-  //       if (length.split("")[1] === "0") {
-  //         total = parseInt(splitNum);
-  //       } else {
-  //         total = parseInt(splitNum) + 1;
-  //       }
-  //     } else if (userGems.length >= 100 && userGems.length < 1000) {
-  //       let length = userGems.length.toString();
-  //       let splitNum = length.substring(0, 2);
-  //       if (length.substring(2) === "0") {
-  //         total = parseInt(splitNum);
-  //       } else {
-  //         total = parseInt(splitNum) + 1;
-  //       }
-  //     }
-  //   }
-  //   return total;
-  // };
-
-  // let items = [];
-  // let active = numPages() !== undefined ? numPages() : 1;
-  // if (active) {
-  //   for (let number = 1; number <= active; number++) {
-  //     items.push(
-  //       <Pagination.Item key={number} active={number === active}>
-  //         {number}
-  //       </Pagination.Item>
-  //     );
-  //   }
-  // }
-
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = userGems.slice(indexOfFirstPost, indexOfLastPost);
+
+  React.useEffect(() => {}, [profilePhoto, currentPosts]);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -94,14 +38,14 @@ const Library: FC = () => {
         </h6>
         <ListGroup id="allGems" as="ul">
           <GemPagination posts={currentPosts}></GemPagination>
+          <PaginationBar
+            postsPerPage={postsPerPage}
+            totalPosts={userGems.length}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            paginate={paginate}
+          ></PaginationBar>
         </ListGroup>
-        <PaginationBar
-          postsPerPage={postsPerPage}
-          totalPosts={userGems.length}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          paginate={paginate}
-        ></PaginationBar>
       </section>
     </div>
   );

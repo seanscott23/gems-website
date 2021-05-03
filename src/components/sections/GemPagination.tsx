@@ -10,10 +10,7 @@ const GemPagination: FC<{
 }> = ({ posts }) => {
   const { userGems } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-  const getIndex = (index: number) => {
-    let num = userGems.length - 1;
-    return num - index;
-  };
+
   React.useEffect(() => {
     dispatch(getUserGems());
   }, [userGems]);
@@ -21,9 +18,7 @@ const GemPagination: FC<{
   return (
     <div>
       {posts !== undefined
-        ? posts.map((gem: any, i: number) => (
-            <GemCard gemID={gem[0]} gemInfo={gem[1]} index={getIndex(i)} />
-          ))
+        ? posts.map((gem: any) => <GemCard gemID={gem[0]} gemInfo={gem[1]} />)
         : null}
     </div>
   );

@@ -12,12 +12,13 @@ import Button from "../UI/Button";
 import { useHistory } from "react-router-dom";
 
 const GemForm: FC = () => {
-  const { gemURL } = useSelector((state: RootState) => state.auth);
+  const { gemURL, userGems } = useSelector((state: RootState) => state.auth);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isChecked, setChecked] = useState(false);
   const [gemID, setGemID] = useState("");
   const [categories, setCategories] = React.useState<any[]>([]);
+  const [episodeNum, setEpisodeNum] = useState(0);
   const [loading, setLoading] = useState(false);
   // const [isInvalid, setInvalid] = useState("");
   const dispatch = useDispatch();
@@ -26,6 +27,10 @@ const GemForm: FC = () => {
   const getGemID = (gemURL: string) => {
     let splitURL = gemURL.split("token=");
     setGemID(splitURL[1]);
+  };
+
+  const getEpisodeNum = () => {
+    setEpisodeNum(userGems.length + 1);
   };
 
   const submitHandler = async (
@@ -41,7 +46,8 @@ const GemForm: FC = () => {
         description,
         categories,
         isChecked,
-        gemID
+        gemID,
+        episodeNum
       )
     );
     setLoading(false);

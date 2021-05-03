@@ -15,14 +15,14 @@ interface Gem {
     categories: Array<any>;
     explicit: boolean;
     ownerId: string;
+    episodeNum: number;
   };
 }
 
 export const GemCard: React.FC<{
   gemID: string;
   gemInfo: any;
-  index: number;
-}> = ({ gemID, gemInfo, index }) => {
+}> = ({ gemID, gemInfo }) => {
   const [isDeleteModalOpen, setDeleteModalState] = React.useState(false);
   const [isUpdateModalOpen, setUpdateModalState] = React.useState(false);
   const [activeClip, setActiveClip] = React.useState<Gem | null>(null);
@@ -71,7 +71,7 @@ export const GemCard: React.FC<{
             </audio>
           </Card.Body>
           <Card.Footer>
-            <div>Episode: #{index}</div>
+            <div>Episode: #{gemInfo.episodeNum}</div>
             <Button
               onClick={() => {
                 setActiveClip(gem);

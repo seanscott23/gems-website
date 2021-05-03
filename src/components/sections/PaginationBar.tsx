@@ -43,18 +43,13 @@ const PaginationBar: FC<{
   }
 
   return (
-    <Pagination className="pageNumbers">
-      <li>
-        <button
-          onClick={handlePrev}
-          disabled={currentPage === pageNumbers[0] ? true : false}
-        >
-          Previous
-        </button>
+    <ul className="pageNumbers">
+      <li className={currentPage === pageNumbers[0] ? "hide" : "show"}>
+        <button onClick={handlePrev}>Previous</button>
       </li>
       {pageDecrementBtn}
       {pageNumbers.map((number) => {
-        if (number < maxPageLimit + 1 && number > minPageNumberLimit) {
+        if (number < maxPageLimit + 1 && number >= minPageNumberLimit) {
           return (
             <li
               key={number}
@@ -69,17 +64,14 @@ const PaginationBar: FC<{
         }
       })}
       {pageIncrementBtn}
-      <li>
-        <button
-          onClick={handleNext}
-          disabled={
-            currentPage === pageNumbers[pageNumbers.length - 1] ? true : false
-          }
-        >
-          Next
-        </button>
+      <li
+        className={
+          currentPage === pageNumbers[pageNumbers.length - 1] ? "hide" : "show"
+        }
+      >
+        <button onClick={handleNext}>Next</button>
       </li>
-    </Pagination>
+    </ul>
   );
 };
 
