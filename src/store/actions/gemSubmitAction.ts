@@ -1,17 +1,7 @@
 import { ThunkAction } from "redux-thunk";
-import {
-  AuthAction,
-  SET_ERROR,
-  FinalGem,
-  SET_FINAL_GEM,
-  SET_USER_GEMS,
-} from "../types";
+import { AuthAction, SET_ERROR, SET_USER_GEMS } from "../types";
 import { RootState } from "..";
 import firebase from "../../firebase/config";
-import admin from "firebase-admin";
-import Parser from "rss-parser";
-import fs from "fs";
-import authReducer from "../reducers/authReducer";
 const auth = firebase.auth();
 
 //submit final gem with form

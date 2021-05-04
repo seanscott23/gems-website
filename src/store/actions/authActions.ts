@@ -7,7 +7,6 @@ import {
   User,
   SET_LOADING,
   SIGN_OUT,
-  SET_SIGNED_IN,
   SignInData,
   SET_ERROR,
   NEED_VERIFICATION,
@@ -15,15 +14,13 @@ import {
   SET_SUCCESS,
   SET_FORM_SUCCESS,
   CLIP_AUDIO,
-  SET_USER_GEMS,
   SET_USER_PHOTO,
 } from "../types";
 import Parser from "rss-parser";
-import fs from "fs";
+
 import { RootState } from "..";
 import firebase from "../../firebase/config";
-import admin from "firebase-admin";
-import authReducer from "../reducers/authReducer";
+
 const auth = firebase.auth();
 
 export const signup = (
@@ -208,13 +205,11 @@ export const submitNewFile = (
     let blob = b64toBlob(file);
     // .then((res) => res.blob())
     // .then((blob) => {
-
+    let beginInt = begin * 60;
+    let endInt = end * 60;
     const mp3file = new File([blob], "simonsays", { type: "audio/*" });
     formData.append("file", mp3file);
     // });
-
-    let beginInt = begin * 60;
-    let endInt = end * 60;
 
     formData.append("userID", auth.currentUser?.uid as string);
     formData.append("token", (await auth?.currentUser?.getIdToken()) as string);

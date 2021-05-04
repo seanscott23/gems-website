@@ -1,6 +1,5 @@
 import { FC, useState } from "react";
 import "../../styles/PaginationBar.css";
-import { Pagination } from "react-bootstrap";
 
 const PaginationBar: FC<{
   postsPerPage: number;

@@ -1,10 +1,9 @@
 import React, { FC, useState } from "react";
 import { useEffect } from "react";
-import { Form, ListGroup, Pagination } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { ListGroup } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { getUserGems } from "../../store/actions/gemSubmitAction";
-import GemCard from "../sections/GemCard";
+
 import "../../styles/Library.css";
 import ProfilePhotoUpload from "../sections/ProfilePhotoUpload";
 import GemPagination from "../sections/GemPagination";
@@ -16,7 +15,6 @@ const Library: FC = () => {
   );
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const dispatch = useDispatch();
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = userGems.slice(indexOfFirstPost, indexOfLastPost);

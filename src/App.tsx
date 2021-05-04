@@ -15,7 +15,7 @@ import PrivateRoute from "./components/auth/PrivateRoute";
 import PublicRoute from "./components/auth/PublicRoute";
 import Loader from "./components/UI/Loader";
 import firebase from "./firebase/config";
-
+import { Route } from "react-router-dom";
 import {
   getUserById,
   setLoading,
