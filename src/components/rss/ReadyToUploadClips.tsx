@@ -12,7 +12,7 @@ interface Clip {
   };
 }
 
-const ReturnHTML: FC<{
+const ReadyToUploadClips: FC<{
   posts: Array<any>;
 }> = ({ posts }) => {
   const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
@@ -43,27 +43,7 @@ const ReturnHTML: FC<{
             <Card.Body>
               <Card.Title>{clip.title}</Card.Title>
               {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
-
-              <Button
-                onClick={() => {
-                  setActiveClip(clip);
-                  setModalState(!isModalOpen);
-                }}
-              >
-                Crop audio
-              </Button>
-
-              {!activeClip ? null : (
-                <AudioModalRipper
-                  isOpen={isModalOpen}
-                  handleClose={handleClose}
-                  clip={activeClip}
-                  id={i}
-                  begin={begin}
-                  end={end}
-                  handleTimeUpdate={handleTimeUpdate}
-                />
-              )}
+              <Card.Link href={clip.enclosure.url}>Submit Gem</Card.Link>
             </Card.Body>
           </Card>
         </ListGroup.Item>
@@ -72,4 +52,4 @@ const ReturnHTML: FC<{
   );
 };
 
-export default ReturnHTML;
+export default ReadyToUploadClips;

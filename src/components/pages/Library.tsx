@@ -1,13 +1,14 @@
 import React, { FC, useState } from "react";
 import { useEffect } from "react";
 import { ListGroup } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 import "../../styles/Library.css";
 import ProfilePhotoUpload from "../sections/ProfilePhotoUpload";
 import GemPagination from "../sections/GemPagination";
 import PaginationBar from "../sections/PaginationBar";
+import { getUserGems } from "../../store/actions/gemSubmitAction";
 
 const Library: FC = () => {
   const { userGems, profilePhoto } = useSelector(
@@ -18,6 +19,7 @@ const Library: FC = () => {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = userGems.slice(indexOfFirstPost, indexOfLastPost);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {}, [profilePhoto, currentPosts]);
 

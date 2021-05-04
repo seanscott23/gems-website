@@ -5,10 +5,20 @@ import { RootState } from "../../store";
 import { Button, Card, ListGroup } from "react-bootstrap";
 import "../../styles/RssFeed.css";
 import ReturnHTML from "../rss/ReturnHtml";
+import ReadyToUploadClips from "../rss/ReadyToUploadClips";
+import PaginationBar from "../sections/PaginationBar";
 
 const RssFeed: FC = () => {
   const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
   const [isModalOpen, setModalState] = useState(false);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [readyPostsPerPage, setReadyPostsPerPage] = useState(10);
+  const [readyCurrentPage, setReadyCurrentPage] = useState(1);
+  const readyIndexLast = readyCurrentPage * readyPostsPerPage;
+  const readyIndexFirst = readyIndexLast * readyPostsPerPage;
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
   const dispatch = useDispatch();
 
@@ -29,43 +39,42 @@ const RssFeed: FC = () => {
     return audioItems;
   };
 
-  const returnReadyHTML = () => {
-    const items = readyToUpload();
-    var codeBlock = [];
-    for (let i = 0; i < items.length; i++) {
-      let clip: any = items[i];
-      codeBlock.push(
-        <ListGroup.Item as="li">
-          <Card>
-            <Card.Body>
-              <Card.Title>{clip.title}</Card.Title>
-              {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
-              <Card.Link href={clip.enclosure.url}>Submit Gem</Card.Link>
-            </Card.Body>
-          </Card>
-        </ListGroup.Item>
-      );
-    }
-    var finalBlock = [];
-    if (codeBlock.length > 0) {
-      finalBlock.push(
-        <div>
-          <h3 style={{ textAlign: "center" }}>Ready to upload</h3>
-          {codeBlock}
-        </div>
-      );
-    }
-    return finalBlock;
+  const audioClipsTooLong = () => {
+    const audioItems: Array<object> = [];
+    const allItems = rssFeedUrl.items;
+    allItems.map(async (currentItem: any) => {
+      if (parseInt(currentItem.itunes.duration) > 600) {
+        audioItems.push(currentItem);
+      }
+    });
+    return audioItems;
   };
-
+  const items = audioClipsTooLong();
+  const readyItems = readyToUpload();
+  const currentPosts = items.slice(indexOfFirstPost, indexOfLastPost);
+  const currentReadyPosts = readyItems.slice(readyIndexFirst, readyIndexLast);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   return (
     <section className="rss-container">
       <div className="rss-columns">
         <ListGroup id="readyToUpload" as="ul">
-          {returnReadyHTML()}
+          {currentReadyPosts.length > 0 ? (
+            <h3 style={{ textAlign: "center" }}>Ready to upload</h3>
+          ) : null}
+          {<ReadyToUploadClips posts={currentReadyPosts}></ReadyToUploadClips>}
         </ListGroup>
         <ListGroup id="needToBeTrimmed" as="ul">
-          {ReturnHTML()}
+          <h3 style={{ textAlign: "center" }}>
+            These clips need to be trimmed
+          </h3>
+          <ReturnHTML posts={currentPosts}></ReturnHTML>
+          <PaginationBar
+            postsPerPage={postsPerPage}
+            totalPosts={items.length}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            paginate={paginate}
+          ></PaginationBar>
         </ListGroup>
       </div>
     </section>
