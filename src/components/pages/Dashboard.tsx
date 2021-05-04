@@ -1,10 +1,10 @@
-import React, { FC, FormEvent, useEffect, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Message from "../UI/Message";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { setSuccess, submitGemForm } from "../../store/actions/authActions";
 import { RootState } from "../../store";
-import { Alert, Form, FormControl } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import Button from "../UI/Button";
 import AudioUpload from "../sections/AudioUpload";
 import "../../styles/Dashboard.css";
@@ -14,6 +14,7 @@ const Dashboard: FC = () => {
   const { user, needVerification, success } = useSelector(
     (state: RootState) => state.auth
   );
+  const [error, setError] = useState("");
 
   const [rssFeed, setRssFeed] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,8 @@ const Dashboard: FC = () => {
       await dispatch(submitGemForm(rssFeed, "Success"));
       setLoading(false);
       history.push("/rssFeed");
+    } else {
+      setError("Please provide a valid RSS Feed URL");
     }
   };
   const getName = () => {
@@ -66,7 +69,7 @@ const Dashboard: FC = () => {
             type="url"
           />
         </Form.Group>
-
+        <p className="Rss-error">{error}</p>
         <Button
           text={loading ? "Loading..." : "Upload Rss Feed"}
           className="w-100 btn btn-primary"

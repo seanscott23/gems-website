@@ -2,6 +2,10 @@
   margin-top: 50px;
 }
 
+.Rss-error {
+  color: red;
+}
+
 Form > .btn-primary {
   background-color: #057dcd;
 }
@@ -12,7 +16,7 @@ Form > .btn-primary {
 
 #container {
   width: 60%;
-  margin: 10% auto;
+  margin: 150px auto;
   height: 100%;
 }
 

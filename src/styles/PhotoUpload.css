@@ -6,7 +6,6 @@
 .photo-section > h2 {
   color: #1e3d58;
 }
-
 .upload-box-photo {
   /* margin-top: 5%; */
   width: 200px;
@@ -20,6 +19,49 @@
   font-weight: 400;
   cursor: pointer;
 }
+
+@media (max-width: 1150px) {
+  .photo-section,
+  .upload-box-photo {
+    width: 150px;
+    height: 150px;
+  }
+  .image-label-instruction {
+    font-size: 0.85rem;
+  }
+  .photo-section > h2 {
+    font-size: 1.3em;
+  }
+}
+
+@media (max-width: 900px) {
+  .photo-section,
+  .upload-box-photo {
+    width: 120px;
+    height: 120px;
+  }
+  .image-label-instruction {
+    font-size: 0.7rem;
+  }
+  .photo-section > h2 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 730px) {
+  .photo-section,
+  .upload-box-photo {
+    width: 90px;
+    height: 90px;
+  }
+  .image-label-instruction {
+    font-size: 0.6rem;
+  }
+  .photo-section > h2 {
+    font-size: 0.9rem;
+  }
+}
+
 .signup-user-photo {
   cursor: pointer;
 }

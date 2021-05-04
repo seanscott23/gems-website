@@ -4,6 +4,7 @@ import uploadPNG from "../../images/upload.png";
 import { submitPhoto } from "../../store/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { Container } from "react-bootstrap";
 
 function ProfilePhotoUpload() {
   const { profilePhoto } = useSelector((state: RootState) => state.auth);
@@ -90,7 +91,7 @@ function ProfilePhotoUpload() {
             />
             {!photo ? (
               <div>
-                <img src={uploadPNG} width="50px" height="50px" />
+                <img src={uploadPNG} />
                 <div>
                   <p className="image-label-instruction">
                     Update Profile Photo
