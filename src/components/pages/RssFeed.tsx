@@ -54,6 +54,7 @@ const RssFeed: FC = () => {
   const currentPosts = items.slice(indexOfFirstPost, indexOfLastPost);
   const currentReadyPosts = readyItems.slice(readyIndexFirst, readyIndexLast);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const readyPaginate = (pageNumber: number) => setReadyCurrentPage(pageNumber);
   return (
     <section className="rss-container">
       <div className="rss-columns">
@@ -62,6 +63,15 @@ const RssFeed: FC = () => {
             <h3 style={{ textAlign: "center" }}>Ready to upload</h3>
           ) : null}
           {<ReadyToUploadClips posts={currentReadyPosts}></ReadyToUploadClips>}
+          {currentReadyPosts.length > 0 ? (
+            <PaginationBar
+              postsPerPage={readyPostsPerPage}
+              totalPosts={readyItems.length}
+              currentPage={readyCurrentPage}
+              setCurrentPage={setReadyCurrentPage}
+              paginate={readyPaginate}
+            ></PaginationBar>
+          ) : null}
         </ListGroup>
         <ListGroup id="needToBeTrimmed" as="ul">
           <h3 style={{ textAlign: "center" }}>
