@@ -27,7 +27,7 @@ const Dashboard: FC = () => {
       }
     };
   }, [dispatch, success]);
-  debugger;
+
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
     if (rssFeed.slice(0, 8) === "https://") {

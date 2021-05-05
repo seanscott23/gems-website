@@ -26,9 +26,9 @@ const GemForm: FC = () => {
     setGemID(splitURL[1]);
   };
 
-  const getEpisodeNum = () => {
-    setEpisodeNum(userGems.length + 1);
-  };
+  // const getEpisodeNum = () => {
+  //   setEpisodeNum(userGems.length + 1);
+  // };
 
   const submitHandler = async (
     e: React.MouseEvent<HTMLElement, MouseEvent>
@@ -43,8 +43,7 @@ const GemForm: FC = () => {
         description,
         categories,
         isChecked,
-        gemID,
-        episodeNum
+        gemID
       )
     );
     setLoading(false);

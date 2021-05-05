@@ -70,7 +70,7 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
     );
     await dispatch(updateUserGem(gem.gemID));
     handleClose();
-    await dispatch(userGems);
+   
     // await dispatch(getUserGems());
   };
 
