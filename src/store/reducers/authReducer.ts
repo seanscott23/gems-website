@@ -1,4 +1,3 @@
-import { getUserGems } from "../actions/gemSubmitAction";
 import {
   AuthAction,
   AuthState,

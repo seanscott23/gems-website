@@ -10,6 +10,7 @@ import "../../styles/Header.css";
 import { getUserGems } from "../../store/actions/gemSubmitAction";
 
 const Header: FC = () => {
+  const { userGems } = useSelector((state: RootState) => state.auth);
   const history = useHistory();
   const dispatch = useDispatch();
   const { authenticated } = useSelector((state: RootState) => state.auth);
@@ -22,7 +23,12 @@ const Header: FC = () => {
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.preventDefault();
-    await dispatch(getUserGems());
+    if (userGems.length < 1) {
+      dispatch(getUserGems());
+    } else {
+      dispatch(userGems);
+    }
+    // await dispatch(getUserGems());
     history.push("/library");
   };
 

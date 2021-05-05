@@ -11,9 +11,7 @@ import PaginationBar from "../sections/PaginationBar";
 import { getUserGems } from "../../store/actions/gemSubmitAction";
 
 const Library: FC = () => {
-  const { userGems, profilePhoto } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { userGems, user } = useSelector((state: RootState) => state.auth);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastPost = currentPage * postsPerPage;
@@ -21,7 +19,13 @@ const Library: FC = () => {
   const currentPosts = userGems.slice(indexOfFirstPost, indexOfLastPost);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {}, [profilePhoto, currentPosts]);
+  React.useEffect(() => {
+    if (userGems.length < 1) {
+      dispatch(getUserGems());
+    } else {
+      dispatch(userGems);
+    }
+  }, [user?.profilePhoto, currentPosts]);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 

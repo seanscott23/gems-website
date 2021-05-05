@@ -5,7 +5,8 @@ import {
   deleteGemAction,
   getUserGems,
 } from "../../store/actions/gemSubmitAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface Gem {
   gemID: string;
@@ -25,16 +26,23 @@ interface ModalProps {
 }
 
 const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
-  // const { userGems, user } = useSelector((state: RootState) => state.auth);
+  const { userGems } = useSelector((state: RootState) => state.auth);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
+  const removeFromArray = (id: string) => {
+    userGems.filter((value) => value === id);
+    return userGems;
+  };
 
   const deleteHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
     await dispatch(deleteGemAction(gem.gemID));
 
     handleClose();
-    await dispatch(getUserGems());
+    await dispatch(removeFromArray(gem.gemID));
+    await dispatch(userGems);
+    // await dispatch(getUserGems());
   };
 
   if (!gem) return null;

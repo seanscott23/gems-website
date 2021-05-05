@@ -5,8 +5,9 @@ import {
   updateGemAction,
   getUserGems,
 } from "../../store/actions/gemSubmitAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { RootState } from "../../store";
 
 interface Gem {
   gemID: string;
@@ -26,11 +27,34 @@ interface ModalProps {
 }
 
 const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
+  const { userGems } = useSelector((state: RootState) => state.auth);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState<any[]>([]);
   const [explicit, setExplicit] = useState(false);
   const dispatch = useDispatch();
+
+  const updateUserGem = (id: string) => {
+    let index;
+    userGems.forEach((gem, i) => {
+      if (gem.gemID === id) {
+        index = i;
+      }
+    });
+    let audioURL = gem.gemInfo.audioURL;
+    if (index !== undefined) {
+      userGems[index] = {
+        gemID: id,
+        gemInfo: {
+          audioURL,
+          title,
+          description,
+          categories,
+          explicit,
+        },
+      };
+    }
+  };
 
   const updateHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -44,9 +68,10 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
         gem.gemID
       )
     );
-
+    await dispatch(updateUserGem(gem.gemID));
     handleClose();
-    await dispatch(getUserGems());
+    await dispatch(userGems);
+    // await dispatch(getUserGems());
   };
 
   const changeTitle = (e: React.ChangeEvent) => {
