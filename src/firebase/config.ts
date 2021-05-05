@@ -25,6 +25,5 @@ firebase.initializeApp({
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID_TEST,
 });
 
-const db = firebase.firestore();
 // db.settings({ timestampInSnapshots: true });
 export default firebase;

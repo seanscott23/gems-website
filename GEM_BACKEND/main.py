@@ -33,14 +33,14 @@ app.include_router(gems.router)
 app.include_router(user.router)
 
 firebaseConfig = {
-  "apiKey": settings.API_KEY,
-  "authDomain": settings.AUTH_DOMAIN,
-  "databaseURL": settings.DATABASE_URL,
-  "projectId": settings.PROJECT_ID,
-  "storageBucket": settings.STORAGE_BUCKET,
-  "messagingSenderId": settings.MESSAGING_SENDER_ID,
-  "appId": settings.APP_ID,
-  "measurementId": settings.MEASUREMENT_ID
+  "apiKey": settings.API_KEY_TEST,
+  "authDomain": settings.AUTH_DOMAIN_TEST,
+  "databaseURL": settings.DATABASE_URL_TEST,
+  "projectId": settings.PROJECT_ID_TEST,
+  "storageBucket": settings.STORAGE_BUCKET_TEST,
+  "messagingSenderId": settings.MESSAGING_SENDER_ID_TEST,
+  "appId": settings.APP_ID_TEST,
+  "measurementId": settings.MEASUREMENT_ID_TEST
 };
 
 
