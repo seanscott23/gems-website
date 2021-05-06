@@ -39,8 +39,12 @@ async def post_user(user:User):
 
 
 @router.post("/api/deliver/userImage/")
-async def add_user_image_to_db_return_url(user_image:UploadFile = Form(...), user_id:str = Form(...), token:str = Form(...), ):
-    main.storage.child("USERPHOTO").child(user_id).put(user_image, token)
+async def add_user_image_to_db_return_url(user_image:UploadFile = File(...), user_id:str = Form(...), token:str = Form(...)):
+    try:
+        main.storage.child("USERPHOTO").child(user_id).put(user_image.file, token)
+    except:
+        print("Unable to upload user image")
+
     return ""
 
 @router.post("/api/signin/")

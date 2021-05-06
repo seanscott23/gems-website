@@ -61,17 +61,3 @@ async def update_gem(gem: Gems):
     print(gem.token)
     return "Gem updated"
 
-
-@router.post("/api/test/get/gems/")
-def get_gems_by_user(gem:Gems):
-    try:
-        array_of_user_gems = []
-        all_gems = main.database.child("GEMS").get(gem.token)
-        if type(all_gems) != 'NoneType':
-            for x in all_gems.pyres:
-                if x.item[1]["ownerID"] == gem.ownerID:
-                    array_of_user_gems.append(x.item)
-                print(type(x.item))    
-            return array_of_user_gems
-    except:
-        return "Database is empty"

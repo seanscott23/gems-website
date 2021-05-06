@@ -38,7 +38,7 @@ export interface SignUpData {
   firstName: string;
   email: string;
   password: string;
-  profilePhoto?: string;
+  profilePhoto?: File | undefined;
 }
 
 export interface FinalGem {

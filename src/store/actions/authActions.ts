@@ -39,7 +39,7 @@ export const signup = (
           id: res.user.uid,
           createdAt: Date.now(),
           gems: [],
-          profilePhoto: data.profilePhoto,
+          profilePhoto: await uploadUserImage(data.profilePhoto as File),
         };
         console.log(userData);
         await firebase
@@ -66,6 +66,24 @@ export const signup = (
     }
   };
 };
+
+const  uploadUserImage = async (image:File) => {
+  console.log(image)
+  let formData = new FormData()
+  formData.append("user_image", image)
+  formData.append("user_id", auth.currentUser?.uid as string)
+  formData.append("token", await auth.currentUser?.getIdToken() as string)
+
+  // fetch("http://localhost:8000/api/deliver/userImage/",{
+  //   method: "POST",
+  //   body: formData
+  // })
+  // .then((response) => response.json())
+  // .then((data) => {
+  //   console.log(data)
+  // });
+  return ""
+} 
 
 export const getUserById = (
   id: string
