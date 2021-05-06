@@ -19,7 +19,11 @@ const Library: FC = () => {
   const currentPosts = userGems.slice(indexOfFirstPost, indexOfLastPost);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {}, [currentPosts]);
+  React.useEffect(() => {
+    if (userGems === undefined) {
+      dispatch(getUserGems());
+    }
+  }, [currentPosts]);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
