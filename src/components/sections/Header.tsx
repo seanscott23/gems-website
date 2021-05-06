@@ -68,8 +68,16 @@ const Header: FC = () => {
                 Library
               </Button>
             </NavDropdown.Item>
-            <NavDropdown.Divider />
             <NavDropdown.Item eventKey="4.3">
+              <Button
+                variant="primary"
+                onClick={() => history.push("/profile")}
+              >
+                Profile
+              </Button>
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item eventKey="4.4">
               <Button variant="secondary" onClick={logoutClickHandler}>
                 Sign out
               </Button>
