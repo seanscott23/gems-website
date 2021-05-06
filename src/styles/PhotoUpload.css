@@ -7,10 +7,9 @@
   color: #1e3d58;
 }
 .upload-box-photo {
-  /* margin-top: 5%; */
-  width: 200px;
-  /* position: absolute; */
-  height: 200px;
+  width: 100%;
+
+  height: 100%;
 
   text-align: center;
   padding: 5px;
@@ -20,7 +19,7 @@
   cursor: pointer;
 }
 
-@media (max-width: 1150px) {
+/* @media (max-width: 1150px) {
   .photo-section,
   .upload-box-photo {
     width: 150px;
@@ -60,10 +59,13 @@
   .photo-section > h2 {
     font-size: 0.9rem;
   }
-}
+} */
 
 .signup-user-photo {
   cursor: pointer;
+}
+.upload-box-photo > label {
+  margin-bottom: 0;
 }
 
 .preparing-4-drag {
@@ -103,6 +105,6 @@
 }
 
 .profileImage {
-  width: 190px;
-  height: 190px;
+  width: 300px;
+  height: 300px;
 }
