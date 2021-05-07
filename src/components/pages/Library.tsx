@@ -20,7 +20,7 @@ const Library: FC = () => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if (userGems === undefined) {
+    if (userGems !== undefined) {
       dispatch(getUserGems());
     }
   }, [currentPosts]);
