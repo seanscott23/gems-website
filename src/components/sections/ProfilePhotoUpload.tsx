@@ -1,21 +1,21 @@
 import "../../styles/PhotoUpload.css";
-import React, { useEffect, useState, DragEvent } from "react";
+import React, { useEffect, useState, DragEvent, FC } from "react";
 import uploadPNG from "../../images/upload.png";
 import { submitPhoto } from "../../store/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Container } from "react-bootstrap";
 
-function ProfilePhotoUpload() {
-  const { profilePhoto } = useSelector((state: RootState) => state.auth);
+const ProfilePhotoUpload: FC = () => {
+  const { user } = useSelector((state: RootState) => state.auth);
   const [photo, setPhoto] = useState<string | ArrayBuffer>("");
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (profilePhoto?.length !== 0 && profilePhoto !== undefined) {
-      setPhoto(profilePhoto);
+    if (user?.profilePhoto) {
+      setPhoto(user?.profilePhoto);
     }
-  }, [profilePhoto]);
+  }, [user?.profilePhoto]);
 
   function dropTargetRelease() {
     document
@@ -106,5 +106,5 @@ function ProfilePhotoUpload() {
       </div>
     </div>
   );
-}
+};
 export default ProfilePhotoUpload;

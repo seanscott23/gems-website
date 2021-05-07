@@ -4,10 +4,7 @@ import { Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import "../../styles/GemForm.css";
-import {
-  submitFinalGem,
-  getUserGems,
-} from "../../store/actions/gemSubmitAction";
+import { submitFinalGem } from "../../store/actions/gemSubmitAction";
 import Button from "../UI/Button";
 import { useHistory } from "react-router-dom";
 
@@ -29,9 +26,9 @@ const GemForm: FC = () => {
     setGemID(splitURL[1]);
   };
 
-  const getEpisodeNum = () => {
-    setEpisodeNum(userGems.length + 1);
-  };
+  // const getEpisodeNum = () => {
+  //   setEpisodeNum(userGems.length + 1);
+  // };
 
   const submitHandler = async (
     e: React.MouseEvent<HTMLElement, MouseEvent>
@@ -46,8 +43,7 @@ const GemForm: FC = () => {
         description,
         categories,
         isChecked,
-        gemID,
-        episodeNum
+        gemID
       )
     );
     setLoading(false);

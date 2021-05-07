@@ -11,8 +11,7 @@ export const submitFinalGem = (
   description: string,
   categories: Array<any>,
   explicit: boolean,
-  gemID: string,
-  episodeNum: number
+  gemID: string
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
@@ -27,7 +26,7 @@ export const submitFinalGem = (
           description: description,
           categories: categories,
           explicit: explicit,
-          episodeNum: episodeNum,
+        
         }),
       })
         .then((response) => response.json())
@@ -75,7 +74,7 @@ export const getUserGems = (): ThunkAction<
           description: "",
           categories: [],
           explicit: false,
-          episodeNum: 0,
+      
         }),
       })
         .then((response) => response.json())

@@ -1,5 +1,4 @@
 import { ThunkAction } from "redux-thunk";
-
 import {
   SignUpData,
   AuthAction,
@@ -17,10 +16,8 @@ import {
   SET_USER_PHOTO,
 } from "../types";
 import Parser from "rss-parser";
-
 import { RootState } from "..";
 import firebase from "../../firebase/config";
-
 const auth = firebase.auth();
 
 export const signup = (
@@ -39,9 +36,9 @@ export const signup = (
           id: res.user.uid,
           createdAt: Date.now(),
           gems: [],
-          profilePhoto: await uploadUserImage(data.profilePhoto as File),
+          profilePhoto: data.profilePhoto 
         };
-        console.log(userData);
+
         await firebase
           .database()
           .ref("/users")
