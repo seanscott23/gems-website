@@ -9,7 +9,7 @@ interface Props extends RouteProps {
 
 const PublicRoute: FC<Props> = ({ component: Component, ...rest }) => {
   const { authenticated } = useSelector((state: RootState) => state.auth);
-
+  // console.log(authenticated);
   return (
     <Route
       {...rest}

@@ -5,7 +5,7 @@ import { RootState } from "../../store";
 import { Button, Card, ListGroup } from "react-bootstrap";
 import "../../styles/RssFeed.css";
 import ReturnHTML from "../rss/ReturnHtml";
-import ReadyToUploadClips from "../rss/ReadyToUploadClips";
+
 import PaginationBar from "../sections/PaginationBar";
 import SearchBar from "../sections/SearchBar";
 
@@ -18,10 +18,7 @@ const RssFeed: FC = () => {
   const [isModalOpen, setModalState] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [readyPostsPerPage, setReadyPostsPerPage] = useState(10);
-  // const [readyCurrentPage, setReadyCurrentPage] = useState(1);
-  // const readyIndexLast = readyCurrentPage * readyPostsPerPage;
-  // const readyIndexFirst = readyIndexLast * readyPostsPerPage;
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
@@ -33,28 +30,12 @@ const RssFeed: FC = () => {
     }
   }, [success, dispatch]);
 
-  // const audioClipsTooLong = () => {
-  //   const audioItems: Array<object> = [];
-  //   const allItems = rssFeedUrl.items;
-  //   allItems.map(async (currentItem: any) => {
-  //     if (parseInt(currentItem.itunes.duration) > 600) {
-  //       audioItems.push(currentItem);
-  //     }
-  //   });
-  //   return audioItems;
-  // };
   const items = rssFeedUrl.items;
   const [clips, setClips] = useState(items);
-  // const readyItems = readyToUpload();
-  const currentPosts = items.slice(indexOfFirstPost, indexOfLastPost);
-  // const currentReadyPosts = readyItems.slice(readyIndexFirst, readyIndexLast);
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-  // const readyPaginate = (pageNumber: number) => setReadyCurrentPage(pageNumber);
 
-  // const handleChange = () => {
-  //   // setInput("");
-  //   setClips(items);
-  // };
+  const currentPosts = items.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const handleFilterList = (input: string) => {
     const filtered = items.filter((clip: any) => {
@@ -71,13 +52,9 @@ const RssFeed: FC = () => {
       <div className="rss-columns">
         <ListGroup id="needToBeTrimmed" as="ul">
           <h3 style={{ textAlign: "center" }}>
-            These clips need to be trimmed
+            Upload or Crop these items to your desired length.
           </h3>
-          <SearchBar
-            input={input}
-            setInput={handleFilterList}
-            // handleChange={handleChange}
-          />
+          <SearchBar input={input} setInput={handleFilterList} />
           <ReturnHTML
             posts={currentPosts}
             clips={clips}
