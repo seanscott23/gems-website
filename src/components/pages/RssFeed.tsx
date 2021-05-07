@@ -14,7 +14,7 @@ const RssFeed: FC = () => {
     (state: RootState) => state.auth
   );
   const [input, setInput] = useState<string>("");
-  // const [filteredList, setFilteredList] = useState<any[]>();
+
   const [isModalOpen, setModalState] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -84,7 +84,19 @@ const RssFeed: FC = () => {
           {currentReadyPosts.length > 0 ? (
             <h3 style={{ textAlign: "center" }}>Ready to upload</h3>
           ) : null}
-          {<ReadyToUploadClips posts={currentReadyPosts}></ReadyToUploadClips>}
+          {/* <SearchBar
+            input={input}
+            setInput={handleFilterList}
+            // handleChange={handleChange}
+          /> */}
+          {
+            <ReadyToUploadClips
+              posts={currentReadyPosts}
+              // clips={clips}
+              // input={input}
+              // setClips={setClips}
+            ></ReadyToUploadClips>
+          }
           {currentReadyPosts.length > 0 ? (
             <PaginationBar
               postsPerPage={readyPostsPerPage}
