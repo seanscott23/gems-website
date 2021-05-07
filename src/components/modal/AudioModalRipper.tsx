@@ -75,6 +75,7 @@ const AudioModalRipper: FC<ModalProps> = ({
       id={id}
       begin={begin}
       end={end}
+      size="lg"
     >
       <Modal.Header closeButton>
         <Modal.Title>{clip.title}</Modal.Title>

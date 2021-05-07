@@ -104,6 +104,7 @@ const ProfilePhotoUpload: FC = () => {
           </div>
         </label>
       </div>
+      <p>Click photo to update</p>
     </div>
   );
 };

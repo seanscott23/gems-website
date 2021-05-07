@@ -26,7 +26,6 @@ export const submitFinalGem = (
           description: description,
           categories: categories,
           explicit: explicit,
-        
         }),
       })
         .then((response) => response.json())
@@ -74,7 +73,6 @@ export const getUserGems = (): ThunkAction<
           description: "",
           categories: [],
           explicit: false,
-      
         }),
       })
         .then((response) => response.json())

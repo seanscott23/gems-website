@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 import "../../styles/Library.css";
-import ProfilePhotoUpload from "../sections/ProfilePhotoUpload";
+
 import GemPagination from "../sections/GemPagination";
 import PaginationBar from "../sections/PaginationBar";
 import { getUserGems } from "../../store/actions/gemSubmitAction";
 
 const Library: FC = () => {
-  const { userGems, user } = useSelector((state: RootState) => state.auth);
+  const { userGems } = useSelector((state: RootState) => state.auth);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastPost = currentPage * postsPerPage;
@@ -20,15 +20,15 @@ const Library: FC = () => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-  }, [user?.profilePhoto, currentPosts]);
+    if (userGems !== undefined) {
+      dispatch(getUserGems());
+    }
+  }, [currentPosts]);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return userGems.length > 0 ? (
     <div>
-      <div>
-        <ProfilePhotoUpload></ProfilePhotoUpload>
-      </div>
       <section className="library-section">
         <h1>Your gem library!</h1>
         <h6>

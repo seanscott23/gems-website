@@ -10,6 +10,7 @@ import ForgotPassword from "./components/pages/ForgotPassword";
 import Homepage from "./components/pages/Homepage";
 import RssFeed from "./components/pages/RssFeed";
 import Dashboard from "./components/pages/Dashboard";
+import Profile from "./components/pages/Profile";
 import GemForm from "./components/pages/GemUploadForm";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import PublicRoute from "./components/auth/PublicRoute";
@@ -61,6 +62,7 @@ const App: FC = () => {
         <PrivateRoute path="/rssFeed" component={RssFeed} exact />
         <PrivateRoute path="/library" component={Library} exact />
         <PrivateRoute path="/gem-form" component={GemForm} exact />
+        <PrivateRoute path="/profile" component={Profile} exact />
       </Switch>
     </BrowserRouter>
   );

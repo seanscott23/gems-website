@@ -14,7 +14,10 @@ interface Clip {
 
 const ReturnHTML: FC<{
   posts: Array<any>;
-}> = ({ posts }) => {
+  clips: Array<any>;
+  setClips: (clips: any[]) => void;
+  input: string;
+}> = ({ posts, clips, setClips, input }) => {
   const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
   const [isModalOpen, setModalState] = React.useState(false);
   const [activeClip, setActiveClip] = React.useState<Clip | null>(null);
@@ -35,9 +38,43 @@ const ReturnHTML: FC<{
     }
   }, [success, dispatch]);
 
-  return (
+  return input === "" ? (
     <div>
       {posts.map((clip: any, i: number) => (
+        <ListGroup.Item as="li">
+          <Card>
+            <Card.Body>
+              <Card.Title>{clip.title}</Card.Title>
+              {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
+
+              <Button
+                onClick={() => {
+                  setActiveClip(clip);
+                  setModalState(!isModalOpen);
+                }}
+              >
+                Crop audio
+              </Button>
+
+              {!activeClip ? null : (
+                <AudioModalRipper
+                  isOpen={isModalOpen}
+                  handleClose={handleClose}
+                  clip={activeClip}
+                  id={i}
+                  begin={begin}
+                  end={end}
+                  handleTimeUpdate={handleTimeUpdate}
+                />
+              )}
+            </Card.Body>
+          </Card>
+        </ListGroup.Item>
+      ))}
+    </div>
+  ) : (
+    <div>
+      {clips.map((clip: any, i: number) => (
         <ListGroup.Item as="li">
           <Card>
             <Card.Body>

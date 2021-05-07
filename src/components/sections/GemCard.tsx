@@ -1,3 +1,4 @@
+import { findAllByDisplayValue } from "@testing-library/dom";
 import React from "react";
 import { useEffect } from "react";
 import { Button, Card, ListGroup } from "react-bootstrap";
@@ -25,6 +26,8 @@ export const GemCard: React.FC<{
 }> = ({ gemID, gemInfo }) => {
   const [isDeleteModalOpen, setDeleteModalState] = React.useState(false);
   const [isUpdateModalOpen, setUpdateModalState] = React.useState(false);
+  const [audioShow, setAudioShow] = React.useState(false);
+  const [hideButton, setHideButton] = React.useState(true);
   const [activeClip, setActiveClip] = React.useState<Gem | null>(null);
   const handleDeleteClose = () => {
     setDeleteModalState(!isDeleteModalOpen);
@@ -42,7 +45,7 @@ export const GemCard: React.FC<{
           <div className="gemCategory">{category}</div>
         ))
       : [];
-  // console.log(key);
+
   let gem = { gemID, gemInfo } as Gem;
   return (
     <div>
@@ -55,20 +58,30 @@ export const GemCard: React.FC<{
                 {gemInfo.explicit ? "E" : null}
               </Card.Subtitle>
             </Card.Title>
-
             <Card.Subtitle className="mb-2 text-muted">
               {getCategories}
             </Card.Subtitle>
             <Card.Text>{gemInfo.description}</Card.Text>
-
-            <audio
-              src={gemInfo.audioURL}
-              controls
-              preload="metadata"
-              className="cardAudio"
-            >
-              Your browser does not support the audio element.
-            </audio>
+            {hideButton ? (
+              <Button
+                onClick={() => {
+                  setAudioShow(!audioShow);
+                  setHideButton(!hideButton);
+                }}
+              >
+                Show audio
+              </Button>
+            ) : null}
+            {audioShow ? (
+              <audio
+                src={gemInfo.audioURL}
+                controls
+                preload="metadata"
+                className="cardAudio"
+              >
+                Your browser does not support the audio element.
+              </audio>
+            ) : null}
           </Card.Body>
           <Card.Footer>
             <div>Episode: #{gemInfo.episodeNum}</div>

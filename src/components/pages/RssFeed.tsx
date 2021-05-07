@@ -7,9 +7,14 @@ import "../../styles/RssFeed.css";
 import ReturnHTML from "../rss/ReturnHtml";
 import ReadyToUploadClips from "../rss/ReadyToUploadClips";
 import PaginationBar from "../sections/PaginationBar";
+import SearchBar from "../sections/SearchBar";
 
 const RssFeed: FC = () => {
-  const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
+  const { rssFeedUrl, success, userGems } = useSelector(
+    (state: RootState) => state.auth
+  );
+  const [input, setInput] = useState<string>("");
+  // const [filteredList, setFilteredList] = useState<any[]>();
   const [isModalOpen, setModalState] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,11 +55,28 @@ const RssFeed: FC = () => {
     return audioItems;
   };
   const items = audioClipsTooLong();
+  const [clips, setClips] = useState(items);
   const readyItems = readyToUpload();
   const currentPosts = items.slice(indexOfFirstPost, indexOfLastPost);
   const currentReadyPosts = readyItems.slice(readyIndexFirst, readyIndexLast);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const readyPaginate = (pageNumber: number) => setReadyCurrentPage(pageNumber);
+
+  // const handleChange = () => {
+  //   // setInput("");
+  //   setClips(items);
+  // };
+
+  const handleFilterList = (input: string) => {
+    const filtered = items.filter((clip: any) => {
+      return input === ""
+        ? clip
+        : clip.title.toLowerCase().includes(input.toLowerCase());
+    });
+    setInput(input);
+    setClips(filtered);
+  };
+
   return (
     <section className="rss-container">
       <div className="rss-columns">
@@ -77,7 +99,17 @@ const RssFeed: FC = () => {
           <h3 style={{ textAlign: "center" }}>
             These clips need to be trimmed
           </h3>
-          <ReturnHTML posts={currentPosts}></ReturnHTML>
+          <SearchBar
+            input={input}
+            setInput={handleFilterList}
+            // handleChange={handleChange}
+          />
+          <ReturnHTML
+            posts={currentPosts}
+            clips={clips}
+            input={input}
+            setClips={setClips}
+          ></ReturnHTML>
           <PaginationBar
             postsPerPage={postsPerPage}
             totalPosts={items.length}

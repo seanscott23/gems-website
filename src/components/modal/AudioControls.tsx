@@ -13,7 +13,7 @@ export const Controls: React.FC<{
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
   const audio: HTMLAudioElement | null = document.querySelector(".audioClip");
   const [startTime, setStartTime] = React.useState<number>(0);
-  const [endTime, setEndTime] = React.useState<number>(100);
+  const [endTime, setEndTime] = React.useState<number>(1000);
 
   const leftProgressCircle:
     | HTMLCollectionOf<Element>
@@ -60,7 +60,7 @@ export const Controls: React.FC<{
     return parseFloat((seconds / 60).toFixed(2));
   };
   React.useEffect(() => {
-    if (audioMetaData?.duration != undefined && endTime == 100) {
+    if (audioMetaData?.duration != undefined && endTime == 1000) {
       setEndTime(secondsToDecimal(audioMetaData.duration) as number);
     }
     handleTimeUpdate(startTime, endTime);
@@ -95,6 +95,7 @@ export const Controls: React.FC<{
         // debugger;
         handleTimeUpdate(startTime, endTime);
         setStartTime(secondsToDecimal(audio.currentTime));
+        // debugger;
         let leftAmountMoved =
           (startTime / secondsToDecimal(audio.duration)) * 100;
         let rightMoved = parseFloat(
@@ -103,6 +104,9 @@ export const Controls: React.FC<{
             -1
           )
         );
+
+        // let rightMoved = (endTime / secondsToDecimal(audio.duration)) * 100;
+
         let rightPercent = parseFloat(rightMoved.toFixed(2));
         let rightMovedPct = parseFloat((100 - rightPercent).toFixed(2));
         let leftPercent = parseFloat(leftAmountMoved.toFixed(2));
@@ -110,7 +114,7 @@ export const Controls: React.FC<{
         leftProgressCircle[leftProgressCircle.length - 1].style.left =
           leftPercent + "%";
         sliderBar[leftProgressCircle.length - 1].style.left = leftPercent + "%";
-        // debugger;
+
         sliderBar[leftProgressCircle.length - 1].style.width =
           widthPercent + "%";
       }
@@ -142,6 +146,7 @@ export const Controls: React.FC<{
 
   const onMinChange = (e: number[]) => {
     setStartTime(e[0]);
+
     setEndTime(e[1]);
     if (audio) {
       audio.currentTime = e[0] * 60;
