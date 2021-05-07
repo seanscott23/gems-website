@@ -53,3 +53,42 @@ const ReadyToUploadClips: FC<{
 };
 
 export default ReadyToUploadClips;
+
+// <ListGroup id="readyToUpload" as="ul">
+//   {currentReadyPosts.length > 0 ? (
+//     <h3 style={{ textAlign: "center" }}>Ready to upload</h3>
+//   ) : null}
+//   {/* <SearchBar
+//         input={input}
+//         setInput={handleFilterList}
+//         // handleChange={handleChange}
+//       /> */}
+//   {
+//     <ReadyToUploadClips
+//       posts={currentReadyPosts}
+//       // clips={clips}
+//       // input={input}
+//       // setClips={setClips}
+//     ></ReadyToUploadClips>
+//   }
+//   {currentReadyPosts.length > 0 ? (
+//     <PaginationBar
+//       postsPerPage={readyPostsPerPage}
+//       totalPosts={readyItems.length}
+//       currentPage={readyCurrentPage}
+//       setCurrentPage={setReadyCurrentPage}
+//       paginate={readyPaginate}
+//     ></PaginationBar>
+//   ) : null}
+// </ListGroup>;
+
+// const readyToUpload = () => {
+//   const audioItems: Array<object> = [];
+//   const allItems = rssFeedUrl.items;
+//   allItems.map(async (currentItem: any) => {
+//     if (parseInt(currentItem.itunes.duration) <= 600) {
+//       audioItems.push(currentItem);
+//     }
+//   });
+//   return audioItems;
+// };

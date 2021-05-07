@@ -25,7 +25,7 @@ const Library: FC = () => {
     if (userGems !== undefined) {
       dispatch(getUserGems());
     }
-  }, [currentPosts, userGems]);
+  }, [currentPosts]);
 
   const handleFilterList = (input: string) => {
     const filtered = userGems.filter((clip: any) => {
