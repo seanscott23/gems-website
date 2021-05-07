@@ -53,6 +53,8 @@ const SignUp: FC = () => {
     );
   };
 
+
+
   return (
     <div>
       <Card className="sign-up-container">

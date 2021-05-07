@@ -15,7 +15,7 @@ const Signin: FC = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const { error } = useSelector((state: RootState) => state.auth);
+  const { error, user } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     return () => {
@@ -30,6 +30,12 @@ const Signin: FC = () => {
     setLoading(true);
     dispatch(signin({ email, password }, () => setLoading(false)));
   };
+
+  // const getError = (error: string) => {
+  //   if (user?.emailVerified) {
+  //     return true;
+  //   }
+  // };
 
   return (
     <div>
@@ -70,7 +76,7 @@ const Signin: FC = () => {
         </Form>
       </Card>
       <div className="homeLink">
-       <span>New to Gems?</span> <Link to={"/signup"}>Sign up</Link>
+        <span>New to Gems?</span> <Link to={"/signup"}>Sign up</Link>
       </div>
     </div>
   );

@@ -53,8 +53,10 @@ export const signup = (
             payload: userData,
           });
         } else {
-          alert("Email sent");
-          window.location.href = "/signin";
+          dispatch(
+            setError("Please check your email to verify your email addess")
+          );
+          // window.location.href = "/signin";
         }
       }
     } catch (err) {
@@ -108,6 +110,10 @@ export const signin = (
         .auth()
         .signInWithEmailAndPassword(data.email, data.password)
         .then((userCredential) => {
+          if (!userCredential.user?.emailVerified) {
+            dispatch(setError("Please verify your email address"));
+            dispatch(setLoading(false));
+          }
           console.log(userCredential);
         });
     } catch (err) {
