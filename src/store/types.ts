@@ -84,7 +84,7 @@ interface SubmitFinalGem {
 
 interface SetIsVerifiedAction {
   type: typeof IS_VERIFIED;
-  payload: boolean;
+  // payload: boolean;
 }
 
 interface SetLoadingAction {

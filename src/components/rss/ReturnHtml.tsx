@@ -6,6 +6,7 @@ import {
   setSuccess,
   submitNewFile,
 } from "../../store/actions/authActions";
+import "../../styles/ReturnHtml.css";
 import { RootState } from "../../store";
 import AudioModalRipper from "../modal/AudioModalRipper";
 import { useHistory } from "react-router-dom";
@@ -71,9 +72,21 @@ const ReturnHTML: FC<{
                   Crop audio
                 </Button>
               ) : (
-                <Button onClick={() => submitHandler(clip)}>
-                  Upload audio
-                </Button>
+                <div>
+                  <Button onClick={() => submitHandler(clip)}>
+                    Upload audio
+                  </Button>
+                  <span className="button-or">Or</span>
+
+                  <Button
+                    onClick={() => {
+                      setActiveClip(clip);
+                      setModalState(!isModalOpen);
+                    }}
+                  >
+                    Crop audio
+                  </Button>
+                </div>
               )}
 
               {!activeClip ? null : (

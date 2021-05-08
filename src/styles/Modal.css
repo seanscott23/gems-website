@@ -5,6 +5,10 @@
 .audioInput {
   width: 100%;
 }
+
+.modal-content {
+  height: 15em;
+}
 #modalBody {
   padding: 0;
 
@@ -74,7 +78,7 @@
   display: block;
   position: absolute;
   width: 100%;
-  bottom: 30px;
+  bottom: 60px;
   top: 0;
   transform: translateY(100%) translateY(-5px);
   transition: all 0.3s;
@@ -115,4 +119,15 @@
   display: flex;
 
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.audioInputs {
+  flex-direction: column;
+  max-width: 170px;
+  display: flex;
+  margin: 5px;
+}
+.audioInputs > .audioTime {
+  height: 2em;
+  margin: 3px;
 }

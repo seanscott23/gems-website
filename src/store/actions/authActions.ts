@@ -19,6 +19,7 @@ import Parser from "rss-parser";
 import { RootState } from "..";
 import firebase from "../../firebase/config";
 import { FC } from "react";
+import { userInfo } from "node:os";
 
 const auth = firebase.auth();
 
@@ -31,7 +32,6 @@ export const signup = (
       const res = await firebase
         .auth()
         .createUserWithEmailAndPassword(data.email, data.password);
-
       if (res.user) {
         const userData: User = {
           email: data.email,
@@ -41,22 +41,47 @@ export const signup = (
           gems: [],
           profilePhoto: data.profilePhoto,
         };
-        res.user.sendEmailVerification();
-        if (res.user.emailVerified) {
-          firebase.database().ref("/users").child(res.user.uid).set(userData);
-          dispatch({
-            type: NEED_VERIFICATION,
-          });
-          dispatch({
-            type: SET_USER,
-            payload: userData,
-          });
-        } else {
+        await firebase
+          .database()
+          .ref("/users")
+          .child(res.user.uid)
+          .set(userData);
+        res.user.sendEmailVerification().then(() => {
+          //useState used on my loading (user can cancel this loading and exit               this task
           dispatch(
             setError("Please check your email to verify your email addess")
           );
-          // window.location.href = "/signin";
-        }
+          const unsubscribeOnUserChanged = firebase
+            .auth()
+            .onAuthStateChanged((response) => {
+              const unsubscribeSetInterval = setInterval(() => {
+                //this works as a next in for-like
+                firebase.auth().currentUser?.reload();
+              }, 30000);
+              if (response?.emailVerified) {
+                clearInterval(unsubscribeSetInterval); //stop setInterval
+                setLoading(false); //close loading describes above
+                dispatch({
+                  type: SET_USER,
+                  payload: userData,
+                });
+                return unsubscribeOnUserChanged(); //unsubscribe onUserChanged
+              }
+            });
+        });
+        // if (!res.user.emailVerified) {
+        //   debugger;
+        //   dispatch(
+        //     setError("Please check your email to verify your email addess")
+        //   );
+        // }
+        // dispatch({
+        //   type: NEED_VERIFICATION,
+        // });
+        // dispatch({
+        //   type: SET_USER,
+        //   payload: userData,
+        // });
       }
     } catch (err) {
       console.log(err);
@@ -101,7 +126,7 @@ export const setLoading = (
 
 export const signin = (
   data: SignInData,
-
+  onError: () => void
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
@@ -110,15 +135,34 @@ export const signin = (
         .signInWithEmailAndPassword(data.email, data.password)
         .then((userCredential) => {
           if (!userCredential.user?.emailVerified) {
-     
             dispatch(setError("Please verify your email address"));
-           
+            dispatch(setLoading(false));
+            return dispatch({
+              type: NEED_VERIFICATION,
+            });
           }
-          console.log(userCredential);
         });
+      // firebase.auth().onAuthStateChanged((user) => {
+      //   if (user) {
+      //     if (!user.emailVerified) {
+      //       dispatch({
+      //         type: NEED_VERIFICATION,
+      //       });
+      //       dispatch(setError("Please verify your email address"));
+      //     } else {
+      //       console.log("success");
+      //     }
+      //   } else {
+      //     dispatch(
+      //       setError(
+      //         "This email password combination may not work or the user doesn't exist"
+      //       )
+      //     );
+      //   }
+      // });
     } catch (err) {
       console.log(err);
-
+      onError();
       dispatch(setError(err.message));
     }
   };

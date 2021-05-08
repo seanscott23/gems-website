@@ -2,6 +2,7 @@ import React from "react";
 import Slider, { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
 import { start } from "node:repl";
+import Input from "../UI/Input";
 
 export const Controls: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
@@ -64,7 +65,6 @@ export const Controls: React.FC<{
       setEndTime(secondsToDecimal(audioMetaData.duration) as number);
     }
     handleTimeUpdate(startTime, endTime);
-
     if (audio) {
       audio.ontimeupdate = function () {
         updateProgressBar();
@@ -92,23 +92,25 @@ export const Controls: React.FC<{
 
     if (leftProgressCircle[leftProgressCircle.length - 1] && audio) {
       if (endTime > startTime) {
-        // debugger;
         handleTimeUpdate(startTime, endTime);
         setStartTime(secondsToDecimal(audio.currentTime));
-        // debugger;
         let leftAmountMoved =
           (startTime / secondsToDecimal(audio.duration)) * 100;
-        let rightMoved = parseFloat(
-          rightProgressCircle[rightProgressCircle.length - 1].style.left.slice(
-            0,
-            -1
-          )
-        );
+        // let rightMoved = parseFloat(
+        //   rightProgressCircle[rightProgressCircle.length - 1].style.left.slice(
+        //     0,
+        //     -1
+        //   )
+        // );
 
-        // let rightMoved = (endTime / secondsToDecimal(audio.duration)) * 100;
+        let rightMoved = (endTime / secondsToDecimal(audio.duration)) * 100;
 
         let rightPercent = parseFloat(rightMoved.toFixed(2));
         let rightMovedPct = parseFloat((100 - rightPercent).toFixed(2));
+
+        rightProgressCircle[rightProgressCircle.length - 1].style.left =
+          rightPercent.toString() + "%";
+
         let leftPercent = parseFloat(leftAmountMoved.toFixed(2));
         let widthPercent = 100 - leftPercent - rightMovedPct;
         leftProgressCircle[leftProgressCircle.length - 1].style.left =
@@ -154,8 +156,6 @@ export const Controls: React.FC<{
   };
 
   const showTime = (decimal: number) => {
-    // debugger;
-
     if (decimal < 60) {
       let string = decimal.toString().split(".");
       if (decimal != 0) {
@@ -196,6 +196,16 @@ export const Controls: React.FC<{
       } else {
         return hour + ":" + min + ":" + 0 + seconds;
       }
+    }
+  };
+
+  const inputEndTime = (e: React.ChangeEvent) => {
+    let target: any = e.currentTarget;
+    if (typeof parseInt(target.value) === "number" && audio) {
+      setEndTime(parseInt(target.value));
+    }
+    if (audio) {
+      audio.currentTime = startTime;
     }
   };
   // const checkKey = (e: KeyboardEvent) => {
@@ -242,6 +252,24 @@ export const Controls: React.FC<{
           <div className="startTime">Start time: {showTime(startTime)}</div>
           <div className="endTime">End time: {showTime(endTime)}</div>
         </div>
+      </div>
+      <div className="audioInputs">
+        <input
+          type="text"
+          className="audioTime"
+          placeholder="Start time"
+          name="startTime"
+          // value={startTime}
+          // onChange={() => setStartTime(startTime)}
+        />
+        <input
+          type="text"
+          className="audioTime"
+          placeholder="End time"
+          name="endTime"
+          // value=""
+          onChange={(e) => inputEndTime(e)}
+        />
       </div>
     </div>
   ) : null;
