@@ -9,7 +9,6 @@ import { RootState } from "../../store";
 import "../../styles/Signup.css";
 import { Link } from "react-router-dom";
 import ProfilePhotoUpload from "../sections/ProfilePhotoUpload";
-import Verification from "../sections/Verification";
 const SignUp: FC = () => {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
@@ -52,8 +51,6 @@ const SignUp: FC = () => {
       )
     );
   };
-
-
 
   return (
     <div>

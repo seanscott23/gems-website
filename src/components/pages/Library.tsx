@@ -36,17 +36,17 @@ const Library: FC = () => {
     setInput(input);
     setClips(filtered);
   };
-  ///not sure if we need to put usergems in the useeffect array here.
+
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  return userGems.length > 0 ? (
+  return userGems !== undefined ? (
     <div>
       <section className="library-section">
-        {/* <h1>Your gem library!</h1>
+        <h1>Your gem library!</h1>
         <h6>
           This page is linked directly with your account on our app. Update or
           delete any gem within this page.
-        </h6> */}
+        </h6>
         <SearchBar input={input} setInput={handleFilterList} />
         <ListGroup id="allGems" as="ul">
           <GemPagination

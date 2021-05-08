@@ -7,6 +7,7 @@ import { signin, setError } from "../../store/actions/authActions";
 import { RootState } from "../../store";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Card } from "react-bootstrap";
+// import firebase from "../../firebase/config";
 import "../../styles/Signin.css";
 
 const Signin: FC = () => {
@@ -30,12 +31,6 @@ const Signin: FC = () => {
     setLoading(true);
     dispatch(signin({ email, password }, () => setLoading(false)));
   };
-
-  // const getError = (error: string) => {
-  //   if (user?.emailVerified) {
-  //     return true;
-  //   }
-  // };
 
   return (
     <div>

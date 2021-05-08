@@ -17,7 +17,6 @@ import {
 } from "../types";
 import Parser from "rss-parser";
 import { RootState } from "..";
-import Verification from "../../components/sections/Verification";
 import firebase from "../../firebase/config";
 import { FC } from "react";
 
@@ -111,9 +110,10 @@ export const signin = (
         .signInWithEmailAndPassword(data.email, data.password)
         .then((userCredential) => {
           if (!userCredential.user?.emailVerified) {
-            dispatch(setError("Please verify your email address"));
             dispatch(setLoading(false));
+            dispatch(setError("Please verify your email address"));
           }
+
           console.log(userCredential);
         });
     } catch (err) {

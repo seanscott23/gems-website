@@ -11,7 +11,7 @@ import Homepage from "./components/pages/Homepage";
 import RssFeed from "./components/pages/RssFeed";
 import Dashboard from "./components/pages/Dashboard";
 import Profile from "./components/pages/Profile";
-import Verification from "./components/sections/Verification";
+
 import GemForm from "./components/pages/GemUploadForm";
 import PrivateRoute from "./components/auth/PrivateRoute";
 
@@ -64,7 +64,7 @@ const App: FC = () => {
         <PublicRoute path="/signup" component={SignUp} exact />
         <PublicRoute path="/signin" component={SignIn} exact />
         <PublicRoute path="/" component={Homepage} exact />
-        <PublicRoute path="/verification" component={Verification} exact />
+
         <PublicRoute path="/forgot-password" component={ForgotPassword} exact />
       </Switch>
     </BrowserRouter>
