@@ -119,7 +119,7 @@ export const setLoading = (
 
 export const signin = (
   data: SignInData,
-  onError: () => void
+
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
@@ -128,15 +128,15 @@ export const signin = (
         .signInWithEmailAndPassword(data.email, data.password)
         .then((userCredential) => {
           if (!userCredential.user?.emailVerified) {
-            dispatch(setLoading(false));
+     
             dispatch(setError("Please verify your email address"));
+           
           }
-
           console.log(userCredential);
         });
     } catch (err) {
       console.log(err);
-      onError();
+
       dispatch(setError(err.message));
     }
   };
