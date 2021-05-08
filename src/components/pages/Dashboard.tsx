@@ -2,7 +2,11 @@ import { FC, FormEvent, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Message from "../UI/Message";
 import { useHistory } from "react-router-dom";
-import { setSuccess, submitGemForm } from "../../store/actions/authActions";
+import {
+  setSuccess,
+  signout,
+  submitGemForm,
+} from "../../store/actions/authActions";
 import { RootState } from "../../store";
 import { Form } from "react-bootstrap";
 import Button from "../UI/Button";
@@ -53,7 +57,7 @@ const Dashboard: FC = () => {
     <section id="container">
       <div>
         {needVerification && (
-          <Message type="success" msg="Please verify your email address." />
+          <Message type="danger" msg="Please verify your email address." />
         )}
         <h1 className="is-size-1 dash-name">Welcome {getName()}</h1>
       </div>

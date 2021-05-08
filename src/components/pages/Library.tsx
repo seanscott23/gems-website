@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 import "../../styles/Library.css";
-
+import SearchBar from "../sections/SearchBar";
 import GemPagination from "../sections/GemPagination";
 import PaginationBar from "../sections/PaginationBar";
 import { getUserGems } from "../../store/actions/gemSubmitAction";
@@ -17,6 +17,8 @@ const Library: FC = () => {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = userGems.slice(indexOfFirstPost, indexOfLastPost);
+  const [input, setInput] = useState<string>("");
+  const [clips, setClips] = useState(userGems);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -25,9 +27,19 @@ const Library: FC = () => {
     }
   }, [currentPosts]);
 
+  const handleFilterList = (input: string) => {
+    const filtered = userGems.filter((clip: any) => {
+      return input === ""
+        ? clip
+        : clip[1].title.toLowerCase().includes(input.toLowerCase());
+    });
+    setInput(input);
+    setClips(filtered);
+  };
+
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  return userGems.length > 0 ? (
+  return userGems !== undefined ? (
     <div>
       <section className="library-section">
         <h1>Your gem library!</h1>
@@ -35,8 +47,14 @@ const Library: FC = () => {
           This page is linked directly with your account on our app. Update or
           delete any gem within this page.
         </h6>
+        <SearchBar input={input} setInput={handleFilterList} />
         <ListGroup id="allGems" as="ul">
-          <GemPagination posts={currentPosts}></GemPagination>
+          <GemPagination
+            posts={currentPosts}
+            clips={clips}
+            input={input}
+            setClips={setClips}
+          ></GemPagination>
           <PaginationBar
             postsPerPage={postsPerPage}
             totalPosts={userGems.length}

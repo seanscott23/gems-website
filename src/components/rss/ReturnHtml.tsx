@@ -1,14 +1,22 @@
 import React, { FC, useEffect } from "react";
 import { ListGroup, Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setSuccess } from "../../store/actions/authActions";
+import {
+  setLoading,
+  setSuccess,
+  submitNewFile,
+} from "../../store/actions/authActions";
 import { RootState } from "../../store";
 import AudioModalRipper from "../modal/AudioModalRipper";
+import { useHistory } from "react-router-dom";
 
 interface Clip {
   title: string;
   enclosure: {
     url: string;
+  };
+  itunes: {
+    duration: number;
   };
 }
 
@@ -31,6 +39,14 @@ const ReturnHTML: FC<{
     setEnd(endPoint);
   };
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const submitHandler = async (clip: Clip) => {
+    setLoading(true);
+    await dispatch(submitNewFile(clip.enclosure.url, 0, clip.itunes.duration));
+    setLoading(false);
+    history.push("/gem-form");
+  };
 
   useEffect(() => {
     if (success) {
@@ -45,16 +61,20 @@ const ReturnHTML: FC<{
           <Card>
             <Card.Body>
               <Card.Title>{clip.title}</Card.Title>
-              {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
-
-              <Button
-                onClick={() => {
-                  setActiveClip(clip);
-                  setModalState(!isModalOpen);
-                }}
-              >
-                Crop audio
-              </Button>
+              {clip.itunes.duration > 600 ? (
+                <Button
+                  onClick={() => {
+                    setActiveClip(clip);
+                    setModalState(!isModalOpen);
+                  }}
+                >
+                  Crop audio
+                </Button>
+              ) : (
+                <Button onClick={() => submitHandler(clip)}>
+                  Upload audio
+                </Button>
+              )}
 
               {!activeClip ? null : (
                 <AudioModalRipper
@@ -79,16 +99,20 @@ const ReturnHTML: FC<{
           <Card>
             <Card.Body>
               <Card.Title>{clip.title}</Card.Title>
-              {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
-
-              <Button
-                onClick={() => {
-                  setActiveClip(clip);
-                  setModalState(!isModalOpen);
-                }}
-              >
-                Crop audio
-              </Button>
+              {clip.itunes.duration > 600 ? (
+                <Button
+                  onClick={() => {
+                    setActiveClip(clip);
+                    setModalState(!isModalOpen);
+                  }}
+                >
+                  Crop audio
+                </Button>
+              ) : (
+                <Button onClick={() => submitHandler(clip)}>
+                  Upload audio
+                </Button>
+              )}
 
               {!activeClip ? null : (
                 <AudioModalRipper

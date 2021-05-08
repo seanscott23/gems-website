@@ -18,6 +18,8 @@ import {
 import Parser from "rss-parser";
 import { RootState } from "..";
 import firebase from "../../firebase/config";
+import { FC } from "react";
+
 const auth = firebase.auth();
 
 export const signup = (
@@ -29,6 +31,7 @@ export const signup = (
       const res = await firebase
         .auth()
         .createUserWithEmailAndPassword(data.email, data.password);
+
       if (res.user) {
         const userData: User = {
           email: data.email,
@@ -38,20 +41,22 @@ export const signup = (
           gems: [],
           profilePhoto: data.profilePhoto 
         };
-
-        await firebase
-          .database()
-          .ref("/users")
-          .child(res.user.uid)
-          .set(userData);
-        await res.user.sendEmailVerification();
-        dispatch({
-          type: NEED_VERIFICATION,
-        });
-        dispatch({
-          type: SET_USER,
-          payload: userData,
-        });
+        res.user.sendEmailVerification();
+        if (res.user.emailVerified) {
+          firebase.database().ref("/users").child(res.user.uid).set(userData);
+          dispatch({
+            type: NEED_VERIFICATION,
+          });
+          dispatch({
+            type: SET_USER,
+            payload: userData,
+          });
+        } else {
+          dispatch(
+            setError("Please check your email to verify your email addess")
+          );
+          // window.location.href = "/signin";
+        }
       }
     } catch (err) {
       console.log(err);
@@ -122,6 +127,11 @@ export const signin = (
         .auth()
         .signInWithEmailAndPassword(data.email, data.password)
         .then((userCredential) => {
+          if (!userCredential.user?.emailVerified) {
+            dispatch(setLoading(false));
+            dispatch(setError("Please verify your email address"));
+          }
+
           console.log(userCredential);
         });
     } catch (err) {

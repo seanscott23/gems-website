@@ -146,7 +146,7 @@ export const Controls: React.FC<{
 
   const onMinChange = (e: number[]) => {
     setStartTime(e[0]);
-
+    //can add logic here to check if playing and then only update endtime and not both
     setEndTime(e[1]);
     if (audio) {
       audio.currentTime = e[0] * 60;
@@ -154,22 +154,40 @@ export const Controls: React.FC<{
   };
 
   const showTime = (decimal: number) => {
-    let string = decimal.toString().split(".");
-    if (decimal != 0) {
-      let min = string[0];
-      let seconds;
-      if (string[1]) {
-        seconds = (parseFloat("." + string[1]) * 60).toFixed(0);
+    debugger;
+
+    if (decimal < 60) {
+      let string = decimal.toString().split(".");
+      if (decimal != 0) {
+        let min = string[0];
+        let seconds;
+        if (string[1]) {
+          seconds = (parseFloat("." + string[1]) * 60).toFixed(0);
+        } else {
+          seconds = "0";
+        }
+        if (seconds.length == 2) {
+          return min + ":" + seconds;
+        } else {
+          return min + ":" + 0 + seconds;
+        }
       } else {
-        seconds = "0";
-      }
-      if (seconds.length == 2) {
-        return min + ":" + seconds;
-      } else {
-        return min + ":" + 0 + seconds;
+        return 0;
       }
     } else {
-      return 0;
+      // let string = decimal.toString().split(".");
+      // let hour = string[0];
+      // let seconds;
+      // if (string[1]) {
+      //   seconds = (parseFloat("." + string[1]) * 60).toFixed(0);
+      // } else {
+      //   seconds = "0";
+      // }
+      // if (seconds.length == 2) {
+      //   return min + ":" + seconds;
+      // } else {
+      //   return min + ":" + 0 + seconds;
+      // }
     }
   };
   // const checkKey = (e: KeyboardEvent) => {
