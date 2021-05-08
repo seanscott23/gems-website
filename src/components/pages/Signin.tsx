@@ -19,17 +19,17 @@ const Signin: FC = () => {
   const { error, user } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
-    return () => {
-      if (error) {
-        dispatch(setError(""));
-      }
-    };
+    // return () => {
+    //   if (error) {
+    //     dispatch(setError(""));
+    //   }
+    // };
   }, [error, dispatch]);
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(signin({ email, password }));
+    dispatch(signin({ email, password }, () => setLoading(false)));
     setLoading(false);
   };
 

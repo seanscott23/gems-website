@@ -92,12 +92,12 @@ const authReducer = (state = initialState, action: AuthAction) => {
     case NEED_VERIFICATION:
       return {
         ...state,
-        needVerification: true,
+        authenticated: false,
       };
     case IS_VERIFIED:
       return {
         ...state,
-        needVerification: false,
+        authenticated: true,
       };
     case SET_SUCCESS:
       return {

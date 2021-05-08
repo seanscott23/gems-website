@@ -52,7 +52,7 @@ const RssFeed: FC = () => {
       <div className="rss-columns">
         <ListGroup id="needToBeTrimmed" as="ul">
           <h3 style={{ textAlign: "center" }}>
-            Upload or Crop these items to your desired length.
+            Upload or Crop these items below 10 minutes.
           </h3>
           <SearchBar input={input} setInput={handleFilterList} />
           <ReturnHTML

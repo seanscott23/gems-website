@@ -1,6 +1,13 @@
 import "../../styles/AudioModalRipper.css";
 import React, { FC, useState } from "react";
-import { Button, Form, Media, Modal, Spinner } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Form,
+  Media,
+  Modal,
+  Spinner,
+} from "react-bootstrap";
 import "../../styles/Modal.css";
 import { AudioPlayer } from "./AudioPlayer";
 import {
@@ -75,7 +82,7 @@ const AudioModalRipper: FC<ModalProps> = ({
       id={id}
       begin={begin}
       end={end}
-      size="lg"
+      // size="md"
     >
       <Modal.Header closeButton>
         <Modal.Title>{clip.title}</Modal.Title>
