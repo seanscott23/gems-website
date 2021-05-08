@@ -201,11 +201,16 @@ export const Controls: React.FC<{
 
   const inputEndTime = (e: React.ChangeEvent) => {
     let target: any = e.currentTarget;
-    if (typeof parseInt(target.value) === "number" && audio) {
-      setEndTime(parseInt(target.value));
-    }
-    if (audio) {
-      audio.currentTime = startTime;
+    debugger;
+    if (target.value.length <= endTime.toString().length) {
+      let time = target.value.split(":")
+      
+      if (typeof parseInt(target.value) === "number" && audio) {
+        setEndTime(parseInt(target.value));
+      }
+      if (audio) {
+        audio.currentTime = startTime;
+      }
     }
   };
   // const checkKey = (e: KeyboardEvent) => {

@@ -61,10 +61,7 @@ export const signup = (
               if (response?.emailVerified) {
                 clearInterval(unsubscribeSetInterval); //stop setInterval
                 setLoading(false); //close loading describes above
-                dispatch({
-                  type: SET_USER,
-                  payload: userData,
-                });
+                dispatch(setError("This user exists, please sign in"));
                 return unsubscribeOnUserChanged(); //unsubscribe onUserChanged
               }
             });
@@ -135,10 +132,16 @@ export const signin = (
         .signInWithEmailAndPassword(data.email, data.password)
         .then((userCredential) => {
           if (!userCredential.user?.emailVerified) {
+            userCredential.user?.reload();
             dispatch(setError("Please verify your email address"));
             dispatch(setLoading(false));
-            return dispatch({
+            dispatch({
               type: NEED_VERIFICATION,
+            });
+          } else {
+            console.log(userCredential);
+            dispatch({
+              type: IS_VERIFIED,
             });
           }
         });

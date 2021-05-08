@@ -30,6 +30,7 @@ const Signin: FC = () => {
     e.preventDefault();
     setLoading(true);
     dispatch(signin({ email, password }, () => setLoading(false)));
+    setLoading(false);
   };
 
   return (
