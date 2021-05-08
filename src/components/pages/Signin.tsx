@@ -29,7 +29,8 @@ const Signin: FC = () => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(signin({ email, password }, () => setLoading(false)));
+    dispatch(signin({ email, password }));
+    setLoading(false);
   };
 
   return (

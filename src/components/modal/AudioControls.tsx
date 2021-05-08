@@ -154,7 +154,7 @@ export const Controls: React.FC<{
   };
 
   const showTime = (decimal: number) => {
-    debugger;
+    // debugger;
 
     if (decimal < 60) {
       let string = decimal.toString().split(".");
@@ -166,7 +166,7 @@ export const Controls: React.FC<{
         } else {
           seconds = "0";
         }
-        if (seconds.length == 2) {
+        if (seconds.length === 2) {
           return min + ":" + seconds;
         } else {
           return min + ":" + 0 + seconds;
@@ -175,19 +175,27 @@ export const Controls: React.FC<{
         return 0;
       }
     } else {
-      // let string = decimal.toString().split(".");
-      // let hour = string[0];
-      // let seconds;
-      // if (string[1]) {
-      //   seconds = (parseFloat("." + string[1]) * 60).toFixed(0);
-      // } else {
-      //   seconds = "0";
-      // }
-      // if (seconds.length == 2) {
-      //   return min + ":" + seconds;
-      // } else {
-      //   return min + ":" + 0 + seconds;
-      // }
+      let string = decimal.toString().split(".");
+      let hour = (
+        (parseInt(string[0]) - (parseInt(string[0]) % 60)) /
+        60
+      ).toString();
+
+      let min = (parseInt(string[0]) % 60).toString();
+      if (min.length < 2) {
+        min = "0" + min;
+      }
+      let seconds;
+      if (string[1]) {
+        seconds = (parseFloat("." + string[1]) * 60).toFixed(0);
+      } else {
+        seconds = "0";
+      }
+      if (seconds.length === 2) {
+        return hour + ":" + min + ":" + seconds;
+      } else {
+        return hour + ":" + min + ":" + 0 + seconds;
+      }
     }
   };
   // const checkKey = (e: KeyboardEvent) => {
