@@ -3,7 +3,9 @@ import Slider, { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
 import { start } from "node:repl";
 import Input from "../UI/Input";
+import { setError } from "../../store/actions/authActions";
 import { Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 
 export const Controls: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
@@ -16,8 +18,11 @@ export const Controls: React.FC<{
   const audio: HTMLAudioElement | null = document.querySelector(".audioClip");
   const [startTime, setStartTime] = React.useState<number>(0);
   const [endTime, setEndTime] = React.useState<number>(1000);
+  const [endValue, setEndValue] = React.useState("");
   const inputEndTime = document.getElementById("inputEndTime");
   const inputStartTime: any = document.getElementById("inputStartTime");
+    const { error } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
   const leftProgressCircle:
     | HTMLCollectionOf<Element>
     | any = document.getElementsByClassName(
@@ -202,9 +207,7 @@ export const Controls: React.FC<{
   };
 
   const getEndTime = () => {
-    if (inputEndTime !== undefined) {
-      debugger;
-    }
+    convertTimeToDecimal(endValue);
     // let inputEnd = inputEndTime;
     // let timeArray = time.split(":");
     // if (timeArray.length === 3) {
@@ -218,38 +221,40 @@ export const Controls: React.FC<{
     if (finalTime.length === 2) {
       let min = parseInt(finalTime[0]);
       let sec = parseInt(finalTime[1]);
-      let time2 = (min * 60 + sec) / 60;
-      setEndTime(time2);
+      if (min < 60 && sec < 60) {
+        let time2 = (min * 60 + sec) / 60;
+        setEndTime(time2);
+      } else {
+        dispatch(setError("Please input a valid time"));
+      }
     } else if (finalTime.length === 1) {
+      let sec = parseInt(finalTime[0]);
+      if (sec < 60) {
+        setEndTime(sec);
+      } else {
+        dispatch(setError("Please input a valid time"));
+      }
     } else if (finalTime.length === 3) {
-    }
-  };
-
-  const getStartTime = () => {
-    if (inputStartTime) {
-      let time = inputStartTime.value;
-      if (time.length <= endTime.toString().length) {
+      let hour = parseInt(finalTime[0]);
+      let min = parseInt(finalTime[1]);
+      let sec = parseInt(finalTime[2]);
+      if (hour < 60 && min < 60 && sec < 60) {
+        let time3 = (hour * 60 * 60 + min * 60 + sec) / 60;
+        setEndTime(time3);
+      } else {
+        dispatch(setError("Please input a valid time"));
       }
     }
   };
 
   const userEndTime = (e: React.ChangeEvent) => {
     let target: any = e.currentTarget;
-    debugger;
     if (typeof parseInt(target) === "number" && audio) {
+      setEndValue(target.value);
     }
-    if (audio) {
-      audio.currentTime = startTime;
-    }
-  };
-
-  const userStartTime = (e: React.ChangeEvent) => {
-    let target: any = e.currentTarget;
-    if (typeof parseInt(target) === "number" && audio) {
-    }
-    if (audio) {
-      audio.currentTime = startTime;
-    }
+    // if (audio) {
+    //   audio.currentTime = startTime;
+    // }
   };
 
   // const checkKey = (e: KeyboardEvent) => {
@@ -305,25 +310,26 @@ export const Controls: React.FC<{
             className="audioTime"
             placeholder="Start time"
             name="startTime"
-            onChange={(e) => userStartTime(e)}
+            // onChange={(e) => userStartTime(e)}
             // value={startTime}
             // onChange={() => setStartTime(startTime)}
           />
-          <Button className="inputTimeButton" onClick={getStartTime}>
+          {/* <Button className="inputTimeButton" onClick={getStartTime}>
             Update
-          </Button>
+          </Button> */}
         </div>
         <div className="endTimeInput">
           <input
-            type="time"
+            type="text"
             id="inputEndTime"
-            step="2"
+            // step="2"
             className="audioTime"
+            value={endValue}
             placeholder="End time"
             name="endTime"
-            value=""
             onChange={(e) => userEndTime(e)}
           />
+          {error ? }
           <Button className="inputTimeButton" onClick={getEndTime}>
             Update
           </Button>
