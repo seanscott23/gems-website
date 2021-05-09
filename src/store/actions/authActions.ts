@@ -1,9 +1,9 @@
+import { User } from './../types';
 import { ThunkAction } from "redux-thunk";
 import {
   SignUpData,
   AuthAction,
   SET_USER,
-  User,
   SET_LOADING,
   SIGN_OUT,
   SignInData,
@@ -49,22 +49,22 @@ export const signup = (
         res.user.sendEmailVerification().then(() => {
           //useState used on my loading (user can cancel this loading and exit               this task
           dispatch(
-            setError("Please check your email to verify your email addess")
+            setError("Please check your email to verify your email address")
           );
-          const unsubscribeOnUserChanged = firebase
-            .auth()
-            .onAuthStateChanged((response) => {
-              const unsubscribeSetInterval = setInterval(() => {
-                //this works as a next in for-like
-                firebase.auth().currentUser?.reload();
-              }, 30000);
-              if (response?.emailVerified) {
-                clearInterval(unsubscribeSetInterval); //stop setInterval
-                setLoading(false); //close loading describes above
-                dispatch(setError("This user exists, please sign in"));
-                return unsubscribeOnUserChanged(); //unsubscribe onUserChanged
-              }
-            });
+          // const unsubscribeOnUserChanged = firebase
+          //   .auth()
+          //   .onAuthStateChanged((response) => {
+          //     const unsubscribeSetInterval = setInterval(() => {
+          //       //this works as a next in for-like
+          //       firebase.auth().currentUser?.reload();
+          //     }, 30000);
+          //     if (response?.emailVerified) {
+          //       clearInterval(unsubscribeSetInterval); //stop setInterval
+          //       setLoading(false); //close loading describes above
+          //       dispatch(setError("This user exists, please sign in"));
+          //       return unsubscribeOnUserChanged(); //unsubscribe onUserChanged
+          //     }
+          //   });
         });
         // if (!res.user.emailVerified) {
         //   debugger;
@@ -115,13 +115,23 @@ export const getUserById = (
   return async (dispatch) => {
     try {
       const user = await firebase.database().ref("users").child(id).get();
+      console.log("Does this user exist", user.exists())
       if (user.exists()) {
         const userData = user.val() as User;
+        console.log("Hiiii im the users data ", userData)
         dispatch({
           type: SET_USER,
           payload: userData,
         });
       }
+      else{
+        console.log(user.val() as User)
+        dispatch({
+          type: SET_USER,
+          payload: user.val() as User
+        });
+      }
+
     } catch (err) {
       console.log(err);
     }
@@ -149,6 +159,7 @@ export const signin = (
         .auth()
         .signInWithEmailAndPassword(data.email, data.password)
         .then((userCredential) => {
+          console.log(userCredential)
           if (!userCredential.user?.emailVerified) {
             userCredential.user?.reload();
             dispatch(setError("Please verify your email address"));
