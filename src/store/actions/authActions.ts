@@ -103,6 +103,11 @@ export const getUserById = (
           type: SET_USER,
           payload: userData,
         });
+      } else {
+        dispatch({
+          type: SET_USER,
+          payload: user.val() as User,
+        });
       }
     } catch (err) {
       console.log(err);
@@ -140,9 +145,11 @@ export const signin = (
             });
           } else {
             console.log(userCredential);
-            dispatch({
-              type: IS_VERIFIED,
-            });
+
+            // dispatch({
+            //   type: SET_USER,
+            //   payload: userCredential.user.email,
+            // });
           }
         });
       // firebase.auth().onAuthStateChanged((user) => {

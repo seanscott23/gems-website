@@ -1,8 +1,9 @@
-import React from "react";
+import React, { ChangeEvent, MouseEvent } from "react";
 import Slider, { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
 import { start } from "node:repl";
 import Input from "../UI/Input";
+import { Button } from "react-bootstrap";
 
 export const Controls: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
@@ -15,7 +16,8 @@ export const Controls: React.FC<{
   const audio: HTMLAudioElement | null = document.querySelector(".audioClip");
   const [startTime, setStartTime] = React.useState<number>(0);
   const [endTime, setEndTime] = React.useState<number>(1000);
-
+  const inputEndTime = document.getElementById("inputEndTime");
+  const inputStartTime: any = document.getElementById("inputStartTime");
   const leftProgressCircle:
     | HTMLCollectionOf<Element>
     | any = document.getElementsByClassName(
@@ -199,20 +201,57 @@ export const Controls: React.FC<{
     }
   };
 
-  const inputEndTime = (e: React.ChangeEvent) => {
-    let target: any = e.currentTarget;
-    debugger;
-    if (target.value.length <= endTime.toString().length) {
-      let time = target.value.split(":")
-      
-      if (typeof parseInt(target.value) === "number" && audio) {
-        setEndTime(parseInt(target.value));
-      }
-      if (audio) {
-        audio.currentTime = startTime;
+  const getEndTime = () => {
+    if (inputEndTime !== undefined) {
+      debugger;
+    }
+    // let inputEnd = inputEndTime;
+    // let timeArray = time.split(":");
+    // if (timeArray.length === 3) {
+    // } else if (timeArray.length === 2) {
+    // } else if (timeArray.length === 1) {
+    // }
+  };
+
+  const convertTimeToDecimal = (time: string) => {
+    let finalTime = time.split(":");
+    if (finalTime.length === 2) {
+      let min = parseInt(finalTime[0]);
+      let sec = parseInt(finalTime[1]);
+      let time2 = (min * 60 + sec) / 60;
+      setEndTime(time2);
+    } else if (finalTime.length === 1) {
+    } else if (finalTime.length === 3) {
+    }
+  };
+
+  const getStartTime = () => {
+    if (inputStartTime) {
+      let time = inputStartTime.value;
+      if (time.length <= endTime.toString().length) {
       }
     }
   };
+
+  const userEndTime = (e: React.ChangeEvent) => {
+    let target: any = e.currentTarget;
+    debugger;
+    if (typeof parseInt(target) === "number" && audio) {
+    }
+    if (audio) {
+      audio.currentTime = startTime;
+    }
+  };
+
+  const userStartTime = (e: React.ChangeEvent) => {
+    let target: any = e.currentTarget;
+    if (typeof parseInt(target) === "number" && audio) {
+    }
+    if (audio) {
+      audio.currentTime = startTime;
+    }
+  };
+
   // const checkKey = (e: KeyboardEvent) => {
   //   // e = e || window.event;
   //   if (audio && isOpen) {
@@ -259,22 +298,36 @@ export const Controls: React.FC<{
         </div>
       </div>
       <div className="audioInputs">
-        <input
-          type="text"
-          className="audioTime"
-          placeholder="Start time"
-          name="startTime"
-          // value={startTime}
-          // onChange={() => setStartTime(startTime)}
-        />
-        <input
-          type="text"
-          className="audioTime"
-          placeholder="End time"
-          name="endTime"
-          // value=""
-          onChange={(e) => inputEndTime(e)}
-        />
+        <div className="endTimeInput">
+          <input
+            type="text"
+            id="inputStartTime"
+            className="audioTime"
+            placeholder="Start time"
+            name="startTime"
+            onChange={(e) => userStartTime(e)}
+            // value={startTime}
+            // onChange={() => setStartTime(startTime)}
+          />
+          <Button className="inputTimeButton" onClick={getStartTime}>
+            Update
+          </Button>
+        </div>
+        <div className="endTimeInput">
+          <input
+            type="time"
+            id="inputEndTime"
+            step="2"
+            className="audioTime"
+            placeholder="End time"
+            name="endTime"
+            value=""
+            onChange={(e) => userEndTime(e)}
+          />
+          <Button className="inputTimeButton" onClick={getEndTime}>
+            Update
+          </Button>
+        </div>
       </div>
     </div>
   ) : null;

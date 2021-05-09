@@ -1,4 +1,3 @@
-import "../../styles/AudioModalRipper.css";
 import React, { FC, useState } from "react";
 import {
   Button,
