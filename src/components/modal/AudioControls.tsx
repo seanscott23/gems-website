@@ -22,7 +22,10 @@ export const Controls: React.FC<{
   const [startTime, setStartTime] = React.useState<number>(0);
   const [endTime, setEndTime] = React.useState<number>(1000);
   const [endValue, setEndValue] = React.useState("");
-  const [showInput, setShowInput] = React.useState(false);
+  const [startValue, setStartValue] = React.useState("");
+  const [showStartInput, setShowStartInput] = React.useState(false);
+  const [showEndInput, setShowEndInput] = React.useState(false);
+  const endTimeButton: any = document.getElementById("endTimeButton");
   const { error } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const leftProgressCircle:
@@ -92,13 +95,11 @@ export const Controls: React.FC<{
   };
 
   const updateProgressBar = () => {
-    // if (audio) {
-    //   let cTime = audio.currentTime as number;
+    // if(audio){
 
-    //   let audioCurrentTime = secondsToDecimal(cTime) as number;
-    //   setStartTime(audioCurrentTime);
     // }
-    setShowInput(false);
+    // setShowEndInput(true);
+    // setShowStartInput(true);
     if (leftProgressCircle[leftProgressCircle.length - 1] && audio) {
       if (endTime > startTime) {
         handleTimeUpdate(startTime, endTime);
@@ -156,7 +157,8 @@ export const Controls: React.FC<{
   };
 
   const onMinChange = (e: number[]) => {
-    // setShowInput(false);
+    setShowEndInput(false);
+    setShowStartInput(false);
     setStartTime(e[0]);
     //can add logic here to check if playing and then only update endtime and not both
     setEndTime(e[1]);
@@ -209,7 +211,7 @@ export const Controls: React.FC<{
     }
   };
 
-  const timeToDecimal = (time: string) => {
+  const endTimeToDecimal = (time: string) => {
     let split = time.split(":");
     let trueTime = 0;
     if (split.length === 1) {
@@ -226,75 +228,145 @@ export const Controls: React.FC<{
       let time3 = (hour * 60 * 60 + min * 60 + sec) / 60;
       trueTime = time3;
     }
+
     if (audioMetaData && trueTime < secondsToDecimal(audioMetaData.duration)) {
       setEndTime(trueTime);
     }
   };
-
-  const getEndTime = () => {
-    setShowInput(true);
-    let val = showInputTime(endValue);
-    if (val) {
-      timeToDecimal(val);
+  const startTimeToDecimal = (time: string) => {
+    let split = time.split(":");
+    let trueTime = 0;
+    if (split.length === 1) {
+      trueTime = parseFloat(split[0]);
+    } else if (split.length === 2) {
+      let min = parseFloat(split[0]);
+      let sec = parseFloat(split[1]);
+      let time2 = (min * 60 + sec) / 60;
+      trueTime = time2;
+    } else if (split.length === 3) {
+      let hour = parseInt(split[0]);
+      let min = parseInt(split[1]);
+      let sec = parseInt(split[2]);
+      let time3 = (hour * 60 * 60 + min * 60 + sec) / 60;
+      trueTime = time3;
     }
 
-    debugger;
+    if (audioMetaData && trueTime < endTime) {
+      setStartTime(trueTime);
+    }
+  };
+
+  const getEndTime = () => {
+    setShowEndInput(true);
+    dispatch(setError(""));
+    let val = showInputTime(endValue);
+    if (val) {
+      endTimeToDecimal(val);
+    }
+
+    // if (audioMetaData) {
+    //   audioMetaData.currentTime = startTime;
+    // }
+    // return val;
+  };
+
+  const getStartTime = () => {
+    setShowStartInput(true);
+    dispatch(setError(""));
+    let val = showInputTime(startValue);
+    if (val) {
+      startTimeToDecimal(val);
+    }
+
     return val;
   };
 
   const showInputTime = (time: string) => {
     let finalTime = time.split(":");
-    if (finalTime.length === 2) {
-      let min = parseInt(finalTime[0]);
-      let sec = parseInt(finalTime[1]);
-      if (min < 60 && sec < 60) {
-        let time2 = (min * 60 + sec) / 60;
-        if (sec.toString().length === 2) {
-          return min + ":" + sec;
+    let endCompTime = showTime(endTime).toString().split(":");
+    // debugger;
+    if (finalTime.length <= endCompTime.length) {
+      if (finalTime.length === 2) {
+        let min = parseInt(finalTime[0]);
+        let sec = parseInt(finalTime[1]);
+        if (min < 60 && sec < 60) {
+          if (sec.toString().length === 2) {
+            return min + ":" + sec;
+          } else {
+            return min + ":" + 0 + sec;
+          }
         } else {
-          return min + ":" + 0 + sec;
+          dispatch(setError("Please input a valid time"));
         }
-      } else {
-        dispatch(setError("Please input a valid time"));
-      }
-    } else if (finalTime.length === 1) {
-      let sec = parseInt(finalTime[0]);
-      if (sec < 60) {
-        let newSec = parseFloat(0 + "." + sec);
-        if (sec.toString().length === 2) {
-          return 0 + ":" + sec;
+      } else if (finalTime.length === 1) {
+        let sec = parseInt(finalTime[0]);
+        if (sec < 60) {
+          if (sec.toString().length === 2) {
+            return 0 + ":" + sec;
+          } else {
+            return 0 + ":" + 0 + sec;
+          }
         } else {
-          return 0 + ":" + 0 + sec;
+          dispatch(setError("Please input a valid time"));
         }
-      } else {
-        dispatch(setError("Please input a valid time"));
-      }
-    } else if (finalTime.length === 3) {
-      let hour = parseInt(finalTime[0]);
-      let min = parseInt(finalTime[1]);
-      let sec = parseInt(finalTime[2]);
-      if (hour < 60 && min < 60 && sec < 60) {
-        // let time3 = (hour * 60 * 60 + min * 60 + sec) / 60;
-        if (sec.toString().length === 2) {
-          return hour + ":" + min + ":" + sec;
+      } else if (finalTime.length === 3) {
+        let hour = parseInt(finalTime[0]);
+        let min = parseInt(finalTime[1]);
+        let sec = parseInt(finalTime[2]);
+        if (hour < 60 && min < 60 && sec < 60) {
+          if (sec.toString().length === 2) {
+            return hour + ":" + min + ":" + sec;
+          } else {
+            return hour + ":" + min + ":" + 0 + sec;
+          }
         } else {
-          return hour + ":" + min + ":" + 0 + sec;
+          dispatch(setError("Please input a valid time"));
         }
-      } else {
-        dispatch(setError("Please input a valid time"));
       }
+    } else {
+      dispatch(setError("Please input a valid time"));
+      return;
     }
   };
 
-  const userEndTime = (e: React.ChangeEvent) => {
-    // setShowInput(false);
+  const userStartTime = (e: React.ChangeEvent) => {
     let target: any = e.currentTarget;
-    if (typeof parseInt(target) === "number" && audio) {
+    if (target.value === "" || !isNaN(parseFloat(target.value))) {
+      setStartValue(target.value);
+    } else {
+      setStartValue("");
+      dispatch(setError("Please input a valid time"));
+    }
+    // if (audio) {
+    //   audio.currentTime = startTime;
+    // }
+  };
+
+  const userEndTime = (e: React.ChangeEvent) => {
+    let target: any = e.currentTarget;
+    if (
+      target.value === "" ||
+      !isNaN(
+        parseFloat(
+          target.value &&
+            target.value.length < showTime(endTime).toString().split(":").length
+        )
+      )
+    ) {
       setEndValue(target.value);
+      if (endTimeButton) {
+        endTimeButton.disabled = false;
+      }
+    } else {
+      setEndValue("");
+      dispatch(setError("Please input a valid time"));
+      if (endTimeButton) {
+        endTimeButton.disabled = true;
+      }
     }
-    if (audio) {
-      audio.currentTime = startTime;
-    }
+    // if (audio) {
+    //   audio.currentTime = startTime;
+    // }
   };
 
   return audioMetaData ? (
@@ -320,33 +392,38 @@ export const Controls: React.FC<{
         </button>
 
         <div className="start-end-time">
-          <div className="startTime">Start time: {showTime(startTime)}</div>
+          <div className="startTime">
+            Start time:
+            {showStartInput ? showInputTime(startValue) : showTime(startTime)}
+          </div>
           <div className="endTime">
-            End time: {showInput ? showInputTime(endValue) : showTime(endTime)}
+            End time:
+            {showEndInput ? showInputTime(endValue) : showTime(endTime)}
           </div>
         </div>
       </div>
       <div className="audioInputs">
-        <div className="endTimeInput">
+        <div className="startTimeInput">
           <input
             type="text"
-            id="inputStartTime"
             className="audioTime"
             placeholder="Start time"
             name="startTime"
-            // onChange={(e) => userStartTime(e)}
-            // value={startTime}
-            // onChange={() => setStartTime(startTime)}
+            onChange={(e) => userStartTime(e)}
+            value={startValue}
           />
-          {/* <Button className="inputTimeButton" onClick={getStartTime}>
+          <Button
+            className="inputTimeButton"
+            id="startTimeButton"
+            onClick={getStartTime}
+          >
             Update
-          </Button> */}
+          </Button>
         </div>
+
         <div className="endTimeInput">
           <input
             type="text"
-            id="inputEndTime"
-            // step="2"
             className="audioTime"
             value={endValue}
             placeholder="End time"
@@ -354,11 +431,17 @@ export const Controls: React.FC<{
             onChange={(e) => userEndTime(e)}
           />
 
-          <Button className="inputTimeButton" onClick={getEndTime}>
+          <Button
+            className="inputTimeButton"
+            id="endTimeButton"
+            onClick={getEndTime}
+          >
             Update
           </Button>
         </div>
-        <div>{error !== "" ? <Message type="danger" msg={error} /> : null}</div>
+        <div className="audioInputError">
+          {error !== "" ? <Message type="danger" msg={error} /> : null}
+        </div>
       </div>
     </div>
   ) : null;
