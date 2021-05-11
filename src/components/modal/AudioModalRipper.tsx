@@ -48,12 +48,11 @@ const AudioModalRipper: FC<ModalProps> = ({
   const [timeError, setTimeError] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
-
   const submitHandler = async (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     if (end - begin <= 10) {
-      // debugger;
+      debugger;
       e.preventDefault();
       setLoading(true);
       setTimeError(false);
