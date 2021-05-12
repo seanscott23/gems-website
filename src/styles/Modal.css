@@ -7,7 +7,7 @@
 }
 
 .modal-content {
-  height: 15em;
+  height: 18em;
 }
 #modalBody {
   padding: 0;
@@ -23,6 +23,7 @@
 #modal-footer {
   padding: 2.5em 5px 5px 0;
   border-top: 0;
+  height: 9em;
 }
 
 .player {
@@ -130,4 +131,24 @@
 .audioInputs > .audioTime {
   height: 2em;
   margin: 3px;
+}
+
+.inputTimeButton {
+  width: 100px;
+}
+
+.endTimeInput,
+.startTimeInput {
+  display: flex;
+  flex-direction: row;
+}
+
+.audioInputError {
+  margin-top: 10px;
+  height: 50px;
+  width: 250px;
+}
+.alert-danger {
+  height: 50px;
+  width: 250px;
 }

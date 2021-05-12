@@ -1,8 +1,14 @@
-import React from "react";
+import React, { ChangeEvent, MouseEvent } from "react";
 import Slider, { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
 import { start } from "node:repl";
 import Input from "../UI/Input";
+import { setError } from "../../store/actions/authActions";
+import { Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import Message from "../UI/Message";
+import { time } from "node:console";
 
 export const Controls: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
@@ -15,46 +21,21 @@ export const Controls: React.FC<{
   const audio: HTMLAudioElement | null = document.querySelector(".audioClip");
   const [startTime, setStartTime] = React.useState<number>(0);
   const [endTime, setEndTime] = React.useState<number>(1000);
-
-  const leftProgressCircle:
-    | HTMLCollectionOf<Element>
-    | any = document.getElementsByClassName(
-    "rc-slider-handle rc-slider-handle-1"
-  );
-  const rightProgressCircle:
-    | HTMLCollectionOf<Element>
-    | any = document.getElementsByClassName(
-    "rc-slider-handle rc-slider-handle-2"
-  );
-  const sliderBar:
-    | HTMLCollectionOf<Element>
-    | any = document.getElementsByClassName(
-    "rc-slider-track rc-slider-track-1"
-  );
+  const [endValue, setEndValue] = React.useState("");
+  const [startValue, setStartValue] = React.useState("");
+  const [showStartInput, setShowStartInput] = React.useState(false);
+  const [showEndInput, setShowEndInput] = React.useState(false);
+  // const endTimeButton: any = document.getElementById("endTimeButton");
+  const { error } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+  const leftProgressCircle: HTMLCollectionOf<Element> | any =
+    document.getElementsByClassName("rc-slider-handle rc-slider-handle-1");
+  const rightProgressCircle: HTMLCollectionOf<Element> | any =
+    document.getElementsByClassName("rc-slider-handle rc-slider-handle-2");
+  const sliderBar: HTMLCollectionOf<Element> | any =
+    document.getElementsByClassName("rc-slider-track rc-slider-track-1");
 
   const { Range } = Slider;
-
-  // const calculateTimeStamp = (seconds: number) => {
-  //   let h = parseFloat((seconds / 3600).toFixed(0));
-  //   let m = parseFloat(((seconds % 3600) / 60).toFixed(0));
-  //   let s = parseFloat(((seconds % 3600) % 60).toFixed(0));
-  //   let hDisplay = h > 0 ? h : 0;
-  //   let mDisplay = m > 0 ? m : 0;
-  //   let sDisplay = s >= 0 ? s : 0;
-  //   debugger;
-  //   if (mDisplay == 0 && sDisplay >= 10) {
-  //     return parseFloat("0." + sDisplay);
-  //   }
-  //   if (mDisplay == 0 && sDisplay < 10) {
-  //     return parseFloat("0.0" + sDisplay);
-  //   } else {
-  //     if (sDisplay <= 9) {
-  //       return parseFloat(mDisplay + ".0" + sDisplay);
-  //     } else {
-  //       return parseFloat(mDisplay + "." + sDisplay);
-  //     }
-  //   }
-  // };
 
   const secondsToDecimal = (seconds: number) => {
     // console.log(parseFloat((seconds / 60).toFixed(2)));
@@ -83,13 +64,11 @@ export const Controls: React.FC<{
   };
 
   const updateProgressBar = () => {
-    // if (audio) {
-    //   let cTime = audio.currentTime as number;
+    // if(audio){
 
-    //   let audioCurrentTime = secondsToDecimal(cTime) as number;
-    //   setStartTime(audioCurrentTime);
     // }
-
+    // setShowEndInput(false);
+    // setShowStartInput(false);
     if (leftProgressCircle[leftProgressCircle.length - 1] && audio) {
       if (endTime > startTime) {
         handleTimeUpdate(startTime, endTime);
@@ -147,6 +126,8 @@ export const Controls: React.FC<{
   };
 
   const onMinChange = (e: number[]) => {
+    setShowEndInput(false);
+    setShowStartInput(false);
     setStartTime(e[0]);
     //can add logic here to check if playing and then only update endtime and not both
     setEndTime(e[1]);
@@ -199,37 +180,197 @@ export const Controls: React.FC<{
     }
   };
 
-  const inputEndTime = (e: React.ChangeEvent) => {
-    let target: any = e.currentTarget;
-    debugger;
-    if (target.value.length <= endTime.toString().length) {
-      let time = target.value.split(":")
-      
-      if (typeof parseInt(target.value) === "number" && audio) {
-        setEndTime(parseInt(target.value));
-      }
-      if (audio) {
-        audio.currentTime = startTime;
+  const endTimeToDecimal = (time: string) => {
+    let split = time.split(":");
+    let trueTime = 0;
+    if (split.length === 1) {
+      trueTime = parseFloat(split[0]);
+    } else if (split.length === 2) {
+      let min = parseFloat(split[0]);
+      let sec = parseFloat(split[1]);
+      let time2 = (min * 60 + sec) / 60;
+      trueTime = time2;
+    } else if (split.length === 3) {
+      let hour = parseInt(split[0]);
+      let min = parseInt(split[1]);
+      let sec = parseInt(split[2]);
+      let time3 = (hour * 60 * 60 + min * 60 + sec) / 60;
+      trueTime = time3;
+    }
+    if (trueTime <= endTime) {
+      return trueTime;
+    } else if (trueTime > endTime) {
+      return false;
+    }
+  };
+  const startTimeToDecimal = (time: string) => {
+    let split = time.split(":");
+    let trueTime = 0;
+    if (split.length === 1) {
+      trueTime = parseFloat(split[0]);
+    } else if (split.length === 2) {
+      let min = parseFloat(split[0]);
+      let sec = parseFloat(split[1]);
+      let time2 = (min * 60 + sec) / 60;
+      trueTime = time2;
+    } else if (split.length === 3) {
+      let hour = parseInt(split[0]);
+      let min = parseInt(split[1]);
+      let sec = parseInt(split[2]);
+      let time3 = (hour * 60 * 60 + min * 60 + sec) / 60;
+      trueTime = time3;
+    }
+
+    if (trueTime <= endTime) {
+      return trueTime;
+    } else if (trueTime > endTime) {
+      return false;
+    }
+  };
+
+  const getEndTime = () => {
+    setShowEndInput(true);
+    dispatch(setError(""));
+    let val = showInputTime(endValue);
+    if (audio) {
+      audio.currentTime = startTime;
+    }
+    if (val) {
+      let trueTime = endTimeToDecimal(val);
+      if (
+        trueTime &&
+        audioMetaData &&
+        trueTime < secondsToDecimal(audioMetaData.duration)
+      ) {
+        setEndTime(trueTime);
+      } else {
+        dispatch(setError("Please input a valid time"));
       }
     }
   };
-  // const checkKey = (e: KeyboardEvent) => {
-  //   // e = e || window.event;
-  //   if (audio && isOpen) {
-  //     if (e.code == "ArrowLeft" && startTime > 0.15) {
-  //       // audio.currentTime = audio.currentTime + 0.15;
-  //       // setStartTime(audio.currentTime);
-  //     } else if (e.code == "ArrowRight" && startTime < endTime - 0.15) {
-  //       debugger;
-  //       audio.currentTime = audio.currentTime + 0.15 * 60;
-  //       // setStartTime(startTime);
-  //     }
-  //   } else if (audio) {
-  //     audio.pause();
-  //   }
-  // };
 
-  // document.addEventListener("keyup", (e) => checkKey(e));
+  const getStartTime = () => {
+    setShowStartInput(true);
+    dispatch(setError(""));
+    let val = showInputTime(startValue);
+
+    if (val) {
+      let trueTime = startTimeToDecimal(val);
+      if (trueTime && audio && trueTime < secondsToDecimal(audio.duration)) {
+        audio.currentTime = trueTime * 60;
+        setStartTime(trueTime);
+      } else {
+        dispatch(setError("Please input a valid time"));
+      }
+    }
+  };
+
+  const showInputTime = (time: string) => {
+    let finalTime = time.split(":");
+    let endCompTime = showTime(endTime).toString().split(":");
+    if (finalTime.length <= endCompTime.length) {
+      if (finalTime.length === 2) {
+        let min = parseInt(finalTime[0]);
+        let sec = parseInt(finalTime[1]);
+        if (min < 60 && sec < 60) {
+          if (sec.toString().length === 2) {
+            return min + ":" + sec;
+          } else {
+            return min + ":" + 0 + sec;
+          }
+        } else {
+          dispatch(setError("Please input a valid time"));
+        }
+      } else if (finalTime.length === 1) {
+        let sec = parseInt(finalTime[0]);
+        if (sec < 60 && sec <= endTime) {
+          if (sec.toString().length === 2) {
+            return 0 + ":" + sec;
+          } else {
+            return 0 + ":" + 0 + sec;
+          }
+        } else {
+          dispatch(setError("Please input a valid time"));
+        }
+      } else if (finalTime.length === 3) {
+        let hour = parseInt(finalTime[0]);
+        let min = parseInt(finalTime[1]);
+        let sec = parseInt(finalTime[2]);
+        if (hour < 60 && min < 60 && sec < 60) {
+          if (sec.toString().length === 2) {
+            return hour + ":" + min + ":" + sec;
+          } else {
+            return hour + ":" + min + ":" + 0 + sec;
+          }
+        } else {
+          dispatch(setError("Please input a valid time"));
+        }
+      }
+    } else {
+      dispatch(setError("Please input a valid time"));
+      return;
+    }
+  };
+
+  const userStartTime = (e: React.ChangeEvent) => {
+    let target: any = e.currentTarget;
+
+    if (target.value === "" || !isNaN(parseFloat(target.value))) {
+      if (target.value.includes(":")) {
+        let chosen = startTimeToDecimal(target.value);
+        if (
+          chosen !== false &&
+          target.value.length <= showTime(endTime).toString().length
+        ) {
+          setStartValue(target.value);
+        }
+      } else if (!target.value.includes(":") && target.value !== "") {
+        let chosen = secondsToDecimal(target.value);
+        if (chosen <= endTime && parseFloat(target.value) < 60) {
+          setStartValue(target.value);
+        }
+      } else if (target.value === "") {
+        setStartValue(target.value);
+      }
+    } else {
+      setStartValue("");
+      dispatch(setError("Please input a valid time"));
+    }
+    if (audio) {
+      audio.currentTime = startTime;
+    }
+  };
+
+  const userEndTime = (e: React.ChangeEvent) => {
+    let target: any = e.currentTarget;
+
+    if (target.value === "" || !isNaN(parseFloat(target.value))) {
+      if (target.value.includes(":")) {
+        let chosen = endTimeToDecimal(target.value);
+        if (
+          chosen !== false && chosen
+            ? chosen > startTime
+            : target.value.length <= showTime(endTime).toString().length
+        ) {
+          setEndValue(target.value);
+        }
+      } else if (!target.value.includes(":") && target.value !== "") {
+        let chosen = secondsToDecimal(target.value);
+        if (
+          chosen <= endTime &&
+          parseFloat(target.value) < 60 &&
+          chosen > startTime
+        ) {
+          setEndValue(target.value);
+        }
+      } else if (target.value === "") {
+        setEndValue(target.value);
+      }
+    } else {
+      setEndValue("");
+      dispatch(setError("Please input a valid time"));
+    }
+  };
 
   return audioMetaData ? (
     <div className="player__controls">
@@ -254,27 +395,56 @@ export const Controls: React.FC<{
         </button>
 
         <div className="start-end-time">
-          <div className="startTime">Start time: {showTime(startTime)}</div>
-          <div className="endTime">End time: {showTime(endTime)}</div>
+          <div className="startTime">
+            Start time:
+            {showStartInput ? showInputTime(startValue) : showTime(startTime)}
+          </div>
+          <div className="endTime">
+            End time:
+            {showEndInput ? showInputTime(endValue) : showTime(endTime)}
+          </div>
         </div>
       </div>
       <div className="audioInputs">
-        <input
-          type="text"
-          className="audioTime"
-          placeholder="Start time"
-          name="startTime"
-          // value={startTime}
-          // onChange={() => setStartTime(startTime)}
-        />
-        <input
-          type="text"
-          className="audioTime"
-          placeholder="End time"
-          name="endTime"
-          // value=""
-          onChange={(e) => inputEndTime(e)}
-        />
+        <div className="startTimeInput">
+          <input
+            type="text"
+            className="audioTime"
+            placeholder="Start time"
+            name="startTime"
+            onChange={(e) => userStartTime(e)}
+            value={startValue}
+          />
+          <Button
+            className="inputTimeButton"
+            id="startTimeButton"
+            onClick={getStartTime}
+          >
+            Update
+          </Button>
+        </div>
+
+        <div className="endTimeInput">
+          <input
+            type="text"
+            className="audioTime"
+            value={endValue}
+            placeholder="End time"
+            name="endTime"
+            onChange={(e) => userEndTime(e)}
+          />
+
+          <Button
+            className="inputTimeButton"
+            id="endTimeButton"
+            onClick={getEndTime}
+          >
+            Update
+          </Button>
+        </div>
+        <div className="audioInputError">
+          {error !== "" ? <Message type="danger" msg={error} /> : null}
+        </div>
       </div>
     </div>
   ) : null;
