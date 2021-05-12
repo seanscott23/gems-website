@@ -144,6 +144,7 @@ export const signin = (
               type: NEED_VERIFICATION,
             });
           } else {
+            // firebase.auth().setPersistence("session").then(())
             console.log(userCredential);
 
             // dispatch({

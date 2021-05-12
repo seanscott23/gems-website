@@ -25,7 +25,7 @@ export const Controls: React.FC<{
   const [startValue, setStartValue] = React.useState("");
   const [showStartInput, setShowStartInput] = React.useState(false);
   const [showEndInput, setShowEndInput] = React.useState(false);
-  // const endTimeButton: any = document.getElementById("endTimeButton");
+  const [format, setFormat] = React.useState("");
   const { error } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const leftProgressCircle: HTMLCollectionOf<Element> | any =
@@ -220,7 +220,7 @@ export const Controls: React.FC<{
       let time3 = (hour * 60 * 60 + min * 60 + sec) / 60;
       trueTime = time3;
     }
-
+    debugger;
     if (trueTime <= endTime) {
       return trueTime;
     } else if (trueTime > endTime) {
@@ -267,6 +267,7 @@ export const Controls: React.FC<{
 
   const showInputTime = (time: string) => {
     let finalTime = time.split(":");
+
     let endCompTime = showTime(endTime).toString().split(":");
     if (finalTime.length <= endCompTime.length) {
       if (finalTime.length === 2) {
@@ -283,7 +284,7 @@ export const Controls: React.FC<{
         }
       } else if (finalTime.length === 1) {
         let sec = parseInt(finalTime[0]);
-        if (sec < 60 && sec <= endTime) {
+        if (sec < 60 && sec <= endTime * 60) {
           if (sec.toString().length === 2) {
             return 0 + ":" + sec;
           } else {
@@ -372,6 +373,10 @@ export const Controls: React.FC<{
     }
   };
 
+  // const getTimeFormat = (e: React.ChangeEvent) => {
+  //   debugger;
+  // };
+
   return audioMetaData ? (
     <div className="player__controls">
       <div id="rc-sliderDiv">
@@ -445,6 +450,13 @@ export const Controls: React.FC<{
         <div className="audioInputError">
           {error !== "" ? <Message type="danger" msg={error} /> : null}
         </div>
+        {/* <input
+          type="time"
+          step={2}
+          value={format}
+          className="without_ampm"
+          onChange={(e) => getTimeFormat(e)}
+        /> */}
       </div>
     </div>
   ) : null;
