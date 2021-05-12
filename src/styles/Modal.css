@@ -21,7 +21,7 @@
 }
 
 #modal-footer {
-  padding: 2.5em 5px 5px 0;
+  padding: 5em 5px 5px 0;
   border-top: 0;
   height: 9em;
 }
@@ -141,6 +141,7 @@
 .startTimeInput {
   display: flex;
   flex-direction: row;
+  margin: 2px 0;
 }
 
 .audioInputError {
@@ -153,19 +154,3 @@
   width: 250px;
 }
 
-input[type="time"]::-webkit-calendar-picker-indicator {
-  background: none;
-  display: none;
-}
-
-.without_ampm::-webkit-datetime-edit-ampm-field {
-  display: none;
-}
-input[type="time"]::-webkit-clear-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -o-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
-  margin: -10px;
-}
