@@ -216,8 +216,7 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
   };
 };
 
-//trimming audioo
-
+//trimming audio
 export const submitNewClip = (
   url: string,
   begin: number,
