@@ -60,6 +60,7 @@ export const getUserGems = (): ThunkAction<
   AuthAction
 > => {
   return async (dispatch) => {
+    console.log(await auth.currentUser?.getIdToken())
     try {
       await fetch("http://localhost:8000/api/get/gems/", {
         method: "POST",
