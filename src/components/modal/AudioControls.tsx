@@ -217,7 +217,7 @@ export const Controls: React.FC<{
         setShowEndInput(true);
         setEndTime(trueTime);
       } else {
-        dispatch(setError("Please input a valid time"));
+        dispatch(setError("Please input a valid time, example: 00:02:12"));
       }
     } else if (val && !startVal) {
       let trueTime = timeToDecimal(val);
@@ -226,7 +226,7 @@ export const Controls: React.FC<{
         setEndTime(trueTime);
       }
     } else {
-      dispatch(setError("Please input a valid time"));
+      dispatch(setError("Please input a valid time, example: 00:02:12"));
     }
   };
 
@@ -357,7 +357,7 @@ export const Controls: React.FC<{
       }
     } else {
       setEndValue("");
-      dispatch(setError("Please input a valid time"));
+      dispatch(setError("Please input a valid time, example: 00:02:12"));
     }
   };
 

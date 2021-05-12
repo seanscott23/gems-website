@@ -23,7 +23,7 @@
 #modal-footer {
   padding: 5em 5px 5px 0;
   border-top: 0;
-  height: 9em;
+  height: 10em;
 }
 
 .player {
@@ -152,5 +152,5 @@
 .alert-danger {
   height: 50px;
   width: 250px;
+  padding: 0 1.25rem;
 }
-
