@@ -234,7 +234,9 @@ export const Controls: React.FC<{
     dispatch(setError(""));
     let val = showInputTime(startValue);
     let endVal = timeToDecimal(endValue);
-    // debugger;
+    if (audio) {
+      audio.currentTime = startTime;
+    }
     if (val && endVal) {
       let trueTime = timeToDecimal(val);
       if (trueTime && audio && trueTime < endVal) {
@@ -258,54 +260,48 @@ export const Controls: React.FC<{
 
   const showInputTime = (time: string) => {
     let finalTime = time.split(":");
-
-    let endCompTime = showTime(endTime).toString().split(":");
-    if (finalTime.length <= endCompTime.length) {
-      if (finalTime.length === 2) {
-        let min = parseInt(finalTime[0]);
-        let sec = parseInt(finalTime[1]);
-        if (min < 60 && sec < 60) {
-          if (sec.toString().length === 2) {
-            return min + ":" + sec;
-          } else {
-            return min + ":" + 0 + sec;
-          }
+    if (finalTime.length === 2) {
+      let min = parseInt(finalTime[0]);
+      let sec = parseInt(finalTime[1]);
+      if (min < 60 && sec < 60) {
+        if (sec.toString().length === 2) {
+          return min + ":" + sec;
         } else {
-          dispatch(setError("Please input a valid time"));
+          return min + ":" + 0 + sec;
         }
-      } else if (finalTime.length === 1) {
-        let sec = parseInt(finalTime[0]);
-        if (sec < 60 && sec <= endTime * 60) {
-          if (sec.toString().length === 2) {
-            return 0 + ":" + sec;
-          } else {
-            return 0 + ":" + 0 + sec;
-          }
-        } else {
-          dispatch(setError("Please input a valid time"));
-        }
-      } else if (finalTime.length === 3) {
-        let hour = parseInt(finalTime[0]);
-        let min = parseInt(finalTime[1]);
-        let sec = parseInt(finalTime[2]);
-        if (hour < 60 && min < 60 && sec < 60) {
-          if (sec.toString().length === 2) {
-            return hour + ":" + min + ":" + sec;
-          } else {
-            return hour + ":" + min + ":" + 0 + sec;
-          }
-        } else {
-          dispatch(setError("Please input a valid time"));
-        }
+      } else {
+        dispatch(setError("Please input a valid time"));
       }
-    } else {
-      dispatch(setError("Please input a valid time"));
-      return;
+    } else if (finalTime.length === 1) {
+      let sec = parseInt(finalTime[0]);
+      if (sec < 60) {
+        if (sec.toString().length === 2) {
+          return 0 + ":" + sec;
+        } else {
+          return 0 + ":" + 0 + sec;
+        }
+      } else {
+        dispatch(setError("Please input a valid time"));
+      }
+    } else if (finalTime.length === 3) {
+      let hour = parseInt(finalTime[0]);
+      let min = parseInt(finalTime[1]);
+      let sec = parseInt(finalTime[2]);
+      if (hour < 60 && min < 60 && sec < 60) {
+        if (sec.toString().length === 2) {
+          return hour + ":" + min + ":" + sec;
+        } else {
+          return hour + ":" + min + ":" + 0 + sec;
+        }
+      } else {
+        dispatch(setError("Please input a valid time"));
+      }
     }
   };
 
   const userStartTime = (e: React.ChangeEvent) => {
     setShowStartInput(false);
+
     let target: any = e.currentTarget;
     dispatch(setError(""));
     if (target.value === "" || !isNaN(parseFloat(target.value))) {
@@ -318,10 +314,7 @@ export const Controls: React.FC<{
           setStartValue(target.value);
         }
       } else if (!target.value.includes(":") && target.value !== "") {
-        let chosen = secondsToDecimal(target.value);
-        if (chosen <= endTime && parseFloat(target.value) < 60) {
-          setStartValue(target.value);
-        }
+        setStartValue(target.value);
       } else if (target.value === "") {
         setStartValue(target.value);
       }
@@ -329,14 +322,13 @@ export const Controls: React.FC<{
       setStartValue("");
       dispatch(setError("Please input a valid time"));
     }
-    if (audio) {
-      audio.currentTime = startTime;
-    }
   };
 
   const userEndTime = (e: React.ChangeEvent) => {
     setShowEndInput(false);
+    // setShowStartInput(false);
     let target: any = e.currentTarget;
+
     dispatch(setError(""));
     if (target.value === "" || !isNaN(parseFloat(target.value))) {
       if (target.value.includes(":")) {
@@ -348,10 +340,7 @@ export const Controls: React.FC<{
           setEndValue(target.value);
         }
       } else if (!target.value.includes(":") && target.value !== "") {
-        let chosen = secondsToDecimal(target.value);
-        if (chosen <= endTime && parseFloat(target.value) < 60) {
-          setEndValue(target.value);
-        }
+        setEndValue(target.value);
       } else if (target.value === "") {
         setEndValue(target.value);
       }
