@@ -129,13 +129,6 @@ export const getUserById = (
           payload: user.val() as User,
         });
       }
-      else{
-        console.log(user.val() as User)
-        dispatch({
-          type: SET_USER,
-          payload: user.val() as User
-        });
-      }
 
     } catch (err) {
       console.log(err);
@@ -173,6 +166,7 @@ export const signin = (
               type: NEED_VERIFICATION,
             });
           } else {
+            // firebase.auth().setPersistence("session").then(())
             console.log(userCredential);
 
             // dispatch({

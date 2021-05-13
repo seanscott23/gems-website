@@ -21,9 +21,9 @@
 }
 
 #modal-footer {
-  padding: 2.5em 5px 5px 0;
+  padding: 5em 5px 5px 0;
   border-top: 0;
-  height: 9em;
+  height: 10em;
 }
 
 .player {
@@ -141,6 +141,7 @@
 .startTimeInput {
   display: flex;
   flex-direction: row;
+  margin: 2px 0;
 }
 
 .audioInputError {
@@ -151,4 +152,5 @@
 .alert-danger {
   height: 50px;
   width: 250px;
+  padding: 0 1.25rem;
 }
