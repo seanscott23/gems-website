@@ -152,5 +152,8 @@
 .alert-danger {
   height: 50px;
   width: 250px;
+}
+
+.audioInputError > .alert {
   padding: 0 1.25rem;
 }
