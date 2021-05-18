@@ -1,6 +1,6 @@
 import "../../styles/AudioUpload.css";
 import React, { useEffect, useState, DragEvent } from "react";
-import uploadPNG from "../../images/upload.png";
+import uploadPNG from "../../images/uploadgem.png";
 import AudioFile from "./AudioFile";
 
 function AudioUpload() {

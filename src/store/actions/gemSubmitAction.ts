@@ -103,7 +103,7 @@ export const updateGemAction = (
         method: "PUT",
         body: JSON.stringify({
           ownerID: auth.currentUser?.uid,
-          token: await auth.currentUser?.getIdToken(),
+          token: auth.currentUser?.getIdToken(),
           gemID: gemID,
           audioURL: audioURL,
           title: title,
@@ -111,11 +111,9 @@ export const updateGemAction = (
           categories: categories,
           explicit: explicit,
         }),
-      });
-      // .then((response) => response.json())
-      // .then((data) => {
-
-      // });
+      })
+        .then((response) => response.json())
+        .then((data) => {});
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));
@@ -134,7 +132,11 @@ export const deleteGemAction = (
           token: await auth.currentUser?.getIdToken(),
           gemID: gemID,
         }),
-      });
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          getUserGems();
+        });
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));

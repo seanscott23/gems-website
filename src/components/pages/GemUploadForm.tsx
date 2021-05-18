@@ -21,6 +21,14 @@ const GemForm: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  if (!localStorage.getItem("gemURL")) {
+    window.localStorage.setItem("gemURL", JSON.stringify(gemURL));
+  }
+  let storedURL;
+  if (gemURL === "" && window.localStorage.getItem("gemURL") !== null) {
+    let newURL = window.localStorage.getItem("gemURL");
+    storedURL = newURL ? JSON.parse(newURL) : "";
+  }
   const getGemID = (gemURL: string) => {
     let splitURL = gemURL.split("token=");
     setGemID(splitURL[1]);
@@ -63,7 +71,12 @@ const GemForm: FC = () => {
   return (
     <div className="gem-container">
       <h1>Upload Gem Form</h1>
-      <audio src={gemURL} controls preload="metadata"></audio>
+      {gemURL !== "" ? (
+        <audio src={gemURL} controls preload="metadata"></audio>
+      ) : (
+        <audio src={storedURL} controls preload="metadata"></audio>
+      )}
+
       <br />
       <Form.Group>
         <Form.Control

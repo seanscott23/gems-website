@@ -8,6 +8,7 @@ import store from "./store/index";
 import firebase from "firebase";
 import { getUserById } from "./store/actions/authActions";
 import { User } from "./store/types";
+import thunk from "redux-thunk";
 
 document.addEventListener("DOMContentLoaded", async () => {
   let newStore;

@@ -1,6 +1,6 @@
 import "../../styles/PhotoUpload.css";
 import React, { useEffect, useState, DragEvent, FC } from "react";
-import uploadPNG from "../../images/upload.png";
+import uploadPNG from "../../images/uploadgem.png";
 import { submitPhoto } from "../../store/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";

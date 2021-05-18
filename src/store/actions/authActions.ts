@@ -1,4 +1,4 @@
-import { User } from './../types';
+import { User } from "./../types";
 import { ThunkAction } from "redux-thunk";
 import {
   SignUpData,
@@ -39,7 +39,7 @@ export const signup = (
           id: res.user.uid,
           createdAt: Date.now(),
           gems: [],
-          profilePhoto: data.profilePhoto 
+          profilePhoto: data.profilePhoto,
         };
         await firebase
           .database()
@@ -91,12 +91,12 @@ export const signup = (
   };
 };
 
-const  uploadUserImage = async (image:File) => {
-  console.log(image)
-  let formData = new FormData()
-  formData.append("user_image", image)
-  formData.append("user_id", auth.currentUser?.uid as string)
-  formData.append("token", await auth.currentUser?.getIdToken() as string)
+const uploadUserImage = async (image: File) => {
+  console.log(image);
+  let formData = new FormData();
+  formData.append("user_image", image);
+  formData.append("user_id", auth.currentUser?.uid as string);
+  formData.append("token", (await auth.currentUser?.getIdToken()) as string);
 
   // fetch("http://localhost:8000/api/deliver/userImage/",{
   //   method: "POST",
@@ -106,8 +106,8 @@ const  uploadUserImage = async (image:File) => {
   // .then((data) => {
   //   console.log(data)
   // });
-  return ""
-} 
+  return "";
+};
 
 export const getUserById = (
   id: string
@@ -115,10 +115,10 @@ export const getUserById = (
   return async (dispatch) => {
     try {
       const user = await firebase.database().ref("users").child(id).get();
-      console.log("Does this user exist", user.exists())
+      console.log("Does this user exist", user.exists());
       if (user.exists()) {
         const userData = user.val() as User;
-        console.log("Hiiii im the users data ", userData)
+        console.log("Hiiii im the users data ", userData);
         dispatch({
           type: SET_USER,
           payload: userData,
@@ -129,7 +129,6 @@ export const getUserById = (
           payload: user.val() as User,
         });
       }
-
     } catch (err) {
       console.log(err);
     }
@@ -157,14 +156,14 @@ export const signin = (
         .auth()
         .signInWithEmailAndPassword(data.email, data.password)
         .then((userCredential) => {
-          console.log(userCredential)
+          console.log(userCredential);
           if (!userCredential.user?.emailVerified) {
-            userCredential.user?.reload();
             dispatch(setError("Please verify your email address"));
             dispatch(setLoading(false));
             dispatch({
               type: NEED_VERIFICATION,
             });
+            // userCredential.user?.reload();
           } else {
             // firebase.auth().setPersistence("session").then(())
             console.log(userCredential);

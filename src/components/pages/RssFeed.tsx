@@ -8,11 +8,10 @@ import ReturnHTML from "../rss/ReturnHtml";
 
 import PaginationBar from "../sections/PaginationBar";
 import SearchBar from "../sections/SearchBar";
+import { useHistory } from "react-router-dom";
 
 const RssFeed: FC = () => {
-  const { rssFeedUrl, success, userGems } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
   const [input, setInput] = useState<string>("");
 
   const [isModalOpen, setModalState] = useState(false);
@@ -21,8 +20,19 @@ const RssFeed: FC = () => {
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-
+  const history = useHistory();
   const dispatch = useDispatch();
+  if (localStorage.getItem("rssFeedUrl") === "{}") {
+    window.localStorage.setItem("rssFeedUrl", JSON.stringify(rssFeedUrl));
+  }
+  let storedRSSUrl;
+  if (
+    rssFeedUrl.items === undefined &&
+    window.localStorage.getItem("rssFeedUrl") !== null
+  ) {
+    let newURL = window.localStorage.getItem("rssFeedUrl");
+    storedRSSUrl = newURL ? JSON.parse(newURL) : {};
+  }
 
   useEffect(() => {
     if (success) {
@@ -30,7 +40,10 @@ const RssFeed: FC = () => {
     }
   }, [success, dispatch]);
 
-  const items = rssFeedUrl.items;
+  let items = rssFeedUrl.items;
+  if (items === undefined) {
+    items = storedRSSUrl.items;
+  }
   const [clips, setClips] = useState(items);
 
   const currentPosts = items.slice(indexOfFirstPost, indexOfLastPost);
