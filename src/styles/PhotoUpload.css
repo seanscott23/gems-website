@@ -1,0 +1,110 @@
+.photo-section {
+  margin-top: 2.5%;
+  position: absolute;
+  margin-left: 20px;
+}
+.photo-section > h2 {
+  color: #1e3d58;
+}
+.upload-box-photo {
+  width: 100%;
+
+  height: 100%;
+
+  text-align: center;
+  padding: 5px;
+  border-radius: 0.25rem;
+  background-color: #057dcd;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+/* @media (max-width: 1150px) {
+  .photo-section,
+  .upload-box-photo {
+    width: 150px;
+    height: 150px;
+  }
+  .image-label-instruction {
+    font-size: 0.85rem;
+  }
+  .photo-section > h2 {
+    font-size: 1.3em;
+  }
+}
+
+@media (max-width: 900px) {
+  .photo-section,
+  .upload-box-photo {
+    width: 120px;
+    height: 120px;
+  }
+  .image-label-instruction {
+    font-size: 0.7rem;
+  }
+  .photo-section > h2 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 730px) {
+  .photo-section,
+  .upload-box-photo {
+    width: 90px;
+    height: 90px;
+  }
+  .image-label-instruction {
+    font-size: 0.6rem;
+  }
+  .photo-section > h2 {
+    font-size: 0.9rem;
+  }
+} */
+
+.signup-user-photo {
+  cursor: pointer;
+}
+.upload-box-photo > label {
+  margin-bottom: 0;
+}
+
+.preparing-4-drag {
+  text-align: center;
+}
+.form-label {
+  margin-top: 20px;
+  color: #1e3d58;
+  font-weight: 400;
+}
+
+#fileElem {
+  display: none;
+}
+
+.image-label-instruction {
+  margin-top: 20px;
+  color: white;
+}
+
+.beingDraggedOver {
+  background: rgba(94, 92, 230, 1);
+}
+
+.uploading,
+.success,
+.failure {
+  height: 100%;
+  display: grid;
+  align-content: center;
+}
+
+.dragdrop-image {
+  display: grid;
+  justify-self: center;
+  margin-bottom: 15px;
+}
+
+.profileImage {
+  width: 300px;
+  height: 300px;
+}

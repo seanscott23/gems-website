@@ -24,7 +24,7 @@ const Homepage: FC = () => {
 
   return (
     <section className="section">
-      <div className="container">
+      <div className="home-container">
         <h1 className=".title has-text-centered is-size-1 mb-6">
           Welcome to Gems!
         </h1>

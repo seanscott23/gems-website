@@ -8,8 +8,11 @@ interface Props extends RouteProps {
 }
 
 const PrivateRoute: FC<Props> = ({ component: Component, ...rest }) => {
-  const { authenticated } = useSelector((state: RootState) => state.auth);
-
+  const { authenticated } = useSelector((state: RootState) => {
+    // debugger;
+    return state.auth;
+  });
+  // debugger;
   return (
     <Route
       {...rest}

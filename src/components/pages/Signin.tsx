@@ -7,6 +7,7 @@ import { signin, setError } from "../../store/actions/authActions";
 import { RootState } from "../../store";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Card } from "react-bootstrap";
+// import firebase from "../../firebase/config";
 import "../../styles/Signin.css";
 
 const Signin: FC = () => {
@@ -15,20 +16,21 @@ const Signin: FC = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const { error } = useSelector((state: RootState) => state.auth);
+  const { error, user } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
-    return () => {
-      if (error) {
-        dispatch(setError(""));
-      }
-    };
+    // return () => {
+    //   if (error) {
+    //     dispatch(setError(""));
+    //   }
+    // };
   }, [error, dispatch]);
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     dispatch(signin({ email, password }, () => setLoading(false)));
+    setLoading(false);
   };
 
   return (
@@ -70,7 +72,7 @@ const Signin: FC = () => {
         </Form>
       </Card>
       <div className="homeLink">
-       <span>Already have a login?</span> <Link to={"/signup"}>Sign up</Link>
+        <span>New to Gems?</span> <Link to={"/signup"}>Sign up</Link>
       </div>
     </div>
   );

@@ -7,12 +7,18 @@ export const SET_FORM_SUCCESS = "SET_FORM_SUCCESS";
 export const SET_SUCCESS = "SET_SUCCESS";
 export const IS_VERIFIED = "IS_VERIFIED";
 export const SET_SIGNED_IN = "SET_SIGNED_IN";
+export const CLIP_AUDIO = "CLIP_AUDIO";
+export const SET_FINAL_GEM = "SET_FINAL_GEM";
+export const SET_USER_GEMS = "SET_USER_GEMS";
+export const SET_USER_PHOTO = "SET_USER_PHOTO";
 
 export interface User {
   firstName: string;
   email: string;
   id: string;
   createdAt: any;
+  gems: Array<any>;
+  profilePhoto: string;
 }
 
 export interface AuthState {
@@ -22,16 +28,28 @@ export interface AuthState {
   error: string;
   needVerification: boolean;
   success: string;
-  rssFeedUrl: any; ///may cause issues with type any instead of object.
+  rssFeedUrl: any;
+  gemURL: string;
+  userGems: Array<any>;
+  profilePhoto: string;
 }
 
 export interface SignUpData {
   firstName: string;
   email: string;
   password: string;
+  profilePhoto: string;
 }
 
-// export interface GemFormData {}
+export interface FinalGem {
+  gemID: string;
+  audioURL: string;
+  title: string;
+  description: string;
+  categories: Array<any>;
+  explicit: boolean;
+  ownerId: string;
+}
 
 export interface SignInData {
   email: string;
@@ -44,19 +62,39 @@ interface GemFormSubmitAction {
   payload: any;
 }
 
+interface GetUserGems {
+  type: typeof SET_USER_GEMS;
+  payload: Array<any>;
+}
+
 interface SetUserAction {
   type: typeof SET_USER;
   payload: User;
 }
 
+interface SetUserPhoto {
+  type: typeof SET_USER_PHOTO;
+  payload: string;
+}
+
+interface SubmitFinalGem {
+  type: typeof SET_FINAL_GEM;
+  payload: FinalGem;
+}
+
 interface SetIsVerifiedAction {
   type: typeof IS_VERIFIED;
-  payload: boolean;
+  // payload: boolean;
 }
 
 interface SetLoadingAction {
   type: typeof SET_LOADING;
   payload: boolean;
+}
+
+interface SetClipAudioAction {
+  type: typeof CLIP_AUDIO;
+  payload: string;
 }
 
 interface SignOutAction {
@@ -79,10 +117,14 @@ interface SetSuccessAction {
 
 export type AuthAction =
   | SetUserAction
+  | SubmitFinalGem
+  | GetUserGems
+  | SetUserPhoto
   | SetLoadingAction
   | SignOutAction
   | SetErrorAction
   | SetIsVerifiedAction
   | NeedVerificationAction
   | GemFormSubmitAction
+  | SetClipAudioAction
   | SetSuccessAction;

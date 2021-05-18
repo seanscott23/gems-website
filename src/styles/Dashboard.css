@@ -2,10 +2,28 @@
   margin-top: 50px;
 }
 
+.Rss-error {
+  color: red;
+}
+
 Form > .btn-primary {
   background-color: #057dcd;
 }
 
 .dash-name {
   color: #1e3d58;
+}
+
+#container {
+  width: 60%;
+  margin: 150px auto;
+  height: 100%;
+}
+
+body {
+  background-color: #63a4ff;
+  background-image: linear-gradient(315deg, #63a4ff 0%, #83eaf1 74%);
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
 }

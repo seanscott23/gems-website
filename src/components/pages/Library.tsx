@@ -1,22 +1,74 @@
-import React, { FC } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import React, { FC, useState } from "react";
+import { useEffect } from "react";
+import { ListGroup } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+
+import "../../styles/Library.css";
+import SearchBar from "../sections/SearchBar";
+import GemPagination from "../sections/GemPagination";
+import PaginationBar from "../sections/PaginationBar";
+import { getUserGems } from "../../store/actions/gemSubmitAction";
 
 const Library: FC = () => {
-  return (
-    <section className="section">
-      <h1>Library Page!</h1>
-      <Container className="library-container">
-        <Row>
-          <Col>1 of 2</Col>
-          <Col>2 of 2</Col>
-        </Row>
-        <Row>
-          <Col>1 of 3</Col>
-          <Col>2 of 3</Col>
-          <Col>3 of 3</Col>
-        </Row>
-      </Container>
-    </section>
+  const { userGems } = useSelector((state: RootState) => state.auth);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = userGems.slice(indexOfFirstPost, indexOfLastPost);
+  const [input, setInput] = useState<string>("");
+  const [clips, setClips] = useState(userGems);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (userGems !== undefined) {
+      dispatch(getUserGems());
+    }
+  }, [currentPosts]);
+
+  const handleFilterList = (input: string) => {
+    const filtered = userGems.filter((clip: any) => {
+      return input === ""
+        ? clip
+        : clip[1].title.toLowerCase().includes(input.toLowerCase());
+    });
+    setInput(input);
+    setClips(filtered);
+  };
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  return userGems !== undefined ? (
+    <div>
+      <section className="library-section">
+        {/* <h1>Your gem library!</h1>
+        <h6>
+          This page is linked directly with your account on our app. Update or
+          delete any gem within this page.
+        </h6> */}
+        <SearchBar input={input} setInput={handleFilterList} />
+        <ListGroup id="allGems" as="ul">
+          <GemPagination
+            posts={currentPosts}
+            clips={clips}
+            input={input}
+            setClips={setClips}
+          ></GemPagination>
+          <PaginationBar
+            postsPerPage={postsPerPage}
+            totalPosts={userGems.length}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            paginate={paginate}
+          ></PaginationBar>
+        </ListGroup>
+      </section>
+    </div>
+  ) : (
+    <h1 className="noGem-h1">
+      You have no gems yet. Please upload a gem first.
+    </h1>
   );
 };
 

@@ -1,5 +1,5 @@
-.signup-user-photo {
-  border: 1px solid #ced4da;
+.signup-user-audio {
+  /* border: 1px solid #ced4da; */
   width: 100%;
   height: 130px;
   padding: 20px;
@@ -22,7 +22,7 @@
   display: none;
 }
 
-.image-label-instruction {
+.audio-label-instruction {
   margin-top: 20px;
   color: white;
 }

@@ -8,11 +8,13 @@ import { Form, Card } from "react-bootstrap";
 import { RootState } from "../../store";
 import "../../styles/Signup.css";
 import { Link } from "react-router-dom";
-
+import ProfilePhotoUpload from "../sections/ProfilePhotoUpload";
 const SignUp: FC = () => {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
+  const [profilePhoto, setProfilePhoto] = useState("");
   const [password, setPassword] = useState("");
+  // const [profileImage, setProfileImage] = useState<File>();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { error } = useSelector((state: RootState) => state.auth);
@@ -25,10 +27,30 @@ const SignUp: FC = () => {
     };
   }, [error, dispatch]);
 
+  const updatePhoto = (e: React.ChangeEvent) => {
+    let fReader = new FileReader();
+    let target: any = e.target;
+    // let result = fReader.readAsDataURL(target.files[0]);
+    let fileEvent = target.files[0];
+    fReader.onload = function (e) {
+      if (
+        e.target?.result !== undefined &&
+        typeof e.target?.result === "string"
+      ) {
+        setProfilePhoto(e.target?.result);
+      }
+    };
+    fReader.readAsDataURL(fileEvent);
+  };
+
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(signup({ email, password, firstName }, () => setLoading(false)));
+    dispatch(
+      signup({ email, password, firstName, profilePhoto }, () =>
+        setLoading(false)
+      )
+    );
   };
 
   return (
@@ -65,6 +87,15 @@ const SignUp: FC = () => {
               label=""
             />
           </Form.Group>
+          <Form.Group>
+            <Form.File
+              onChange={(e: React.ChangeEvent) => updatePhoto(e)}
+              accept=".jpg,.png"
+              id="exampleFormControlFile1"
+              label="Your gem profile image(optional)"
+            />
+            <div className="signup-photo"></div>
+          </Form.Group>
           <Button
             text={loading ? "Loading..." : "Sign Up"}
             className="w-100 btn btn-primary"
@@ -75,7 +106,7 @@ const SignUp: FC = () => {
         {/* </div> */}
       </Card>
       <div className="homeLink">
-        <span>New to Gems?</span> <Link to={"/signin"}>Sign in</Link>
+        <span>Already have a login?</span> <Link to={"/signin"}>Sign in</Link>
       </div>
     </div>
   );

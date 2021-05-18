@@ -1,57 +1,135 @@
-import React from "react";
+import React, { FC } from "react";
+import { useState } from "react";
 import { Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import "../../styles/GemForm.css";
+import { submitFinalGem } from "../../store/actions/gemSubmitAction";
+import Button from "../UI/Button";
+import { useHistory } from "react-router-dom";
 
-const Modal: React.FC<{
-  item: {
-    name: string;
-  } | null;
-}> = ({ item }) => {
-  if (!item) return null;
+const GemForm: FC = () => {
+  const { gemURL, userGems } = useSelector((state: RootState) => state.auth);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [isChecked, setChecked] = useState(false);
+  const [gemID, setGemID] = useState("");
+  const [categories, setCategories] = React.useState<any[]>([]);
+  const [episodeNum, setEpisodeNum] = useState(0);
+  const [loading, setLoading] = useState(false);
+  // const [isInvalid, setInvalid] = useState("");
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  if (!localStorage.getItem("gemURL")) {
+    window.localStorage.setItem("gemURL", JSON.stringify(gemURL));
+  }
+  let storedURL;
+  if (gemURL === "" && window.localStorage.getItem("gemURL") !== null) {
+    let newURL = window.localStorage.getItem("gemURL");
+    storedURL = newURL ? JSON.parse(newURL) : "";
+  }
+  const getGemID = (gemURL: string) => {
+    let splitURL = gemURL.split("token=");
+    setGemID(splitURL[1]);
+  };
+
+  // const getEpisodeNum = () => {
+  //   setEpisodeNum(userGems.length + 1);
+  // };
+
+  const submitHandler = async (
+    e: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    setLoading(true);
+    getGemID(gemURL);
+    dispatch(
+      await submitFinalGem(
+        gemURL,
+        title,
+        description,
+        categories,
+        isChecked,
+        gemID
+      )
+    );
+    setLoading(false);
+    history.push("/library");
+  };
+
+  const getCategories = (e: React.ChangeEvent) => {
+    let target: any = e.currentTarget;
+    let array = target.selectedOptions;
+    let newArray = [];
+    for (let i = 0; i < array.length; i++) {
+      newArray.push(array[i].value);
+    }
+    setCategories(newArray);
+  };
+
   return (
-    <div>
-      <h1>Modal</h1>
-      <div>{item.name}</div>
-    </div>
-  );
-};
-
-interface Item {
-  name: string;
-}
-
-const ItemsIndex = () => {
-  const [selectedItem, setSelectedItem] = React.useState<Item | null>(null);
-  const items = [{ name: "hello" }, { name: "goodbye" }];
-  return (
-    <div>
+    <div className="gem-container">
       <h1>Upload Gem Form</h1>
+      {gemURL !== "" ? (
+        <audio src={gemURL} controls preload="metadata"></audio>
+      ) : (
+        <audio src={storedURL} controls preload="metadata"></audio>
+      )}
+
+      <br />
       <Form.Group>
-        <Form.Control type="text" placeholder="Title" />
+        <Form.Control
+          type="text"
+          placeholder="Title"
+          onChange={(e) => setTitle(e.currentTarget.value)}
+        />
         <br />
-        <Form.Control as="textarea" rows={3} placeholder="Description" />
-        <br />
-        <Form.Group controlId="exampleForm.ControlSelect2">
-          <Form.Label>Select Categories</Form.Label>
-          <Form.Control as="select" multiple>
-            <option>Comedy</option>
-            <option>News</option>
-            <option>History</option>
-            <option>Science</option>
-            <option>Music</option>
-          </Form.Control>
-        </Form.Group>
+        <Form.Control
+          as="textarea"
+          rows={3}
+          placeholder="Description"
+          className="gem-description"
+          onChange={(e) => setDescription(e.currentTarget.value)}
+        />
+
+        <Form.Label>
+          Select Categories (commmand + click to select multiple)
+        </Form.Label>
+        <Form.Control
+          required
+          // type={isInvalid}
+          as="select"
+          multiple
+          id="gem-categories"
+          onChange={(e: any) => getCategories(e)}
+        >
+          <option>Comedy</option>
+          <option>News</option>
+          <option>History</option>
+          <option>Science</option>
+          <option>Music</option>
+        </Form.Control>
+        {/* {isInvalid ? (
+          <Form.Control.Feedback type="invalid">
+            Please select at least one category.
+          </Form.Control.Feedback>
+        ) : null} */}
         <br />
         <Form.Check
           type="checkbox"
           label="Check box if explicit"
           id={`disabled-default-checkbox`}
+          onChange={(e) => setChecked(e.currentTarget.checked)}
+        />
+        <Button
+          className="gem-form-button"
+          onClick={(e) => submitHandler(e)}
+          text="Submit Gem"
         />
       </Form.Group>
     </div>
   );
 };
-// Your modal is ALWAYS on the page
-// You put items INTO the modal on click rather than making new JSX
-// The JSX that you need should already exist on the page and only show when the item has something in it
-// This is a simple example that makes the page concise, but also reduces functions rendering more JSX that renders functions, etc
-// It's a bad loop to get into
+
+export default GemForm;

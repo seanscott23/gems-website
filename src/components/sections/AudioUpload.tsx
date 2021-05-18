@@ -1,86 +1,90 @@
-import "../../styles/AudioUpload.css"
-import React, { useEffect, useState, DragEvent } from 'react';
-import uploadPNG from "../../images/upload.png"
+import "../../styles/AudioUpload.css";
+import React, { useEffect, useState, DragEvent } from "react";
+import uploadPNG from "../../images/uploadgem.png";
+import AudioFile from "./AudioFile";
 
 function AudioUpload() {
+  const [audiox, setAudiox] = useState<string | ArrayBuffer>("");
 
-    const [userImage, setUserImage] = useState("");
+  function dropTargetRelease() {
+    document
+      .getElementsByClassName("signup-user-audio")[0]
+      .classList.remove("beingDraggedOver");
+  }
 
-    function dropTargetRelease() {
-        document.getElementsByClassName("signup-user-photo")[0].classList.remove("beingDraggedOver")
+  const dragOverHandler = (ev: DragEvent<HTMLLabelElement>) => {
+    ev.preventDefault();
+    document
+      .getElementsByClassName("signup-user-audio")[0]
+      .classList.add("beingDraggedOver");
+  };
+
+  function checkIfImage(file: any) {
+    return file && file["type"].split("/")[0] === "audio";
+  }
+
+  const dropHandler = (ev: DragEvent<HTMLLabelElement>) => {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    const file = ev?.dataTransfer?.files[0];
+
+    if (checkIfImage(file)) {
+      presentAudio(file);
+    } else {
+      alert("File must be audio!");
     }
-    
 
-    const dragOverHandler = (ev: DragEvent<HTMLLabelElement>) => {
-        ev.preventDefault();
-       
-        document.getElementsByClassName("signup-user-photo")[0].classList.add("beingDraggedOver")
-      
-    }
+    dropTargetRelease();
+  };
 
-    function checkIfImage(file: any) {
-        return file && file['type'].split('/')[0] === 'image';
-    }
+  function presentAudio(ev: any) {
+    if (ev?.length != 0) {
+      var reader = new FileReader();
+      const fileEvent = ev[0] == undefined ? ev : ev[0];
 
-   const dropHandler = (ev: DragEvent<HTMLLabelElement>) => {
-       let event = ev
-      
-        event.stopPropagation();
-        event.preventDefault();
-
-        const file = event?.dataTransfer?.files[0]
-
-        if (checkIfImage(file)) {
-            // presentImage(file)
-        }else {
-
+      reader.onload = function (e) {
+        if (e.target?.result != undefined) {
+          setAudiox(e.target?.result);
         }
-        dropTargetRelease()
+      };
+      reader.readAsDataURL(fileEvent);
     }
+  }
 
-    function presentImage(ev: any) {
-        var reader = new FileReader();
-        var imgtag = document.getElementById("fileElem");
-
-        reader.onload = function(event) {
-            // imgtag.src = event?.target?.result;
-            // setUserImage(imgtag?.src)
-            // values.userImage = imgtag?.src
-        };
-
-        reader.readAsDataURL(ev);
-    }
-
-    return(
-        <div className="upload-box">
-
-            <label htmlFor="fileElem" className="signup-user-photo"  onDrop={(ev) => dropHandler(ev)} onDragOver={ ev => dragOverHandler(ev)} onDragLeave={()=> dropTargetRelease()}> 
-                <div className="preparing-4-drag">
-                    <input type="file" name="userImage" id="fileElem" accept="audio/*"  onChange={(e) => presentImage(e?.target?.files?[0]: "")}/>
-                        <img src={userImage || uploadPNG}  width="50px" height="50px" />
-                        <div>
-                            <p className="image-label-instruction"> Drag &amp; Drop A Gem </p>
-                        </div>
-                </div>
-
-                { /* <div className="uploading" hidden>
-                            <span> Uploading... </span>
-                        </div>
-                        <div className="success" hidden>
-                            <img className="dragdrop-image" src={upload}  width="50px" height="50px" />
-                            <div>
-                                <p className="dragdrop-message"> Successful upload! </p>
-                            </div>
-                        </div> 
-                        <div className="failure" hidden>
-                            <img className="dragdrop-image" src={upload}  width="50px" height="50px" />
-                            <div>
-                                <p className="dragdrop-message"> Failure uploading! </p>
-                            </div>
-                    </div>  */ }
-            </label>
-
+  return (
+    <div className="upload-box">
+      <label
+        htmlFor="fileElem"
+        className="signup-user-audio"
+        onDrop={(ev) => dropHandler(ev)}
+        onDragOver={(ev) => dragOverHandler(ev)}
+        onDragLeave={() => dropTargetRelease()}
+      >
+        <div className="preparing-4-drag">
+          <input
+            type="file"
+            name="userAudio"
+            id="fileElem"
+            accept="audio/*"
+            onChange={(e) => presentAudio(e?.target?.files)}
+          />
+          {!audiox ? (
+            <div>
+              <img src={uploadPNG} width="50px" height="50px" />
+              <div>
+                <p className="audio-label-instruction">
+                  {" "}
+                  Drag &amp; Drop A Gem{" "}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <AudioFile file={audiox} />
+          )}
         </div>
-    );
+      </label>
+    </div>
+  );
 }
 export default AudioUpload;

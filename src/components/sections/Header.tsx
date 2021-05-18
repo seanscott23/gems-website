@@ -7,8 +7,10 @@ import Navbar from "react-bootstrap/Navbar";
 import { RootState } from "../../store";
 import { signout } from "../../store/actions/authActions";
 import "../../styles/Header.css";
+import { getUserGems } from "../../store/actions/gemSubmitAction";
 
 const Header: FC = () => {
+  const { userGems } = useSelector((state: RootState) => state.auth);
   const history = useHistory();
   const dispatch = useDispatch();
   const { authenticated } = useSelector((state: RootState) => state.auth);
@@ -17,10 +19,16 @@ const Header: FC = () => {
     dispatch(signout());
   };
 
-
-  // const libraryClickHandler = () => {
-  //   dispatch(goToLibrary());
-  // };
+  const libraryHandler = async (
+    e: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    if (userGems.length < 1) {
+      dispatch(getUserGems());
+    }
+    // await dispatch(getUserGems());
+    history.push("/library");
+  };
 
   return (
     <Navbar bg="light" expand="lg" id="navbar">
@@ -29,40 +37,54 @@ const Header: FC = () => {
           Gems
         </Link>
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav"  />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto navupdate">
-          {!authenticated ? (
-            <div className="loggedOut-buttons">
+      <NavDropdown title="Menu" id="nav-dropdown">
+        {!authenticated ? (
+          <div className="loggedOut-buttons">
+            <NavDropdown.Item eventKey="4.1">
+              {" "}
               <Button
                 onClick={() => history.push("/signup")}
                 className="is-primary"
               >
                 Sign up
               </Button>
+            </NavDropdown.Item>
+            <NavDropdown.Item eventKey="4.2">
               <Button onClick={() => history.push("/signin")}>Sign in</Button>
-            </div>
-          ) : (
-            <div className="loggedIn-buttons">
+            </NavDropdown.Item>
+          </div>
+        ) : (
+          <div className="loggedIn-buttons">
+            <NavDropdown.Item eventKey="4.1">
               <Button
                 variant="primary"
                 onClick={() => history.push("/dashboard")}
               >
                 Upload Gem
               </Button>
-              <Button
-                variant="primary"
-                onClick={() => history.push("/library")}
-              >
+            </NavDropdown.Item>
+            <NavDropdown.Item eventKey="4.2">
+              <Button variant="primary" onClick={(e) => libraryHandler(e)}>
                 Library
               </Button>
+            </NavDropdown.Item>
+            <NavDropdown.Item eventKey="4.3">
+              <Button
+                variant="primary"
+                onClick={() => history.push("/profile")}
+              >
+                Profile
+              </Button>
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item eventKey="4.4">
               <Button variant="secondary" onClick={logoutClickHandler}>
                 Sign out
               </Button>
-            </div>
-          )}
-        </Nav>
-      </Navbar.Collapse>
+            </NavDropdown.Item>
+          </div>
+        )}
+      </NavDropdown>
     </Navbar>
   );
 };

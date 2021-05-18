@@ -1,26 +1,53 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { ListGroup, Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setSuccess } from "../../store/actions/authActions";
+import {
+  setLoading,
+  setSuccess,
+  submitNewFile,
+} from "../../store/actions/authActions";
+import "../../styles/ReturnHtml.css";
 import { RootState } from "../../store";
 import AudioModalRipper from "../modal/AudioModalRipper";
+import { useHistory } from "react-router-dom";
 
 interface Clip {
   title: string;
   enclosure: {
     url: string;
   };
+  itunes: {
+    duration: number;
+  };
 }
 
-const ReturnHTML = () => {
+const ReturnHTML: FC<{
+  posts: Array<any>;
+  clips: Array<any>;
+  setClips: (clips: any[]) => void;
+  input: string;
+}> = ({ posts, clips, setClips, input }) => {
   const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
   const [isModalOpen, setModalState] = React.useState(false);
   const [activeClip, setActiveClip] = React.useState<Clip | null>(null);
-
+  const [begin, setBegin] = React.useState(0);
+  const [end, setEnd] = React.useState(0);
   const handleClose = () => {
     setModalState(!isModalOpen);
   };
+  const handleTimeUpdate = (startPoint: number, endPoint: number) => {
+    setBegin(startPoint);
+    setEnd(endPoint);
+  };
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const submitHandler = async (clip: Clip) => {
+    setLoading(true);
+    await dispatch(submitNewFile(clip.enclosure.url, 0, clip.itunes.duration));
+    setLoading(false);
+    history.push("/gem-form");
+  };
 
   useEffect(() => {
     if (success) {
@@ -28,60 +55,95 @@ const ReturnHTML = () => {
     }
   }, [success, dispatch]);
 
-  const audioClipsTooLong = () => {
-    const audioItems: Array<object> = [];
-    const allItems = rssFeedUrl.items;
-    allItems.map(async (currentItem: any) => {
-      if (parseInt(currentItem.itunes.duration) > 600) {
-        audioItems.push(currentItem);
-      }
-    });
-    return audioItems;
-  };
-  const items = audioClipsTooLong();
-  let codeBlock: any[] = [];
-  codeBlock = items.map((clip: any, i: number) => {
-    return (
-      <ListGroup.Item as="li">
-        <Card>
-          <Card.Body>
-            <Card.Title>{clip.title}</Card.Title>
-            {/* <Card.Text>{clip.contentSnippet}</Card.Text> */}
+  return input === "" ? (
+    <div>
+      {posts.map((clip: any, i: number) => (
+        <ListGroup.Item as="li">
+          <Card>
+            <Card.Body>
+              <Card.Title>{clip.title}</Card.Title>
+              {clip.itunes.duration > 600 ? (
+                <Button
+                  onClick={() => {
+                    setActiveClip(clip);
+                    setModalState(!isModalOpen);
+                  }}
+                >
+                  Crop audio
+                </Button>
+              ) : (
+                <div>
+                  <Button onClick={() => submitHandler(clip)}>
+                    Upload audio
+                  </Button>
+                  <span className="button-or">Or</span>
 
-            <Button
-              onClick={() => {
-                setActiveClip(clip);
-                setModalState(!isModalOpen);
-              }}
-            >
-              Crop audio
-            </Button>
-            {/* For the ripper, need to pass in the props its missing */}
-            {!activeClip ? null : (
-              <AudioModalRipper
-                isOpen={isModalOpen}
-                handleClose={handleClose}
-                clip={activeClip}
-                id={i}
-              />
-            )}
-            {/* Also, i suggest you pass in the clip entirely rather than bits of it . how?*/}
-          </Card.Body>
-        </Card>
-      </ListGroup.Item>
-    );
-  });
+                  <Button
+                    onClick={() => {
+                      setActiveClip(clip);
+                      setModalState(!isModalOpen);
+                    }}
+                  >
+                    Crop audio
+                  </Button>
+                </div>
+              )}
 
-  let finalBlock;
-  if (codeBlock.length > 0) {
-    finalBlock = (
-      <div>
-        <h3 style={{ textAlign: "center" }}>These clips need to be trimmed</h3>
-        {codeBlock}
-      </div>
-    );
-  }
-  return finalBlock;
+              {!activeClip ? null : (
+                <AudioModalRipper
+                  isOpen={isModalOpen}
+                  handleClose={handleClose}
+                  clip={activeClip}
+                  id={i}
+                  begin={begin}
+                  end={end}
+                  handleTimeUpdate={handleTimeUpdate}
+                />
+              )}
+            </Card.Body>
+          </Card>
+        </ListGroup.Item>
+      ))}
+    </div>
+  ) : (
+    <div>
+      {clips.map((clip: any, i: number) => (
+        <ListGroup.Item as="li">
+          <Card>
+            <Card.Body>
+              <Card.Title>{clip.title}</Card.Title>
+              {clip.itunes.duration > 600 ? (
+                <Button
+                  onClick={() => {
+                    setActiveClip(clip);
+                    setModalState(!isModalOpen);
+                  }}
+                >
+                  Crop audio
+                </Button>
+              ) : (
+                <Button onClick={() => submitHandler(clip)}>
+                  Upload audio
+                </Button>
+              )}
+
+              {!activeClip ? null : (
+                <AudioModalRipper
+                  isOpen={isModalOpen}
+                  handleClose={handleClose}
+                  clip={activeClip}
+                  id={i}
+                  begin={begin}
+                  end={end}
+                  handleTimeUpdate={handleTimeUpdate}
+                />
+              )}
+            </Card.Body>
+          </Card>
+        </ListGroup.Item>
+      ))}
+    </div>
+  );
 };
 
 export default ReturnHTML;
