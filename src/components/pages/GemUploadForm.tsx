@@ -15,9 +15,8 @@ const GemForm: FC = () => {
   const [isChecked, setChecked] = useState(false);
   const [gemID, setGemID] = useState("");
   const [categories, setCategories] = React.useState<any[]>([]);
-  const [episodeNum, setEpisodeNum] = useState(0);
   const [loading, setLoading] = useState(false);
-  // const [isInvalid, setInvalid] = useState("");
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -33,10 +32,6 @@ const GemForm: FC = () => {
     let splitURL = gemURL.split("token=");
     setGemID(splitURL[1]);
   };
-
-  // const getEpisodeNum = () => {
-  //   setEpisodeNum(userGems.length + 1);
-  // };
 
   const submitHandler = async (
     e: React.MouseEvent<HTMLElement, MouseEvent>

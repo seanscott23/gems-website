@@ -41,3 +41,9 @@
 .form-group > .alert {
   padding: 0 1.25rem;
 }
+
+.eye-icon {
+  position: absolute;
+  right: 20px;
+  bottom: 135px;
+}

@@ -14,13 +14,12 @@ const RssFeed: FC = () => {
   const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
   const [input, setInput] = useState<string>("");
 
-  const [isModalOpen, setModalState] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const history = useHistory();
+
   const dispatch = useDispatch();
   if (localStorage.getItem("rssFeedUrl") === "{}") {
     window.localStorage.setItem("rssFeedUrl", JSON.stringify(rssFeedUrl));

@@ -7,7 +7,9 @@ import { signin, setError } from "../../store/actions/authActions";
 import { RootState } from "../../store";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Card } from "react-bootstrap";
-// import firebase from "../../firebase/config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import PasswordToggle from "../hooks/PasswordToggle";
 import "../../styles/Signin.css";
 
 const Signin: FC = () => {
@@ -16,6 +18,9 @@ const Signin: FC = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
+  let [passwordInputType, toggleIcon] = PasswordToggle();
+
   const { error, user } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
@@ -53,11 +58,17 @@ const Signin: FC = () => {
               <Input
                 name="password"
                 value={password}
-                type="passowrd"
+                type={
+                  typeof passwordInputType === "string"
+                    ? passwordInputType
+                    : "password"
+                }
                 label=""
                 onChange={(e) => setPassword(e.currentTarget.value)}
                 placeholder="Password"
               />
+
+              <span className="eye-icon">{toggleIcon}</span>
             </Form.Group>
             <p>
               <Link to="/forgot-password">Forgot password?</Link>
