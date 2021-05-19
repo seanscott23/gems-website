@@ -2,4 +2,6 @@
   color: red;
 }
 
-
+#delete-modal > .modal-content {
+  height: 12em;
+}

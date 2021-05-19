@@ -1,0 +1,27 @@
+#profile-container {
+  margin: 10% auto;
+
+  width: 60%;
+}
+
+.photoupload-div {
+  display: flex;
+}
+
+#profile-container > h2 {
+  color: #1e3d58;
+}
+
+#profile-container .allInputs > .input {
+  width: 98%;
+
+}
+
+#profile-container .allInputs {
+  width: 70%;
+}
+
+.org-flex {
+  display: flex;
+  width: 100%;
+}

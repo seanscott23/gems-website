@@ -13,6 +13,7 @@ import PasswordToggle from "../hooks/PasswordToggle";
 
 const SignUp: FC = () => {
   const [firstName, setFirstName] = useState("");
+  const [orgName, setOrgName] = useState("");
   const [email, setEmail] = useState("");
   const [profilePhoto, setProfilePhoto] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +22,7 @@ const SignUp: FC = () => {
   const dispatch = useDispatch();
   const { error } = useSelector((state: RootState) => state.auth);
   let [passwordInputType, toggleIcon] = PasswordToggle();
+
   useEffect(() => {
     return () => {
       if (error) {
@@ -49,7 +51,7 @@ const SignUp: FC = () => {
     e.preventDefault();
     setLoading(true);
     dispatch(
-      signup({ email, password, firstName, profilePhoto }, () =>
+      signup({ email, password, firstName, orgName, profilePhoto }, () =>
         setLoading(false)
       )
     );
@@ -68,6 +70,15 @@ const SignUp: FC = () => {
               value={firstName}
               onChange={(e) => setFirstName(e.currentTarget.value)}
               placeholder="First name"
+              label=""
+            />
+          </Form.Group>
+          <Form.Group>
+            <Input
+              name="organizationName"
+              value={orgName}
+              onChange={(e) => setOrgName(e.currentTarget.value)}
+              placeholder="Organization Name"
               label=""
             />
           </Form.Group>
@@ -114,7 +125,8 @@ const SignUp: FC = () => {
         {/* </div> */}
       </Card>
       <div className="homeLink">
-        <span>Already have a login?</span> <Link to={"/signin"}>Sign in</Link>
+        <span>Already have an account?</span>{" "}
+        <Link to={"/signin"}>Sign in</Link>
       </div>
     </div>
   );

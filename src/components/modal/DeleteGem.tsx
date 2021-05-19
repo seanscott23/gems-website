@@ -54,6 +54,7 @@ const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
       keyboard={false}
       backdrop="static"
       className="modalBack"
+      id="delete-modal"
       // size="lg"
     >
       <Modal.Header className="deleteModal-warning">

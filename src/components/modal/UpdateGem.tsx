@@ -105,6 +105,7 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
       keyboard={false}
       backdrop="static"
       className="modalBack"
+      id="update-modal"
       // size="lg"
     >
       <Modal.Body className="update-modal">
@@ -152,7 +153,7 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
             />
           </Form.Group>
         </Form>
-        <div>
+        <div className="Update-buttons">
           <Button onClick={handleClose}>Close</Button>
           <Button onClick={(e) => updateHandler(e)}>Update</Button>
         </div>

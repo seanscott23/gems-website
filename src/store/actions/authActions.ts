@@ -10,6 +10,7 @@ import {
   SET_ERROR,
   NEED_VERIFICATION,
   IS_VERIFIED,
+  SET_USER_ORG,
   SET_SUCCESS,
   SET_FORM_SUCCESS,
   CLIP_AUDIO,
@@ -18,8 +19,8 @@ import {
 import Parser from "rss-parser";
 import { RootState } from "..";
 import firebase from "../../firebase/config";
-import { FC } from "react";
-import { userInfo } from "node:os";
+// import { FC } from "react";
+// import { userInfo } from "node:os";
 
 const auth = firebase.auth();
 
@@ -36,6 +37,7 @@ export const signup = (
         const userData: User = {
           email: data.email,
           firstName: data.firstName,
+          orgName: data.orgName,
           id: res.user.uid,
           createdAt: Date.now(),
           gems: [],
@@ -91,23 +93,23 @@ export const signup = (
   };
 };
 
-const uploadUserImage = async (image: File) => {
-  console.log(image);
-  let formData = new FormData();
-  formData.append("user_image", image);
-  formData.append("user_id", auth.currentUser?.uid as string);
-  formData.append("token", (await auth.currentUser?.getIdToken()) as string);
+// const uploadUserImage = async (image: File) => {
+//   console.log(image);
+//   let formData = new FormData();
+//   formData.append("user_image", image);
+//   formData.append("user_id", auth.currentUser?.uid as string);
+//   formData.append("token", (await auth.currentUser?.getIdToken()) as string);
 
-  // fetch("http://localhost:8000/api/deliver/userImage/",{
-  //   method: "POST",
-  //   body: formData
-  // })
-  // .then((response) => response.json())
-  // .then((data) => {
-  //   console.log(data)
-  // });
-  return "";
-};
+//   // fetch("http://localhost:8000/api/deliver/userImage/",{
+//   //   method: "POST",
+//   //   body: formData
+//   // })
+//   // .then((response) => response.json())
+//   // .then((data) => {
+//   //   console.log(data)
+//   // });
+//   return "";
+// };
 
 export const getUserById = (
   id: string
@@ -325,16 +327,46 @@ export const submitPhoto = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      dispatch({
-        type: SET_USER_PHOTO,
-        payload: photoUrl,
-      });
+      if (auth.currentUser) {
+        let id = auth.currentUser.uid;
+        await firebase.database().ref("users").child(id).update({
+          profilePhoto: photoUrl,
+        });
+        dispatch({
+          type: SET_USER_PHOTO,
+          payload: photoUrl,
+        });
+      }
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));
     }
   };
 };
+
+export const submitOrgName = (
+  orgName: string
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      if (auth.currentUser) {
+        let id = auth.currentUser.uid;
+        await firebase.database().ref("users").child(id).update({
+          orgName: orgName,
+        });
+        dispatch({
+          type: SET_USER_ORG,
+          payload: orgName,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      dispatch(setError(err.message));
+    }
+  };
+};
+
+
 
 //dashboard form
 export const submitGemForm = (
