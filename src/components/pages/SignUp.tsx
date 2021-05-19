@@ -9,6 +9,8 @@ import { RootState } from "../../store";
 import "../../styles/Signup.css";
 import { Link } from "react-router-dom";
 import ProfilePhotoUpload from "../sections/ProfilePhotoUpload";
+import PasswordToggle from "../hooks/PasswordToggle";
+
 const SignUp: FC = () => {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,7 +20,7 @@ const SignUp: FC = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { error } = useSelector((state: RootState) => state.auth);
-
+  let [passwordInputType, toggleIcon] = PasswordToggle();
   useEffect(() => {
     return () => {
       if (error) {
@@ -82,10 +84,16 @@ const SignUp: FC = () => {
             <Input
               name="password"
               value={password}
+              type={
+                typeof passwordInputType === "string"
+                  ? passwordInputType
+                  : "password"
+              }
               onChange={(e) => setPassword(e.currentTarget.value)}
               placeholder="Password"
               label=""
             />
+            <span className="up-eye-icon">{toggleIcon}</span>
           </Form.Group>
           <Form.Group>
             <Form.File

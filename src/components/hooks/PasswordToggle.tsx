@@ -6,7 +6,7 @@ import { useState } from "react";
 const PasswordToggle = () => {
   const [visible, setVisible] = useState(false);
   let setIcon;
-  visible ? (setIcon = faEyeSlash) : (setIcon = faEye);
+  visible ? (setIcon = faEye) : (setIcon = faEyeSlash);
   const icon = (
     <FontAwesomeIcon icon={setIcon} onClick={() => setVisible(!visible)} />
   );

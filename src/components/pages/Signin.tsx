@@ -68,7 +68,7 @@ const Signin: FC = () => {
                 placeholder="Password"
               />
 
-              <span className="eye-icon">{toggleIcon}</span>
+              <span className="in-eye-icon">{toggleIcon}</span>
             </Form.Group>
             <p>
               <Link to="/forgot-password">Forgot password?</Link>
