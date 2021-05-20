@@ -4,7 +4,10 @@ import { Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import "../../styles/GemForm.css";
-import { submitFinalGem } from "../../store/actions/gemSubmitAction";
+import {
+  getUserGems,
+  submitFinalGem,
+} from "../../store/actions/gemSubmitAction";
 import Button from "../UI/Button";
 import { useHistory } from "react-router-dom";
 

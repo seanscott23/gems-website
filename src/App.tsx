@@ -34,7 +34,6 @@ const App: FC = () => {
     dispatch(setLoading(true));
     const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        console.log("this is the user", user.uid);
         dispatch(setLoading(true));
         await dispatch(getUserById(user.uid));
         if (!user.emailVerified) {

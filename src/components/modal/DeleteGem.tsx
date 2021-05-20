@@ -42,7 +42,7 @@ const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
     handleClose();
     // await dispatch(removeFromArray(gem.gemID));
 
-    // await dispatch(getUserGems());
+    await dispatch(getUserGems());
   };
 
   if (!gem) return null;

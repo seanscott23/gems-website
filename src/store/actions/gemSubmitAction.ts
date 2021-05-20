@@ -30,6 +30,7 @@ export const submitFinalGem = (
       })
         .then((response) => response.json())
         .then((data) => {
+          dispatch(getUserGems());
           // dispatch({
           //   type: "SET_NEW_GEM",
           //   payload: data
@@ -77,6 +78,7 @@ export const getUserGems = (): ThunkAction<
         .then((response) => response.json())
         .then((data) => {
           let newData = data.reverse();
+
           dispatch({
             type: SET_USER_GEMS,
             payload: newData,
@@ -111,10 +113,9 @@ export const updateGemAction = (
           categories: categories,
           explicit: explicit,
         }),
-      })
-        .then((response) => response.json())
-        .then((data) => {});
+      });
     } catch (err) {
+      debugger;
       console.log(err);
       dispatch(setError(err.message));
     }
