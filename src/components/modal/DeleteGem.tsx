@@ -30,10 +30,10 @@ const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const removeFromArray = (id: string) => {
-    userGems.filter((value) => value === id);
-    return userGems;
-  };
+  // const removeFromArray = (id: string) => {
+  //   userGems.filter((value) => value === id);
+  //   return userGems;
+  // };
 
   const deleteHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -44,7 +44,7 @@ const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
 
     await dispatch(getUserGems());
   };
-
+  // debugger;
   if (!gem) return null;
   return (
     <Modal

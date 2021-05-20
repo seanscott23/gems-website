@@ -103,6 +103,15 @@ const GemForm: FC = () => {
           onChange={(e: any) => getCategories(e)}
         >
           <option>Comedy</option>
+          <option>Society & Culture</option>
+          <option>Business</option>
+          <option>Sports</option>
+          <option>Health & Fitness</option>
+          <option>Arts</option>
+          <option>Fiction</option>
+          <option>Philosophy</option>
+          <option>Motivation</option>
+          <option>True Crime</option>
           <option>News</option>
           <option>History</option>
           <option>Science</option>

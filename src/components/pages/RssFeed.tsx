@@ -21,16 +21,22 @@ const RssFeed: FC = () => {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
   const dispatch = useDispatch();
-  if (localStorage.getItem("rssFeedUrl") === "{}") {
+
+  if (rssFeedUrl.items !== undefined) {
     window.localStorage.setItem("rssFeedUrl", JSON.stringify(rssFeedUrl));
   }
-  let storedRSSUrl;
+  let storedRSSUrl: any = {};
+
   if (
     rssFeedUrl.items === undefined &&
     window.localStorage.getItem("rssFeedUrl") !== null
   ) {
     let newURL = window.localStorage.getItem("rssFeedUrl");
-    storedRSSUrl = newURL ? JSON.parse(newURL) : {};
+    storedRSSUrl = newURL ? JSON.parse(newURL) : [];
+  } else if (rssFeedUrl.items !== undefined) {
+    window.localStorage.setItem("rssFeedUrl", JSON.stringify(rssFeedUrl));
+    let newURL = window.localStorage.getItem("rssFeedUrl");
+    storedRSSUrl = newURL ? JSON.parse(newURL) : [];
   }
 
   useEffect(() => {
@@ -39,10 +45,8 @@ const RssFeed: FC = () => {
     }
   }, [success, dispatch]);
 
-  let items = rssFeedUrl.items;
-  if (items === undefined) {
-    items = storedRSSUrl.items;
-  }
+  let items = storedRSSUrl.items;
+
   const [clips, setClips] = useState(items);
 
   const currentPosts = items.slice(indexOfFirstPost, indexOfLastPost);
@@ -59,7 +63,7 @@ const RssFeed: FC = () => {
     setClips(filtered);
   };
 
-  return (
+  return items !== undefined ? (
     <section className="rss-container">
       <div className="rss-columns">
         <ListGroup id="needToBeTrimmed" as="ul">
@@ -83,6 +87,8 @@ const RssFeed: FC = () => {
         </ListGroup>
       </div>
     </section>
+  ) : (
+    <h1 className="noGem-h1">This RSS Feed has nothing in it.</h1>
   );
 };
 

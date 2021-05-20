@@ -78,7 +78,7 @@ const Library: FC = () => {
           ></GemPagination>
           <PaginationBar
             postsPerPage={postsPerPage}
-            totalPosts={userGems.length}
+            totalPosts={storedGems.length}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             paginate={paginate}

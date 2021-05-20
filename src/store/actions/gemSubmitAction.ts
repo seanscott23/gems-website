@@ -136,7 +136,14 @@ export const deleteGemAction = (
       })
         .then((response) => response.json())
         .then((data) => {
-          getUserGems();
+          let storedGems: any[] = [];
+          let newURL = localStorage.getItem("userGems");
+          storedGems = newURL ? JSON.parse(newURL) : [];
+          if (storedGems.length === 1) {
+            localStorage.clear();
+          } else {
+            getUserGems();
+          }
         });
     } catch (err) {
       console.log(err);
