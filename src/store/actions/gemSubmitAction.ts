@@ -11,7 +11,8 @@ export const submitFinalGem = (
   description: string,
   categories: Array<any>,
   explicit: boolean,
-  gemID: string
+  gemID: string,
+  duration: number
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
@@ -26,6 +27,7 @@ export const submitFinalGem = (
           description: description,
           categories: categories,
           explicit: explicit,
+          duration: duration,
         }),
       })
         .then((response) => response.json())
@@ -100,6 +102,7 @@ export const updateGemAction = (
   gemID: string
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
+    debugger;
     try {
       await fetch("http://localhost:8000/api/update/gem/", {
         method: "PUT",
@@ -115,7 +118,6 @@ export const updateGemAction = (
         }),
       });
     } catch (err) {
-      debugger;
       console.log(err);
       dispatch(setError(err.message));
     }

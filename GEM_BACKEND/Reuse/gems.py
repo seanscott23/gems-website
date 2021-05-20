@@ -13,6 +13,7 @@ class Gems(BaseModel):
     description: Optional[str] = "" 
     categories: Optional[list] = []
     explicit: Optional[bool] = False
+    duration: Optional[int] = 0
 
 
 @router.post("/api/post/gems/")
@@ -24,7 +25,7 @@ def post_gems_(gem: Gems):
         "description": gem.description,
         "categories": gem.categories,
         "explicit": gem.explicit,
-
+        "duration": gem.duration,
     }, gem.token)
     return "GEM ADDED"
   

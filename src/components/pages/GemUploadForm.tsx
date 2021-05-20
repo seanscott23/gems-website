@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +26,7 @@ const GemForm: FC = () => {
   if (!localStorage.getItem("gemURL")) {
     window.localStorage.setItem("gemURL", JSON.stringify(gemURL));
   }
-  let storedURL;
+  let storedURL = "";
   if (gemURL === "" && window.localStorage.getItem("gemURL") !== null) {
     let newURL = window.localStorage.getItem("gemURL");
     storedURL = newURL ? JSON.parse(newURL) : "";
@@ -36,22 +36,49 @@ const GemForm: FC = () => {
     setGemID(splitURL[1]);
   };
 
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [audioMetaData, setAudioMetaData] =
+    useState<HTMLAudioElement | undefined>();
+
+  useEffect(() => {
+    if (audioRef.current) {
+      setAudioMetaData(audioRef.current);
+    }
+  }, [audioMetaData]);
+
   const submitHandler = async (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.preventDefault();
     setLoading(true);
     getGemID(gemURL);
-    dispatch(
-      await submitFinalGem(
-        gemURL,
-        title,
-        description,
-        categories,
-        isChecked,
-        gemID
-      )
-    );
+
+    if (gemURL === "" && audioMetaData) {
+      dispatch(
+        await submitFinalGem(
+          storedURL,
+          title,
+          description,
+          categories,
+          isChecked,
+          gemID,
+          audioMetaData.duration
+        )
+      );
+    } else if (gemURL !== "" && audioMetaData) {
+      dispatch(
+        await submitFinalGem(
+          gemURL,
+          title,
+          description,
+          categories,
+          isChecked,
+          gemID,
+          audioMetaData.duration
+        )
+      );
+    }
+
     setLoading(false);
     history.push("/library");
   };
@@ -70,9 +97,14 @@ const GemForm: FC = () => {
     <div className="gem-container">
       <h1>Upload Gem Form</h1>
       {gemURL !== "" ? (
-        <audio src={gemURL} controls preload="metadata"></audio>
+        <audio src={gemURL} controls preload="metadata" ref={audioRef}></audio>
       ) : (
-        <audio src={storedURL} controls preload="metadata"></audio>
+        <audio
+          src={storedURL}
+          controls
+          preload="metadata"
+          ref={audioRef}
+        ></audio>
       )}
 
       <br />

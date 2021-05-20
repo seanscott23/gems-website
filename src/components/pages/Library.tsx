@@ -57,7 +57,6 @@ const Library: FC = () => {
     setInput(input);
     setClips(filtered);
   };
-
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return storedGems.length > 0 ? (
