@@ -14,7 +14,6 @@
 
 #profile-container .allInputs > .input {
   width: 98%;
-
 }
 
 #profile-container .allInputs {
@@ -24,4 +23,10 @@
 .org-flex {
   display: flex;
   width: 100%;
+}
+
+.org-success {
+  width: 280px;
+  margin-top: 10px;
+  text-align: center;
 }

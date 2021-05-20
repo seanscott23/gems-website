@@ -168,6 +168,7 @@ export const signin = (
             // userCredential.user?.reload();
           } else {
             // firebase.auth().setPersistence("session").then(())
+            localStorage.clear();
             console.log(userCredential);
 
             // dispatch({
@@ -365,8 +366,6 @@ export const submitOrgName = (
     }
   };
 };
-
-
 
 //dashboard form
 export const submitGemForm = (
