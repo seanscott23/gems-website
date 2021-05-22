@@ -117,10 +117,10 @@ export const getUserById = (
   return async (dispatch) => {
     try {
       const user = await firebase.database().ref("users").child(id).get();
-      console.log("Does this user exist", user.exists());
+      // console.log("Does this user exist", user.exists());
       if (user.exists()) {
         const userData = user.val() as User;
-        console.log("Hiiii im the users data ", userData);
+        // console.log("Hiiii im the users data ", userData);
         dispatch({
           type: SET_USER,
           payload: userData,
