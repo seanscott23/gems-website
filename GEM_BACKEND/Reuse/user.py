@@ -54,3 +54,13 @@ async def sign_in_user(user: User):
         return user
     except:
         return "Either incorrect credentials or user doesn't exist"
+
+@router.get("/api/get/userData/")
+async def get_user_data(user_id: str):
+    try:
+       print(main.database.child("users").child(user_id))
+    #    return main.database.child("users").child(user_id)
+    except:
+        print("Unable to upload user image")
+
+    return "Unable to find user"
