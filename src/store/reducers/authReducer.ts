@@ -13,6 +13,7 @@ import {
   SET_FINAL_GEM,
   SET_USER_GEMS,
   SET_USER_PHOTO,
+  SET_USER_ORG,
 } from "../types";
 
 const initialState: AuthState = {
@@ -25,10 +26,10 @@ const initialState: AuthState = {
   rssFeedUrl: {},
   gemURL: "",
   userGems: [],
-  profilePhoto: "",
 };
 
 const authReducer = (state = initialState, action: AuthAction) => {
+  const userObj = Object.assign({}, state.user);
   switch (action.type) {
     case SET_USER:
       return {
@@ -53,9 +54,16 @@ const authReducer = (state = initialState, action: AuthAction) => {
         userGems: action.payload,
       };
     case SET_USER_PHOTO:
+      userObj.profilePhoto = action.payload;
       return {
         ...state,
-        profilePhoto: action.payload,
+        user: userObj,
+      };
+    case SET_USER_ORG:
+      userObj.orgName = action.payload;
+      return {
+        ...state,
+        user: userObj,
       };
     case SET_FORM_SUCCESS:
       return {

@@ -9,26 +9,47 @@ import SearchBar from "../sections/SearchBar";
 import GemPagination from "../sections/GemPagination";
 import PaginationBar from "../sections/PaginationBar";
 import { getUserGems } from "../../store/actions/gemSubmitAction";
+import { useHistory } from "react-router-dom";
 
 const Library: FC = () => {
   const { userGems } = useSelector((state: RootState) => state.auth);
+  if (userGems.length === 0) {
+    getUserGems();
+  }
+  let storedGems: any[] = [];
+  if (userGems.length > 0) {
+    window.localStorage.setItem("userGems", JSON.stringify(userGems));
+  }
+  if (userGems.length <= storedGems.length) {
+    let newURL = window.localStorage.getItem("userGems");
+    storedGems = newURL ? JSON.parse(newURL) : [];
+  } else if (userGems.length > storedGems.length) {
+    window.localStorage.setItem("userGems", JSON.stringify(userGems));
+    let newURL = window.localStorage.getItem("userGems");
+    storedGems = newURL ? JSON.parse(newURL) : [];
+  }
+
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = userGems.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = storedGems.slice(indexOfFirstPost, indexOfLastPost);
   const [input, setInput] = useState<string>("");
-  const [clips, setClips] = useState(userGems);
+  const [clips, setClips] = useState(storedGems);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   React.useEffect(() => {
-    if (userGems !== undefined) {
-      dispatch(getUserGems());
+    if (storedGems.length === 0) {
+      getUserGems();
     }
-  }, [currentPosts]);
+    return () => {
+      getUserGems();
+    };
+  }, [currentPosts, userGems]);
 
   const handleFilterList = (input: string) => {
-    const filtered = userGems.filter((clip: any) => {
+    const filtered = storedGems.filter((clip: any) => {
       return input === ""
         ? clip
         : clip[1].title.toLowerCase().includes(input.toLowerCase());
@@ -36,10 +57,9 @@ const Library: FC = () => {
     setInput(input);
     setClips(filtered);
   };
-
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  return userGems !== undefined ? (
+  return storedGems.length > 0 ? (
     <div>
       <section className="library-section">
         {/* <h1>Your gem library!</h1>
@@ -57,7 +77,7 @@ const Library: FC = () => {
           ></GemPagination>
           <PaginationBar
             postsPerPage={postsPerPage}
-            totalPosts={userGems.length}
+            totalPosts={storedGems.length}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             paginate={paginate}

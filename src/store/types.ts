@@ -11,6 +11,7 @@ export const CLIP_AUDIO = "CLIP_AUDIO";
 export const SET_FINAL_GEM = "SET_FINAL_GEM";
 export const SET_USER_GEMS = "SET_USER_GEMS";
 export const SET_USER_PHOTO = "SET_USER_PHOTO";
+export const SET_USER_ORG = "SET_USER_ORG";
 
 export interface User {
   firstName: string;
@@ -19,6 +20,7 @@ export interface User {
   createdAt: any;
   gems: Array<any>;
   profilePhoto: string;
+  orgName: string;
 }
 
 export interface AuthState {
@@ -31,7 +33,6 @@ export interface AuthState {
   rssFeedUrl: any;
   gemURL: string;
   userGems: Array<any>;
-  profilePhoto: string;
 }
 
 export interface SignUpData {
@@ -39,6 +40,7 @@ export interface SignUpData {
   email: string;
   password: string;
   profilePhoto: string;
+  orgName: string;
 }
 
 export interface FinalGem {
@@ -74,6 +76,11 @@ interface SetUserAction {
 
 interface SetUserPhoto {
   type: typeof SET_USER_PHOTO;
+  payload: string;
+}
+
+interface SetUserOrg {
+  type: typeof SET_USER_ORG;
   payload: string;
 }
 
@@ -118,6 +125,7 @@ interface SetSuccessAction {
 export type AuthAction =
   | SetUserAction
   | SubmitFinalGem
+  | SetUserOrg
   | GetUserGems
   | SetUserPhoto
   | SetLoadingAction

@@ -34,7 +34,7 @@ interface ModalProps {
   end: number;
   handleTimeUpdate: (arg1: number, arg2: number) => void;
 }
-//u can leave the notes. they're helfpul.hha all good
+
 const AudioModalRipper: FC<ModalProps> = ({
   isOpen,
   handleClose,

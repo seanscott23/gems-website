@@ -2,9 +2,7 @@ import React, { FC, useState, useRef } from "react";
 import Slider, { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
 import { Controls } from "./AudioControls";
-// interface AudioPlayerProps {
-//   url: string;
-// }
+
 
 export const AudioPlayer: React.FC<{
   url: string;
@@ -28,7 +26,6 @@ export const AudioPlayer: React.FC<{
       setAudioMetaData(audioRef.current);
     }
   };
-
 
   return show ? (
     <div className="audioDiv">

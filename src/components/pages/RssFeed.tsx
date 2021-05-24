@@ -8,14 +8,12 @@ import ReturnHTML from "../rss/ReturnHtml";
 
 import PaginationBar from "../sections/PaginationBar";
 import SearchBar from "../sections/SearchBar";
+import { useHistory } from "react-router-dom";
 
 const RssFeed: FC = () => {
-  const { rssFeedUrl, success, userGems } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
   const [input, setInput] = useState<string>("");
 
-  const [isModalOpen, setModalState] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -24,13 +22,31 @@ const RssFeed: FC = () => {
 
   const dispatch = useDispatch();
 
+  if (rssFeedUrl.items !== undefined) {
+    window.localStorage.setItem("rssFeedUrl", JSON.stringify(rssFeedUrl));
+  }
+  let storedRSSUrl: any = {};
+
+  if (
+    rssFeedUrl.items === undefined &&
+    window.localStorage.getItem("rssFeedUrl") !== null
+  ) {
+    let newURL = window.localStorage.getItem("rssFeedUrl");
+    storedRSSUrl = newURL ? JSON.parse(newURL) : [];
+  } else if (rssFeedUrl.items !== undefined) {
+    window.localStorage.setItem("rssFeedUrl", JSON.stringify(rssFeedUrl));
+    let newURL = window.localStorage.getItem("rssFeedUrl");
+    storedRSSUrl = newURL ? JSON.parse(newURL) : [];
+  }
+
   useEffect(() => {
     if (success) {
       dispatch(setSuccess(""));
     }
   }, [success, dispatch]);
 
-  const items = rssFeedUrl.items;
+  let items = storedRSSUrl.items;
+
   const [clips, setClips] = useState(items);
 
   const currentPosts = items.slice(indexOfFirstPost, indexOfLastPost);
@@ -47,7 +63,7 @@ const RssFeed: FC = () => {
     setClips(filtered);
   };
 
-  return (
+  return items !== undefined ? (
     <section className="rss-container">
       <div className="rss-columns">
         <ListGroup id="needToBeTrimmed" as="ul">
@@ -71,6 +87,8 @@ const RssFeed: FC = () => {
         </ListGroup>
       </div>
     </section>
+  ) : (
+    <h1 className="noGem-h1">This RSS Feed has nothing in it.</h1>
   );
 };
 

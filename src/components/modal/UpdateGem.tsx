@@ -34,27 +34,27 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
   const [explicit, setExplicit] = useState(false);
   const dispatch = useDispatch();
 
-  const updateUserGem = (id: string) => {
-    let index;
-    userGems.forEach((gem, i) => {
-      if (gem.gemID === id) {
-        index = i;
-      }
-    });
-    let audioURL = gem.gemInfo.audioURL;
-    if (index !== undefined) {
-      userGems[index] = {
-        gemID: id,
-        gemInfo: {
-          audioURL,
-          title,
-          description,
-          categories,
-          explicit,
-        },
-      };
-    }
-  };
+  // const updateUserGem = (id: string) => {
+  //   let index;
+  //   userGems.forEach((gem, i) => {
+  //     if (gem.gemID === id) {
+  //       index = i;
+  //     }
+  //   });
+  //   let audioURL = gem.gemInfo.audioURL;
+  //   if (index !== undefined) {
+  //     userGems[index] = {
+  //       gemID: id,
+  //       gemInfo: {
+  //         audioURL,
+  //         title,
+  //         description,
+  //         categories,
+  //         explicit,
+  //       },
+  //     };
+  //   }
+  // };
 
   const updateHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -68,9 +68,9 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
         gem.gemID
       )
     );
-    await dispatch(updateUserGem(gem.gemID));
+    // updateUserGem(gem.gemID);
     handleClose();
-   
+
     // await dispatch(getUserGems());
   };
 
@@ -105,9 +105,10 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
       keyboard={false}
       backdrop="static"
       className="modalBack"
+      id="update-modal"
       // size="lg"
     >
-      <Modal.Body>
+      <Modal.Body className="update-modal">
         <Form>
           <Form.Group>
             <Form.Control
@@ -152,7 +153,7 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
             />
           </Form.Group>
         </Form>
-        <div>
+        <div className="Update-buttons">
           <Button onClick={handleClose}>Close</Button>
           <Button onClick={(e) => updateHandler(e)}>Update</Button>
         </div>

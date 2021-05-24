@@ -16,7 +16,6 @@ interface Gem {
     categories: Array<any>;
     explicit: boolean;
     ownerId: string;
-    episodeNum: number;
   };
 }
 
@@ -84,7 +83,6 @@ export const GemCard: React.FC<{
             ) : null}
           </Card.Body>
           <Card.Footer>
-            <div>Episode: #{gemInfo.episodeNum}</div>
             <Button
               onClick={() => {
                 setActiveClip(gem);

@@ -41,7 +41,6 @@ const Header: FC = () => {
         {!authenticated ? (
           <div className="loggedOut-buttons">
             <NavDropdown.Item eventKey="4.1">
-              {" "}
               <Button
                 onClick={() => history.push("/signup")}
                 className="is-primary"
@@ -51,6 +50,9 @@ const Header: FC = () => {
             </NavDropdown.Item>
             <NavDropdown.Item eventKey="4.2">
               <Button onClick={() => history.push("/signin")}>Sign in</Button>
+            </NavDropdown.Item>
+            <NavDropdown.Item eventKey="4.2">
+              <Button onClick={() => history.push("/contact")}>Contact</Button>
             </NavDropdown.Item>
           </div>
         ) : (

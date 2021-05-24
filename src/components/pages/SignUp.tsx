@@ -9,8 +9,11 @@ import { RootState } from "../../store";
 import "../../styles/Signup.css";
 import { Link } from "react-router-dom";
 import ProfilePhotoUpload from "../sections/ProfilePhotoUpload";
+import PasswordToggle from "../hooks/PasswordToggle";
+
 const SignUp: FC = () => {
   const [firstName, setFirstName] = useState("");
+  const [orgName, setOrgName] = useState("");
   const [email, setEmail] = useState("");
   const [profilePhoto, setProfilePhoto] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +21,7 @@ const SignUp: FC = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { error } = useSelector((state: RootState) => state.auth);
+  let [passwordInputType, toggleIcon] = PasswordToggle();
 
   useEffect(() => {
     return () => {
@@ -47,7 +51,7 @@ const SignUp: FC = () => {
     e.preventDefault();
     setLoading(true);
     dispatch(
-      signup({ email, password, firstName, profilePhoto }, () =>
+      signup({ email, password, firstName, orgName, profilePhoto }, () =>
         setLoading(false)
       )
     );
@@ -71,6 +75,15 @@ const SignUp: FC = () => {
           </Form.Group>
           <Form.Group>
             <Input
+              name="organizationName"
+              value={orgName}
+              onChange={(e) => setOrgName(e.currentTarget.value)}
+              placeholder="Organization Name"
+              label=""
+            />
+          </Form.Group>
+          <Form.Group>
+            <Input
               name="email"
               value={email}
               onChange={(e) => setEmail(e.currentTarget.value)}
@@ -82,10 +95,16 @@ const SignUp: FC = () => {
             <Input
               name="password"
               value={password}
+              type={
+                typeof passwordInputType === "string"
+                  ? passwordInputType
+                  : "password"
+              }
               onChange={(e) => setPassword(e.currentTarget.value)}
               placeholder="Password"
               label=""
             />
+            <span className="up-eye-icon">{toggleIcon}</span>
           </Form.Group>
           <Form.Group>
             <Form.File
@@ -106,7 +125,8 @@ const SignUp: FC = () => {
         {/* </div> */}
       </Card>
       <div className="homeLink">
-        <span>Already have a login?</span> <Link to={"/signin"}>Sign in</Link>
+        <span>Already have an account?</span>{" "}
+        <Link to={"/signin"}>Sign in</Link>
       </div>
     </div>
   );

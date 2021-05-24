@@ -11,7 +11,8 @@ export const submitFinalGem = (
   description: string,
   categories: Array<any>,
   explicit: boolean,
-  gemID: string
+  gemID: string,
+  duration: number
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
@@ -26,10 +27,12 @@ export const submitFinalGem = (
           description: description,
           categories: categories,
           explicit: explicit,
+          duration: duration,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
+          dispatch(getUserGems());
           // dispatch({
           //   type: "SET_NEW_GEM",
           //   payload: data
@@ -60,7 +63,6 @@ export const getUserGems = (): ThunkAction<
   AuthAction
 > => {
   return async (dispatch) => {
-    console.log(await auth.currentUser?.getIdToken())
     try {
       await fetch("http://localhost:8000/api/get/gems/", {
         method: "POST",
@@ -78,6 +80,7 @@ export const getUserGems = (): ThunkAction<
         .then((response) => response.json())
         .then((data) => {
           let newData = data.reverse();
+
           dispatch({
             type: SET_USER_GEMS,
             payload: newData,
@@ -99,12 +102,13 @@ export const updateGemAction = (
   gemID: string
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
+    debugger;
     try {
       await fetch("http://localhost:8000/api/update/gem/", {
         method: "PUT",
         body: JSON.stringify({
           ownerID: auth.currentUser?.uid,
-          token: await auth.currentUser?.getIdToken(),
+          token: auth.currentUser?.getIdToken(),
           gemID: gemID,
           audioURL: audioURL,
           title: title,
@@ -113,10 +117,6 @@ export const updateGemAction = (
           explicit: explicit,
         }),
       });
-      // .then((response) => response.json())
-      // .then((data) => {
-
-      // });
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));
@@ -135,7 +135,18 @@ export const deleteGemAction = (
           token: await auth.currentUser?.getIdToken(),
           gemID: gemID,
         }),
-      });
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          let storedGems: any[] = [];
+          let newURL = localStorage.getItem("userGems");
+          storedGems = newURL ? JSON.parse(newURL) : [];
+          if (storedGems.length === 1) {
+            localStorage.clear();
+          } else {
+            getUserGems();
+          }
+        });
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));

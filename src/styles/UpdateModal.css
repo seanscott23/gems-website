@@ -1,3 +1,12 @@
 #gem-categories {
   background-color: #e8eef1;
 }
+
+#update-modal > .modal-content {
+  height: 27em;
+}
+
+.Update-buttons {
+  justify-content: space-between;
+  display: flex;
+}
