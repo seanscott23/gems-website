@@ -102,13 +102,12 @@ export const updateGemAction = (
   gemID: string
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
-    debugger;
     try {
       await fetch("http://localhost:8000/api/update/gem/", {
         method: "PUT",
         body: JSON.stringify({
-          ownerID: auth.currentUser?.uid,
-          token: auth.currentUser?.getIdToken(),
+          ownerID: await auth.currentUser?.uid,
+          token: await auth.currentUser?.getIdToken(),
           gemID: gemID,
           audioURL: audioURL,
           title: title,
