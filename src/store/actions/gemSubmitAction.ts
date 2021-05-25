@@ -95,6 +95,7 @@ export const getUserGems = (): ThunkAction<
 
 export const updateGemAction = (
   audioURL: string,
+  duration: string,
   title: string,
   description: string,
   categories: Array<any>,
@@ -116,6 +117,31 @@ export const updateGemAction = (
           explicit: explicit,
         }),
       });
+
+      // let currentGem = [
+      //   gemID,
+      //   {
+      //     audioURL: audioURL,
+      //     categories: categories,
+      //     description: description,
+      //     duration: duration,
+      //     explicit: explicit,
+      //     title: title,
+      //   },
+      // ];
+      // let storedGems: any[] = [];
+      // let newURL = localStorage.getItem("userGems");
+      // storedGems = newURL ? JSON.parse(newURL) : [];
+      // localStorage.clear();
+
+      // storedGems.forEach((tempGem) => {
+      //   if (tempGem[0] === gemID) {
+      //     tempGem = currentGem;
+      //     return;
+      //   }
+      // });
+      // window.localStorage.setItem("userGems", JSON.stringify(storedGems));
+      // getUserGems();
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));

@@ -3,6 +3,8 @@ from fastapi import APIRouter, File, UploadFile, Response, Form, HTTPException
 from typing import Optional
 from datetime import datetime
 import main
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 
 router = APIRouter()
 
@@ -55,12 +57,12 @@ async def sign_in_user(user: User):
     except:
         return "Either incorrect credentials or user doesn't exist"
 
-@router.get("/api/get/userData/")
+@router.get("/api/get/userData/{user_id}")
 async def get_user_data(user_id: str):
     try:
-       print(main.database.child("users").child(user_id))
-    #    return main.database.child("users").child(user_id)
+    #    print(main.database.child("users").child(user_id))
+       return  main.database.child("users").child(user_id).get()
     except:
-        print("Unable to upload user image")
+        print("Unable to return user info")
 
     return "Unable to find user"

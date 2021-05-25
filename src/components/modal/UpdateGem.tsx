@@ -18,6 +18,7 @@ interface Gem {
     categories: Array<string>;
     explicit: boolean;
     ownerId: string;
+    duration: string;
   };
 }
 interface ModalProps {
@@ -60,6 +61,7 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
     e.preventDefault();
     await dispatch(
       updateGemAction(
+        gem.gemInfo.duration,
         gem.gemInfo.audioURL,
         title,
         description,
@@ -68,10 +70,9 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
         gem.gemID
       )
     );
-    // updateUserGem(gem.gemID);
-    handleClose();
+    dispatch(getUserGems());
 
-    // await dispatch(getUserGems());
+    handleClose();
   };
 
   const changeTitle = (e: React.ChangeEvent) => {
