@@ -47,3 +47,7 @@
   right: 80px;
   bottom: 135px;
 }
+
+.form-group > .alert {
+  width: 100%;
+}

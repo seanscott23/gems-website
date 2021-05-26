@@ -62,11 +62,11 @@ const Library: FC = () => {
   return storedGems.length > 0 ? (
     <div>
       <section className="library-section">
-        {/* <h1>Your gem library!</h1>
+        <h1>Your gem library!</h1>
         <h6>
           This page is linked directly with your account on our app. Update or
           delete any gem within this page.
-        </h6> */}
+        </h6>
         <SearchBar input={input} setInput={handleFilterList} />
         <ListGroup id="allGems" as="ul">
           <GemPagination

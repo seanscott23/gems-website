@@ -34,7 +34,7 @@ const Header: FC = () => {
     <Navbar bg="light" expand="lg" id="navbar">
       <Navbar.Brand>
         <Link className="navbar-item" to={!authenticated ? "/" : "/dashboard"}>
-          Gems
+          Karats
         </Link>
       </Navbar.Brand>
       <NavDropdown title="Menu" id="nav-dropdown">

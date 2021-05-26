@@ -24,7 +24,7 @@ const Contact: FC = () => {
         <h2 className="text-center">Contact</h2>
         <br />
         <p>
-          Please contact us at [INSERT_GEMS_EMAIL_HERE] if you have any
+          Please contact us at [INSERT_KARATS_EMAIL_HERE] if you have any
           questions or concerns.
         </p>
         <p>
@@ -34,7 +34,7 @@ const Contact: FC = () => {
         </p>
       </div>
       <div className="homeLink">
-        <span>New to Gems?</span> <Link to={"/signup"}>Sign up</Link>
+        <span>New to Karats?</span> <Link to={"/signup"}>Sign up</Link>
       </div>
       <p className="contact-or">Or</p>
       <div className="contact-signin">

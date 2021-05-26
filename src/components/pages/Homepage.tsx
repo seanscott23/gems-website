@@ -26,7 +26,7 @@ const Homepage: FC = () => {
     <section className="section">
       <div className="home-container">
         <h1 className=".title has-text-centered is-size-1 mb-6">
-          Welcome to Gems!
+          Welcome to Karats!
         </h1>
         <p>
           The new platform for audio content creators.
@@ -40,7 +40,9 @@ const Homepage: FC = () => {
           podcasters with a unique and effective way to advertise their podcast
           highlights to gain new users. The second was to provide new and
           existing creators with a platform exclusivly for focused material they
-          can share with the world.
+          can share with the world. That's why we chose the name 'Karats', we
+          like to call any clips that you upload 'gems' and as you upload more,
+          the value "(karats)" of your organization grows
         </p>
         <div className="homepage-buttons">
           <Button
