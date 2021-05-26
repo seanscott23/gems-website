@@ -11,7 +11,8 @@ export const submitFinalGem = (
   description: string,
   categories: Array<any>,
   explicit: boolean,
-  gemID: string
+  gemID: string,
+  duration: number
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
@@ -26,10 +27,12 @@ export const submitFinalGem = (
           description: description,
           categories: categories,
           explicit: explicit,
+          duration: duration,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
+          dispatch(getUserGems());
           // dispatch({
           //   type: "SET_NEW_GEM",
           //   payload: data
@@ -76,7 +79,9 @@ export const getUserGems = (): ThunkAction<
       })
         .then((response) => response.json())
         .then((data) => {
+      
           let newData = data.reverse();
+
           dispatch({
             type: SET_USER_GEMS,
             payload: newData,
@@ -91,6 +96,7 @@ export const getUserGems = (): ThunkAction<
 
 export const updateGemAction = (
   audioURL: string,
+  duration: string,
   title: string,
   description: string,
   categories: Array<any>,
@@ -102,8 +108,8 @@ export const updateGemAction = (
       await fetch("http://localhost:8000/api/update/gem/", {
         method: "PUT",
         body: JSON.stringify({
-          ownerID: auth.currentUser?.uid,
-          token: auth.currentUser?.getIdToken(),
+          ownerID: await auth.currentUser?.uid,
+          token: await auth.currentUser?.getIdToken(),
           gemID: gemID,
           audioURL: audioURL,
           title: title,
@@ -111,9 +117,32 @@ export const updateGemAction = (
           categories: categories,
           explicit: explicit,
         }),
-      })
-        .then((response) => response.json())
-        .then((data) => {});
+      });
+
+      // let currentGem = [
+      //   gemID,
+      //   {
+      //     audioURL: audioURL,
+      //     categories: categories,
+      //     description: description,
+      //     duration: duration,
+      //     explicit: explicit,
+      //     title: title,
+      //   },
+      // ];
+      // let storedGems: any[] = [];
+      // let newURL = localStorage.getItem("userGems");
+      // storedGems = newURL ? JSON.parse(newURL) : [];
+      // localStorage.clear();
+
+      // storedGems.forEach((tempGem) => {
+      //   if (tempGem[0] === gemID) {
+      //     tempGem = currentGem;
+      //     return;
+      //   }
+      // });
+      // window.localStorage.setItem("userGems", JSON.stringify(storedGems));
+      // getUserGems();
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));
@@ -135,7 +164,14 @@ export const deleteGemAction = (
       })
         .then((response) => response.json())
         .then((data) => {
-          getUserGems();
+          let storedGems: any[] = [];
+          let newURL = localStorage.getItem("userGems");
+          storedGems = newURL ? JSON.parse(newURL) : [];
+          if (storedGems.length === 1) {
+            localStorage.clear();
+          } else {
+            getUserGems();
+          }
         });
     } catch (err) {
       console.log(err);

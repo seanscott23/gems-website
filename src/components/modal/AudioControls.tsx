@@ -197,8 +197,14 @@ export const Controls: React.FC<{
       let time3 = (hour * 60 * 60 + min * 60 + sec) / 60;
       trueTime = time3;
     }
-    if (audio && trueTime <= secondsToDecimal(audio.duration)) {
-      return trueTime;
+    if (audio && trueTime % 1 === 0) {
+      if (trueTime < secondsToDecimal(audio.duration) * 60) {
+        return trueTime;
+      }
+    } else if (audio && trueTime % 1 !== 0) {
+      if (trueTime < secondsToDecimal(audio.duration)) {
+        return trueTime;
+      }
     }
   };
 
@@ -326,6 +332,7 @@ export const Controls: React.FC<{
 
   const userEndTime = (e: React.ChangeEvent) => {
     setShowEndInput(false);
+
     let target: any = e.currentTarget;
     let regex = /^["0-9":]+$/;
     dispatch(setError(""));

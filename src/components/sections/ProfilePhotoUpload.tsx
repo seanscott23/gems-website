@@ -8,7 +8,7 @@ import { Container } from "react-bootstrap";
 
 const ProfilePhotoUpload: FC = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  const [photo, setPhoto] = useState<string | ArrayBuffer>("");
+  const [photo, setPhoto] = useState<string | ArrayBuffer | File>("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -66,6 +66,8 @@ const ProfilePhotoUpload: FC = () => {
 
   const submitPhotoHandler = async (photoUrl: string | ArrayBuffer) => {
     if (typeof photoUrl === "string") {
+      let newPhoto = user?.profilePhoto;
+      newPhoto = photoUrl;
       await dispatch(submitPhoto(photoUrl));
     }
   };
@@ -91,7 +93,7 @@ const ProfilePhotoUpload: FC = () => {
             />
             {!photo ? (
               <div>
-                <img src={uploadPNG} />
+                <img className="photoIcon" src={uploadPNG} />
                 <div>
                   <p className="image-label-instruction">
                     Update Profile Photo

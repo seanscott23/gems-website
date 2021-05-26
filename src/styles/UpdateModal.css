@@ -2,6 +2,11 @@
   background-color: #e8eef1;
 }
 
-.modalBack > .modal-dialog > .modal-content {
+#update-modal > .modal-content {
   height: 27em;
+}
+
+.Update-buttons {
+  justify-content: space-between;
+  display: flex;
 }

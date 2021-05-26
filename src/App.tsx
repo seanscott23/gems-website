@@ -5,13 +5,13 @@ import "./styles/App.css";
 import Header from "./components/sections/Header";
 import SignUp from "./components/pages/SignUp";
 import SignIn from "./components/pages/Signin";
+import Contact from "./components/pages/Contact";
 import Library from "./components/pages/Library";
 import ForgotPassword from "./components/pages/ForgotPassword";
 import Homepage from "./components/pages/Homepage";
 import RssFeed from "./components/pages/RssFeed";
 import Dashboard from "./components/pages/Dashboard";
 import Profile from "./components/pages/Profile";
-import thunk from "redux-thunk";
 import GemForm from "./components/pages/GemUploadForm";
 import PrivateRoute from "./components/auth/PrivateRoute";
 
@@ -34,7 +34,6 @@ const App: FC = () => {
     dispatch(setLoading(true));
     const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        console.log("this is the user", user.uid);
         dispatch(setLoading(true));
         await dispatch(getUserById(user.uid));
         if (!user.emailVerified) {
@@ -64,6 +63,7 @@ const App: FC = () => {
         <PrivateRoute path="/profile" component={Profile} exact />
         <PublicRoute path="/signup" component={SignUp} exact />
         <PublicRoute path="/signin" component={SignIn} exact />
+        <PublicRoute path="/contact" component={Contact} exact />
         <PublicRoute path="/" component={Homepage} exact />
 
         <PublicRoute path="/forgot-password" component={ForgotPassword} exact />

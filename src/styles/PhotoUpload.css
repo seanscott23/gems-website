@@ -1,13 +1,13 @@
 .photo-section {
   margin-top: 2.5%;
-  position: absolute;
-  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
 }
 .photo-section > h2 {
   color: #1e3d58;
 }
 .upload-box-photo {
-  width: 100%;
+  /* width: 100%; */
 
   height: 100%;
 
@@ -18,48 +18,6 @@
   font-weight: 400;
   cursor: pointer;
 }
-
-/* @media (max-width: 1150px) {
-  .photo-section,
-  .upload-box-photo {
-    width: 150px;
-    height: 150px;
-  }
-  .image-label-instruction {
-    font-size: 0.85rem;
-  }
-  .photo-section > h2 {
-    font-size: 1.3em;
-  }
-}
-
-@media (max-width: 900px) {
-  .photo-section,
-  .upload-box-photo {
-    width: 120px;
-    height: 120px;
-  }
-  .image-label-instruction {
-    font-size: 0.7rem;
-  }
-  .photo-section > h2 {
-    font-size: 1.1rem;
-  }
-}
-
-@media (max-width: 730px) {
-  .photo-section,
-  .upload-box-photo {
-    width: 90px;
-    height: 90px;
-  }
-  .image-label-instruction {
-    font-size: 0.6rem;
-  }
-  .photo-section > h2 {
-    font-size: 0.9rem;
-  }
-} */
 
 .signup-user-photo {
   cursor: pointer;
@@ -105,6 +63,10 @@
 }
 
 .profileImage {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
+}
+
+.photoIcon {
+  width: 50%;
 }

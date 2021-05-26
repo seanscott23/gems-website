@@ -10,6 +10,7 @@ import {
   SET_ERROR,
   NEED_VERIFICATION,
   IS_VERIFIED,
+  SET_USER_ORG,
   SET_SUCCESS,
   SET_FORM_SUCCESS,
   CLIP_AUDIO,
@@ -18,8 +19,9 @@ import {
 import Parser from "rss-parser";
 import { RootState } from "..";
 import firebase from "../../firebase/config";
-import { FC } from "react";
-import { userInfo } from "node:os";
+import { callbackify } from "node:util";
+// import { FC } from "react";
+// import { userInfo } from "node:os";
 
 const auth = firebase.auth();
 
@@ -27,19 +29,23 @@ export const signup = (
   data: SignUpData,
   onError: () => void
 ): ThunkAction<void, RootState, null, AuthAction> => {
+  
   return async (dispatch) => {
     try {
       const res = await firebase
         .auth()
         .createUserWithEmailAndPassword(data.email, data.password);
+        console.log(res.user)
       if (res.user) {
+        let userPhoto = await sendingProfileImageToDB(data.profilePhoto as File)
         const userData: User = {
           email: data.email,
           firstName: data.firstName,
+          orgName: data.orgName,
           id: res.user.uid,
           createdAt: Date.now(),
           gems: [],
-          profilePhoto: data.profilePhoto,
+          profilePhoto: userPhoto
         };
         await firebase
           .database()
@@ -79,6 +85,8 @@ export const signup = (
         //   type: SET_USER,
         //   payload: userData,
         // });
+      } else {
+        console.log("delete here", res.user)
       }
     } catch (err) {
       console.log(err);
@@ -91,23 +99,41 @@ export const signup = (
   };
 };
 
-const uploadUserImage = async (image: File) => {
-  console.log(image);
-  let formData = new FormData();
-  formData.append("user_image", image);
-  formData.append("user_id", auth.currentUser?.uid as string);
-  formData.append("token", (await auth.currentUser?.getIdToken()) as string);
+ const sendingProfileImageToDB = async (image: File) => {
 
-  // fetch("http://localhost:8000/api/deliver/userImage/",{
-  //   method: "POST",
-  //   body: formData
-  // })
-  // .then((response) => response.json())
-  // .then((data) => {
-  //   console.log(data)
-  // });
-  return "";
-};
+  const formData = new FormData();
+  formData.append("user_image", image)
+  formData.append("user_id", auth.currentUser?.uid as string);
+  formData.append("token", (await auth?.currentUser?.getIdToken()) as string);
+  
+  return fetch('http://localhost:8000/api/deliver/userImage/', {
+    method: "POST",
+    body: formData,
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    let url = data;
+    return url
+  });
+}
+
+// const uploadUserImage = async (image: File) => {
+//   console.log(image);
+//   let formData = new FormData();
+//   formData.append("user_image", image);
+//   formData.append("user_id", auth.currentUser?.uid as string);
+//   formData.append("token", (await auth.currentUser?.getIdToken()) as string);
+
+//   // fetch("http://localhost:8000/api/deliver/userImage/",{
+//   //   method: "POST",
+//   //   body: formData
+//   // })
+//   // .then((response) => response.json())
+//   // .then((data) => {
+//   //   console.log(data)
+//   // });
+//   return "";
+// };
 
 export const getUserById = (
   id: string
@@ -115,10 +141,10 @@ export const getUserById = (
   return async (dispatch) => {
     try {
       const user = await firebase.database().ref("users").child(id).get();
-      console.log("Does this user exist", user.exists());
+      // console.log("Does this user exist", user.exists());
       if (user.exists()) {
         const userData = user.val() as User;
-        console.log("Hiiii im the users data ", userData);
+        // console.log("Hiiii im the users data ", userData);
         dispatch({
           type: SET_USER,
           payload: userData,
@@ -166,6 +192,7 @@ export const signin = (
             // userCredential.user?.reload();
           } else {
             // firebase.auth().setPersistence("session").then(())
+            localStorage.clear();
             console.log(userCredential);
 
             // dispatch({
@@ -216,8 +243,7 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
   };
 };
 
-//trimming audioo
-
+//trimming audio
 export const submitNewClip = (
   url: string,
   begin: number,
@@ -325,10 +351,38 @@ export const submitPhoto = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      dispatch({
-        type: SET_USER_PHOTO,
-        payload: photoUrl,
-      });
+      if (auth.currentUser) {
+        let id = auth.currentUser.uid;
+        await firebase.database().ref("users").child(id).update({
+          profilePhoto: photoUrl,
+        });
+        dispatch({
+          type: SET_USER_PHOTO,
+          payload: photoUrl,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      dispatch(setError(err.message));
+    }
+  };
+};
+
+export const submitOrgName = (
+  orgName: string
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return async (dispatch) => {
+    try {
+      if (auth.currentUser) {
+        let id = auth.currentUser.uid;
+        await firebase.database().ref("users").child(id).update({
+          orgName: orgName,
+        });
+        dispatch({
+          type: SET_USER_ORG,
+          payload: orgName,
+        });
+      }
     } catch (err) {
       console.log(err);
       dispatch(setError(err.message));

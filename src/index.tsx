@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           success: "",
           rssFeedUrl: {},
           gemURL: "",
-          profilePhoto: "",
+          // profilePhoto: "",
         },
       };
 

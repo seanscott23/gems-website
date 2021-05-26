@@ -18,6 +18,7 @@ interface Gem {
     categories: Array<string>;
     explicit: boolean;
     ownerId: string;
+    duration: string;
   };
 }
 interface ModalProps {
@@ -60,6 +61,7 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
     e.preventDefault();
     await dispatch(
       updateGemAction(
+        gem.gemInfo.duration,
         gem.gemInfo.audioURL,
         title,
         description,
@@ -68,10 +70,9 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
         gem.gemID
       )
     );
-    // await dispatch(updateUserGem(gem.gemID));
-    handleClose();
+    dispatch(getUserGems());
 
-    // await dispatch(getUserGems());
+    handleClose();
   };
 
   const changeTitle = (e: React.ChangeEvent) => {
@@ -105,6 +106,7 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
       keyboard={false}
       backdrop="static"
       className="modalBack"
+      id="update-modal"
       // size="lg"
     >
       <Modal.Body className="update-modal">
@@ -152,7 +154,7 @@ const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
             />
           </Form.Group>
         </Form>
-        <div>
+        <div className="Update-buttons">
           <Button onClick={handleClose}>Close</Button>
           <Button onClick={(e) => updateHandler(e)}>Update</Button>
         </div>

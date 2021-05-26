@@ -16,6 +16,7 @@ interface Gem {
     categories: Array<any>;
     explicit: boolean;
     ownerId: string;
+    duration: string;
   };
 }
 

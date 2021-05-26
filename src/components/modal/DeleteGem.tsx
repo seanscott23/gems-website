@@ -30,10 +30,10 @@ const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const removeFromArray = (id: string) => {
-    userGems.filter((value) => value === id);
-    return userGems;
-  };
+  // const removeFromArray = (id: string) => {
+  //   userGems.filter((value) => value === id);
+  //   return userGems;
+  // };
 
   const deleteHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -42,9 +42,9 @@ const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
     handleClose();
     // await dispatch(removeFromArray(gem.gemID));
 
-    // await dispatch(getUserGems());
+    await dispatch(getUserGems());
   };
-
+  // debugger;
   if (!gem) return null;
   return (
     <Modal
@@ -54,6 +54,7 @@ const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
       keyboard={false}
       backdrop="static"
       className="modalBack"
+      id="delete-modal"
       // size="lg"
     >
       <Modal.Header className="deleteModal-warning">
