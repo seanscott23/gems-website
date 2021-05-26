@@ -44,6 +44,7 @@ async def post_user(user:User):
 async def add_user_image_to_db_return_url(user_image:UploadFile = File(...), user_id:str = Form(...), token:str = Form(...)):
     try:
         main.storage.child("USERPHOTO").child(user_id).put(user_image.file, token)
+        return main.storage.child("USERPHOTO").child(user_id).get_url(token)
     except:
         print("Unable to upload user image")
 
@@ -60,8 +61,7 @@ async def sign_in_user(user: User):
 @router.get("/api/get/userData/{user_id}")
 async def get_user_data(user_id: str):
     try:
-    #    print(main.database.child("users").child(user_id))
-       return  main.database.child("users").child(user_id).get()
+       return main.database.child("users").child(user_id).get().val()
     except:
         print("Unable to return user info")
 

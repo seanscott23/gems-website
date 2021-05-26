@@ -8,7 +8,7 @@ import { Container } from "react-bootstrap";
 
 const ProfilePhotoUpload: FC = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  const [photo, setPhoto] = useState<string | ArrayBuffer>("");
+  const [photo, setPhoto] = useState<string | ArrayBuffer | File>("");
   const dispatch = useDispatch();
 
   useEffect(() => {

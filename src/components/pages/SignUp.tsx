@@ -36,12 +36,15 @@ const SignUp: FC = () => {
     let target: any = e.target;
     // let result = fReader.readAsDataURL(target.files[0]);
     let fileEvent = target.files[0];
+  
     fReader.onload = function (e) {
+      console.log(e.target?.result)
       if (
         e.target?.result !== undefined &&
         typeof e.target?.result === "string"
       ) {
-        setProfilePhoto(e.target?.result);
+        // setProfilePhoto(e.target?.result);
+        setProfilePhoto(fileEvent);
       }
     };
     fReader.readAsDataURL(fileEvent);

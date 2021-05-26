@@ -19,7 +19,7 @@ export interface User {
   id: string;
   createdAt: any;
   gems: Array<any>;
-  profilePhoto: string;
+  profilePhoto: string ;
   orgName: string;
 }
 
@@ -39,7 +39,7 @@ export interface SignUpData {
   firstName: string;
   email: string;
   password: string;
-  profilePhoto: string;
+  profilePhoto: string | File;
   orgName: string;
 }
 

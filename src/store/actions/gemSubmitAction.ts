@@ -79,6 +79,7 @@ export const getUserGems = (): ThunkAction<
       })
         .then((response) => response.json())
         .then((data) => {
+      
           let newData = data.reverse();
 
           dispatch({
