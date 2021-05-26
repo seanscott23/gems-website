@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Provider, useDispatch } from "react-redux";
-import App from "./App";
-import "./firebase/config";
+import App from "./src/App";
+import "./src/firebase/config";
 import "bootstrap/dist/css/bootstrap.min.css";
-import store from "./store/index";
+import store from "./src/store/index";
 import firebase from "firebase";
-import { getUserById } from "./store/actions/authActions";
-import { User } from "./store/types";
+import { getUserById } from "./src/store/actions/authActions";
+import { User } from "./src/store/types";
 import thunk from "redux-thunk";
 
 document.addEventListener("DOMContentLoaded", async () => {
