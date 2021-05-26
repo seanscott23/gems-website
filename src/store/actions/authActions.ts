@@ -29,15 +29,16 @@ export const signup = (
   data: SignUpData,
   onError: () => void
 ): ThunkAction<void, RootState, null, AuthAction> => {
-  
   return async (dispatch) => {
     try {
       const res = await firebase
         .auth()
         .createUserWithEmailAndPassword(data.email, data.password);
-        console.log(res.user)
+      console.log(res.user);
       if (res.user) {
-        let userPhoto = await sendingProfileImageToDB(data.profilePhoto as File)
+        let userPhoto = await sendingProfileImageToDB(
+          data.profilePhoto as File
+        );
         const userData: User = {
           email: data.email,
           firstName: data.firstName,
@@ -45,7 +46,7 @@ export const signup = (
           id: res.user.uid,
           createdAt: Date.now(),
           gems: [],
-          profilePhoto: userPhoto
+          profilePhoto: userPhoto,
         };
         await firebase
           .database()
@@ -86,7 +87,7 @@ export const signup = (
         //   payload: userData,
         // });
       } else {
-        console.log("delete here", res.user)
+        console.log("delete here", res.user);
       }
     } catch (err) {
       console.log(err);
@@ -99,23 +100,22 @@ export const signup = (
   };
 };
 
- const sendingProfileImageToDB = async (image: File) => {
-
+const sendingProfileImageToDB = async (image: File) => {
   const formData = new FormData();
-  formData.append("user_image", image)
+  formData.append("user_image", image);
   formData.append("user_id", auth.currentUser?.uid as string);
   formData.append("token", (await auth?.currentUser?.getIdToken()) as string);
-  
-  return fetch('http://localhost:8000/api/deliver/userImage/', {
+
+  return fetch("http://localhost:8000/api/deliver/userImage/", {
     method: "POST",
     body: formData,
   })
-  .then((response) => response.json())
-  .then((data) => {
-    let url = data;
-    return url
-  });
-}
+    .then((response) => response.json())
+    .then((data) => {
+      let url = data;
+      return url;
+    });
+};
 
 // const uploadUserImage = async (image: File) => {
 //   console.log(image);
@@ -232,6 +232,7 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
+      localStorage.clear();
       await firebase.auth().signOut();
       dispatch({
         type: SIGN_OUT,
