@@ -16,5 +16,5 @@ jobs:
         ftp-server: ftp.karatsapp.com
         ftp-username: ir3btnqgrkhs
         ftp-password: ${{ secrets.FTP_PASSWORD }}
-        password: ${{ secrets.ftp_password }}
+
 
