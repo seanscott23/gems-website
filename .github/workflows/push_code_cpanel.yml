@@ -1,20 +1,20 @@
-name: Publish Website to CPanel
-on: push
-  branches:
+on:
+  push:
+    branches:
       - master
-name: 🚀 Deploy website on push
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
-    
-    - name: 📂 Sync files
+    - uses: actions/checkout@v2.1.0
+      with:
+        fetch-depth: 2
+    - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
-        server: ftp.karatsapp.com
-        username: ir3btnqgrkhs
+        ftp-server: ftp.karatsapp.com
+        ftp-username: ir3btnqgrkhs
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
         password: ${{ secrets.ftp_password }}
 
