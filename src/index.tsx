@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Provider, useDispatch } from "react-redux";
 import App from "./App";
-import "./src/firebase/config";
+import "./firebase/config";
 import "bootstrap/dist/css/bootstrap.min.css";
 import store from "./store/index";
 import firebase from "firebase";
