@@ -29,7 +29,7 @@ import { RootState } from "./store";
 const App: FC = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state: RootState) => state.auth);
-  //check if user exists
+
   useEffect(() => {
     dispatch(setLoading(true));
     const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
