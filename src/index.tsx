@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import App from "./src/App";
-import "./src/firebase/config";
+import App from "./App";
+import "./firebase/config";
 import "bootstrap/dist/css/bootstrap.min.css";
-import store from "./src/store/index";
+import store from "./store/index";
 import firebase from "firebase";
 
-import { User } from "./src/store/types";
+import { User } from "./store/types";
 
 document.addEventListener("DOMContentLoaded", async () => {
   let newStore;
