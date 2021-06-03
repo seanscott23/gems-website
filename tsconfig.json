@@ -16,9 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-<<<<<<< HEAD
-  "include": ["src/index.tsx"]
-=======
   "include": ["src", "index.tsx"]
->>>>>>> 1d5ca6a5f78423a64970872d783f21f4f4abd128
 }
