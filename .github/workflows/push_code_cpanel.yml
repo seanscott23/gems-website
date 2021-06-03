@@ -13,7 +13,7 @@ jobs:
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
-        server: 208.109.76.36
+        server: karatsapp.com
         username: ir3btnqgrkhs
         password: ${{ secrets.FTP_PASSWORD }}
 
