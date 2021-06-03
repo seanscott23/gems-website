@@ -10,14 +10,9 @@ import "./firebase/config";
 import "bootstrap/dist/css/bootstrap.min.css";
 import store from "./store/index";
 import firebase from "firebase";
-<<<<<<< HEAD:src/index.tsx
 import { getUserById } from "./store/actions/authActions";
 import { User } from "./store/types";
 import thunk from "redux-thunk";
-=======
-
-import { User } from "./store/types";
->>>>>>> 1d5ca6a5f78423a64970872d783f21f4f4abd128:index.tsx
 
 document.addEventListener("DOMContentLoaded", async () => {
   let newStore;
