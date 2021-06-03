@@ -1,10 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-<<<<<<< HEAD:src/index.tsx
 import { Provider, useDispatch } from "react-redux";
-=======
-import { Provider } from "react-redux";
->>>>>>> 1d5ca6a5f78423a64970872d783f21f4f4abd128:index.tsx
 import App from "./App";
 import "./firebase/config";
 import "bootstrap/dist/css/bootstrap.min.css";
