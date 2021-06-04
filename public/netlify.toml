@@ -1,6 +1,15 @@
 [[build]]
-    command = "npm run build && npm run export"
-    publish = "out"
+    command = "npm run build"
+    environment:
+        REACT_APP_FIREBASE_API_KEY_TEST
+        REACT_APP_FIREBASE_APP_ID_TEST
+        REACT_APP_FIREBASE_AUTH_DOMAIN_TEST
+        REACT_APP_FIREBASE_DB_URL_TEST
+        REACT_APP_FIREBASE_MEASUREMENT_ID_TEST
+        REACT_APP_FIREBASE_MESSAGING_SENDER_ID_TEST
+        REACT_APP_FIREBASE_PROJECT_ID_TEST
+        REACT_APP_FIREBASE_STORAGE_BUCKET_TEST
+    publish: "/opt/build/repo/build"
     base = "/"
 
 [[redirects]]
