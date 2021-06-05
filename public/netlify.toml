@@ -1,4 +1,4 @@
-[[build]]
+[build]
     command = "npm run build"
     publish = "/opt/build/repo/build"
     base = "/"
@@ -11,9 +11,9 @@
     REACT_APP_FIREBASE_STORAGE_BUCKET = "gems-website-30276.appspot.com"
     REACT_APP_FIREBASE_MESSAGING_SENDER_ID = "962054406113"
     REACT_APP_FIREBASE_APP_ID = "1:962054406113:web:56dbc0c04217543a44dca0"
-    REACT_APP_FIREBASE_MEASUREMENT_ID= "G-K2E7VRL238"
+    REACT_APP_FIREBASE_MEASUREMENT_ID = "G-K2E7VRL238"
 
-[[redirects]]
+[redirects]
     from = "/*"
     to  = "/index.html"
     status = 200
