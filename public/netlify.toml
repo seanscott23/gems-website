@@ -3,6 +3,16 @@
     publish = "/opt/build/repo/build"
     base = "/"
 
+[context.production.environment]
+    REACT_APP_FIREBASE_API_KEY = "AIzaSyDM52ukjKJ5De3It6MTOYqZ3pY8PpOJ0qk"
+    REACT_APP_FIREBASE_AUTH_DOMAIN = "gems-website-30276.firebaseapp.com"
+    REACT_APP_FIREBASE_DB_URL = "https://gems-website-30276-default-rtdb.firebaseio.com/"
+    REACT_APP_FIREBASE_PROJECT_ID = "gems-website-30276"
+    REACT_APP_FIREBASE_STORAGE_BUCKET = "gems-website-30276.appspot.com"
+    REACT_APP_FIREBASE_MESSAGING_SENDER_ID = "962054406113"
+    REACT_APP_FIREBASE_APP_ID = "1:962054406113:web:56dbc0c04217543a44dca0"
+    REACT_APP_FIREBASE_MEASUREMENT_ID= "G-K2E7VRL238"
+
 [[redirects]]
     from = "/*"
     to  = "/index.html"
