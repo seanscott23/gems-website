@@ -1,6 +1,6 @@
 [build]
     command = "npm run build"
-    publish = "public"
+    publish = "src"
     base = "/"
 
 [context.production.environment]
@@ -15,5 +15,5 @@
 
 [redirects]
     from = "/*"
-    to  = "public/index.html"
+    to  = "src/index.tsx"
     status = 200
