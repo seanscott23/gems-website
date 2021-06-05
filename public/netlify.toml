@@ -1,7 +1,7 @@
 [build]
     command = "npm run build"
-    publish = "/public/"
-    base = "/index.html"
+    publish = "/index.html"
+    base = "/public"
 
 [context.production.environment]
     REACT_APP_FIREBASE_API_KEY = "AIzaSyDM52ukjKJ5De3It6MTOYqZ3pY8PpOJ0qk"
