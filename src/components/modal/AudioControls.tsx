@@ -1,7 +1,6 @@
 import React from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-
 import { setError } from "../../store/actions/authActions";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
