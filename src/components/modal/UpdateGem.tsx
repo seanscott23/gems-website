@@ -27,7 +27,7 @@ interface ModalProps {
 }
 
 const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
-  const { userGems } = useSelector((state: RootState) => state.auth);
+  // const { userGems } = useSelector((state: RootState) => state.auth);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState<any[]>([]);

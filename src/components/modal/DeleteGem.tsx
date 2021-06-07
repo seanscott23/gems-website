@@ -1,12 +1,12 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "../../styles/DeleteModal.css";
 import {
   deleteGemAction,
   getUserGems,
 } from "../../store/actions/gemSubmitAction";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useDispatch } from "react-redux";
+
 
 interface Gem {
   gemID: string;

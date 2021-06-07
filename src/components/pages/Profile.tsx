@@ -18,7 +18,7 @@ const Profile: FC = () => {
   const [success, setSuccess] = useState("");
 
   // const [rssFeed, setRssFeed] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Profile: FC = () => {
               text="Update"
               className="w-20 btn btn-primary"
               type="submit"
-              disabled={loading}
+              // disabled={loading}
               onClick={(e) => updateOrgName(e)}
             />
           </div>

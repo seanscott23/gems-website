@@ -55,9 +55,9 @@ export const Controls: React.FC<{
     handleTimeUpdate,
     audio,
   ]);
-//would be good for useeffect to not have handletimeupdate and audio in
-//there because those change so often. test with putting them other places. 
-//even netlify doesn't like it in useEffect.
+  //would be good for useeffect to not have handletimeupdate, updateprogress and audio in
+  //there because those change so often. test with putting them other places.
+  //even netlify doesn't like it in useEffect.
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
     if (audio?.paused) {

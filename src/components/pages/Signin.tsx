@@ -5,7 +5,7 @@ import Button from "../UI/Button";
 import Message from "../UI/Message";
 import { signin } from "../../store/actions/authActions";
 import { RootState } from "../../store";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Form, Card } from "react-bootstrap";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -21,7 +21,7 @@ const Signin: FC = () => {
 
   let [passwordInputType, toggleIcon] = PasswordToggle();
 
-  const { error} = useSelector((state: RootState) => state.auth);
+  const { error } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     // return () => {
