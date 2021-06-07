@@ -1,8 +1,5 @@
-import { findAllByDisplayValue } from "@testing-library/dom";
 import React from "react";
-import { useEffect } from "react";
 import { Button, Card, ListGroup } from "react-bootstrap";
-
 import "../../styles/GemCard.css";
 import DeleteGemModal from "../modal/DeleteGem";
 import UpdateGemModal from "../modal/UpdateGem";

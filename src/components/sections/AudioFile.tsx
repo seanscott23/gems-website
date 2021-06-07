@@ -1,15 +1,13 @@
-import React, { FC, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import AudioButtons from "./AudioButtons";
-
 
 export const AudioFile: React.FC<{
   file: any;
 }> = ({ file }) => {
   const [show, setShow] = React.useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [audioMetaData, setAudioMetaData] = useState<
-    HTMLAudioElement | undefined
-  >();
+  const [audioMetaData, setAudioMetaData] =
+    useState<HTMLAudioElement | undefined>();
 
   const onLoadedMetadata = () => {
     if (audioRef.current) {

@@ -4,15 +4,12 @@ import { Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import "../../styles/GemForm.css";
-import {
-  getUserGems,
-  submitFinalGem,
-} from "../../store/actions/gemSubmitAction";
+import { submitFinalGem } from "../../store/actions/gemSubmitAction";
 import Button from "../UI/Button";
 import { useHistory } from "react-router-dom";
 
 const GemForm: FC = () => {
-  const { gemURL, userGems } = useSelector((state: RootState) => state.auth);
+  const { gemURL } = useSelector((state: RootState) => state.auth);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isChecked, setChecked] = useState(false);

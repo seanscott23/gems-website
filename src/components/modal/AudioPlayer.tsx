@@ -1,8 +1,7 @@
-import React, { FC, useState, useRef } from "react";
-import Slider, { Range } from "rc-slider";
+import React, { useState, useRef } from "react";
+
 import "rc-slider/assets/index.css";
 import { Controls } from "./AudioControls";
-
 
 export const AudioPlayer: React.FC<{
   url: string;
@@ -13,9 +12,8 @@ export const AudioPlayer: React.FC<{
 }> = ({ url, isOpen, begin, end, handleTimeUpdate }) => {
   const [show, setShow] = React.useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [audioMetaData, setAudioMetaData] = useState<
-    HTMLAudioElement | undefined
-  >();
+  const [audioMetaData, setAudioMetaData] =
+    useState<HTMLAudioElement | undefined>();
 
   React.useEffect(() => {
     setShow(true);

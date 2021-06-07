@@ -1,19 +1,19 @@
-import React, { FC, useState, FormEvent, useEffect } from "react";
+import { FC, useState, FormEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
 import Message from "../UI/Message";
-import { signin, setError } from "../../store/actions/authActions";
+import { signin } from "../../store/actions/authActions";
 import { RootState } from "../../store";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Card } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import PasswordToggle from "../hooks/PasswordToggle";
 import "../../styles/Signin.css";
 
 const Signin: FC = () => {
-  const history = useHistory();
+  // const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ const Signin: FC = () => {
 
   let [passwordInputType, toggleIcon] = PasswordToggle();
 
-  const { error, user } = useSelector((state: RootState) => state.auth);
+  const { error} = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     // return () => {

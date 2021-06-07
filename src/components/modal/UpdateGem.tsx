@@ -6,7 +6,6 @@ import {
   getUserGems,
 } from "../../store/actions/gemSubmitAction";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { RootState } from "../../store";
 
 interface Gem {

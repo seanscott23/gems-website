@@ -1,10 +1,9 @@
 import "../../styles/PhotoUpload.css";
-import React, { useEffect, useState, DragEvent, FC } from "react";
+import { useEffect, useState, DragEvent, FC } from "react";
 import uploadPNG from "../../images/uploadgem.png";
 import { submitPhoto } from "../../store/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { Container } from "react-bootstrap";
 
 const ProfilePhotoUpload: FC = () => {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -50,12 +49,12 @@ const ProfilePhotoUpload: FC = () => {
   };
 
   function presentPhoto(ev: any) {
-    if (ev?.length != 0) {
+    if (ev?.length !== 0) {
       var reader = new FileReader();
-      const fileEvent = ev[0] == undefined ? ev : ev[0];
+      const fileEvent = ev[0] === undefined ? ev : ev[0];
 
       reader.onload = function (e) {
-        if (e.target?.result != undefined) {
+        if (e.target?.result !== undefined && e.target.result !== null) {
           setPhoto(e.target?.result);
           submitPhotoHandler(e.target?.result);
         }
@@ -66,8 +65,8 @@ const ProfilePhotoUpload: FC = () => {
 
   const submitPhotoHandler = async (photoUrl: string | ArrayBuffer) => {
     if (typeof photoUrl === "string") {
-      let newPhoto = user?.profilePhoto;
-      newPhoto = photoUrl;
+      // let newPhoto = user?.profilePhoto;
+      // newPhoto = photoUrl;
       await dispatch(submitPhoto(photoUrl));
     }
   };
@@ -93,7 +92,7 @@ const ProfilePhotoUpload: FC = () => {
             />
             {!photo ? (
               <div>
-                <img className="photoIcon" src={uploadPNG} />
+                <img alt="" className="photoIcon" src={uploadPNG} />
                 <div>
                   <p className="image-label-instruction">
                     Update Profile Photo
@@ -101,7 +100,7 @@ const ProfilePhotoUpload: FC = () => {
                 </div>
               </div>
             ) : typeof photo == "string" ? (
-              <img src={photo} className="profileImage" />
+              <img alt="" src={photo} className="profileImage" />
             ) : null}
           </div>
         </label>

@@ -52,7 +52,7 @@ const PaginationBar: FC<{
           return (
             <li
               key={number}
-              className={currentPage == number ? "active" : undefined}
+              className={currentPage === number ? "active" : undefined}
               onClick={() => paginate(number)}
             >
               {number}

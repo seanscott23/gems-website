@@ -1,22 +1,10 @@
 import React, { FC, useState } from "react";
-import {
-  Button,
-  Container,
-  Form,
-  Media,
-  Modal,
-  Spinner,
-} from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 import "../../styles/Modal.css";
 import { AudioPlayer } from "./AudioPlayer";
-import {
-  setLoading,
-  submitNewClip,
-  submitNewFile,
-} from "../../store/actions/authActions";
-import { useDispatch, useSelector } from "react-redux";
+import { submitNewClip, submitNewFile } from "../../store/actions/authActions";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { RootState } from "../../store";
 
 interface Clip {
   title: string;
@@ -56,7 +44,7 @@ const AudioModalRipper: FC<ModalProps> = ({
       e.preventDefault();
       setLoading(true);
       setTimeError(false);
-      if (clip.title != "") {
+      if (clip.title !== "") {
         await dispatch(submitNewClip(clip.enclosure.url, begin, end));
       } else {
         await dispatch(submitNewFile(clip.enclosure.url, begin, end));

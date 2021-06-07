@@ -8,7 +8,7 @@ import { Form, Card } from "react-bootstrap";
 import { RootState } from "../../store";
 import "../../styles/Signup.css";
 import { Link } from "react-router-dom";
-import ProfilePhotoUpload from "../sections/ProfilePhotoUpload";
+// import ProfilePhotoUpload from "../sections/ProfilePhotoUpload";
 import PasswordToggle from "../hooks/PasswordToggle";
 
 const SignUp: FC = () => {

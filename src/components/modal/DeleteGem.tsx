@@ -26,8 +26,8 @@ interface ModalProps {
 }
 
 const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
-  const { userGems } = useSelector((state: RootState) => state.auth);
-  const [loading, setLoading] = useState(false);
+  // const { userGems } = useSelector((state: RootState) => state.auth);
+  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   // const removeFromArray = (id: string) => {
