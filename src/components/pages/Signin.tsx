@@ -83,7 +83,7 @@ const Signin: FC = () => {
         </Form>
       </Card>
       <div className="homeLink">
-        <span>New to Gems?</span> <Link to={"/signup"}>Sign up</Link>
+        <span>New to Karats?</span> <Link to={"/signup"}>Sign up</Link>
       </div>
     </div>
   );
