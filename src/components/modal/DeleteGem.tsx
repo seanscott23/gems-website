@@ -1,12 +1,12 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "../../styles/DeleteModal.css";
 import {
   deleteGemAction,
   getUserGems,
 } from "../../store/actions/gemSubmitAction";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useDispatch } from "react-redux";
+
 
 interface Gem {
   gemID: string;
@@ -26,8 +26,8 @@ interface ModalProps {
 }
 
 const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
-  const { userGems } = useSelector((state: RootState) => state.auth);
-  const [loading, setLoading] = useState(false);
+  // const { userGems } = useSelector((state: RootState) => state.auth);
+  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   // const removeFromArray = (id: string) => {

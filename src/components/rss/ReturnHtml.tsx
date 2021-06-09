@@ -27,7 +27,7 @@ const ReturnHTML: FC<{
   setClips: (clips: any[]) => void;
   input: string;
 }> = ({ posts, clips, setClips, input }) => {
-  const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);
+  const { success } = useSelector((state: RootState) => state.auth);
   const [isModalOpen, setModalState] = React.useState(false);
   const [activeClip, setActiveClip] = React.useState<Clip | null>(null);
   const [begin, setBegin] = React.useState(0);

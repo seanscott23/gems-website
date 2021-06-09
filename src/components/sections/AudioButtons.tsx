@@ -6,12 +6,13 @@ import { submitNewFile } from "../../store/actions/authActions";
 import AudioModalRipper from "../modal/AudioModalRipper";
 import "../../styles/AudioButtons.css";
 
-interface Clip {
-  title: string;
-  enclosure: {
-    url: string;
-  };
-}
+// interface Clip {
+//   title: string;
+//   enclosure: {
+//     url: string;
+//   };
+// }
+
 export const AudioButtons: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
 }> = ({ audioMetaData }) => {

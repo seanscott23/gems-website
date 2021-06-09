@@ -1,5 +1,5 @@
 import "../../styles/AudioUpload.css";
-import React, { useEffect, useState, DragEvent } from "react";
+import { useState, DragEvent } from "react";
 import uploadPNG from "../../images/uploadgem.png";
 import AudioFile from "./AudioFile";
 
@@ -39,19 +39,19 @@ function AudioUpload() {
   };
 
   function presentAudio(ev: any) {
-    if (ev?.length != 0) {
+    if (ev?.length !== 0) {
       var reader = new FileReader();
-      const fileEvent = ev[0] == undefined ? ev : ev[0];
+      const fileEvent = ev[0] === undefined ? ev : ev[0];
 
       reader.onload = function (e) {
-        if (e.target?.result != undefined) {
+        if (e.target?.result !== undefined && e.target.result !== null) {
           setAudiox(e.target?.result);
         }
       };
       reader.readAsDataURL(fileEvent);
     }
   }
-
+  //added the line about null on 47  because of the double equals
   return (
     <div className="upload-box">
       <label
@@ -71,7 +71,7 @@ function AudioUpload() {
           />
           {!audiox ? (
             <div>
-              <img src={uploadPNG} width="50px" height="50px" />
+              <img alt="" src={uploadPNG} width="50px" height="50px" />
               <div>
                 <p className="audio-label-instruction">
                   {" "}

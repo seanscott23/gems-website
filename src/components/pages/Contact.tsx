@@ -1,20 +1,15 @@
-import React, { FC, useState, FormEvent, useEffect } from "react";
+import  { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Input from "../UI/Input";
-import Button from "../UI/Button";
-import Message from "../UI/Message";
-import { signin, setError } from "../../store/actions/authActions";
 import { RootState } from "../../store";
-import { Link, useHistory } from "react-router-dom";
-import { Form, Card } from "react-bootstrap";
+import { Link} from "react-router-dom";
 import "../../styles/Contact.css";
 
 const Contact: FC = () => {
-  const history = useHistory();
-  const [loading, setLoading] = useState(false);
+  // const history = useHistory();
+  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const { error, user } = useSelector((state: RootState) => state.auth);
+  const { error } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {}, [error, dispatch]);
 

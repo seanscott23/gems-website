@@ -1,14 +1,14 @@
-import { FC, ReactElement, useEffect, useState } from "react";
+import { FC,  useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSuccess } from "../../store/actions/authActions";
 import { RootState } from "../../store";
-import { Button, Card, ListGroup } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import "../../styles/RssFeed.css";
 import ReturnHTML from "../rss/ReturnHtml";
 
 import PaginationBar from "../sections/PaginationBar";
 import SearchBar from "../sections/SearchBar";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 const RssFeed: FC = () => {
   const { rssFeedUrl, success } = useSelector((state: RootState) => state.auth);

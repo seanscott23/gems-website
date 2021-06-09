@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Button from "../UI/Button";
 import "../../styles/Homepage.css";
 

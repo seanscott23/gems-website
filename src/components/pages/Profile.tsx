@@ -1,8 +1,8 @@
-import React, { FC, FormEvent, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Message from "../UI/Message";
-import { useHistory } from "react-router-dom";
-import { submitGemForm, submitOrgName } from "../../store/actions/authActions";
+// import { useHistory } from "react-router-dom";
+import { submitOrgName } from "../../store/actions/authActions";
 import ProfilePhotoUpload from "../sections/ProfilePhotoUpload";
 import { RootState } from "../../store";
 import "../../styles/Profile.css";
@@ -11,16 +11,14 @@ import Button from "../UI/Button";
 import Input from "../UI/Input";
 
 const Profile: FC = () => {
-  const history = useHistory();
-  const { user, needVerification } = useSelector(
-    (state: RootState) => state.auth
-  );
+  // const history = useHistory();
+  const { user } = useSelector((state: RootState) => state.auth);
   const [newOrg, setNewOrg] = useState("");
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const [rssFeed, setRssFeed] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [rssFeed, setRssFeed] = useState("");
+  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,7 +57,7 @@ const Profile: FC = () => {
               text="Update"
               className="w-20 btn btn-primary"
               type="submit"
-              disabled={loading}
+              // disabled={loading}
               onClick={(e) => updateOrgName(e)}
             />
           </div>

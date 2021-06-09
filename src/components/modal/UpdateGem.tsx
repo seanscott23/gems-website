@@ -6,7 +6,6 @@ import {
   getUserGems,
 } from "../../store/actions/gemSubmitAction";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { RootState } from "../../store";
 
 interface Gem {
@@ -28,7 +27,7 @@ interface ModalProps {
 }
 
 const UpdateGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
-  const { userGems } = useSelector((state: RootState) => state.auth);
+  // const { userGems } = useSelector((state: RootState) => state.auth);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState<any[]>([]);

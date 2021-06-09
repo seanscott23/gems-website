@@ -1,14 +1,11 @@
-import React, { ChangeEvent, MouseEvent } from "react";
-import Slider, { Range } from "rc-slider";
+import React from "react";
+import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-// import { start } from "node:repl";
-import Input from "../UI/Input";
 import { setError } from "../../store/actions/authActions";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import Message from "../UI/Message";
-// import { time } from "node:console";
 
 export const Controls: React.FC<{
   audioMetaData: HTMLAudioElement | undefined;
@@ -25,7 +22,7 @@ export const Controls: React.FC<{
   const [startValue, setStartValue] = React.useState("");
   const [showStartInput, setShowStartInput] = React.useState(false);
   const [showEndInput, setShowEndInput] = React.useState(false);
-  const [format, setFormat] = React.useState("");
+
   const { error } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const leftProgressCircle: HTMLCollectionOf<Element> | any =
@@ -41,7 +38,7 @@ export const Controls: React.FC<{
     return parseFloat((seconds / 60).toFixed(2));
   };
   React.useEffect(() => {
-    if (audioMetaData?.duration != undefined && endTime == 1000) {
+    if (audioMetaData?.duration !== undefined && endTime === 1000) {
       setEndTime(secondsToDecimal(audioMetaData.duration) as number);
     }
     handleTimeUpdate(startTime, endTime);
@@ -50,8 +47,17 @@ export const Controls: React.FC<{
         updateProgressBar();
       };
     }
-  }, [audioMetaData, audio?.ontimeupdate, startTime, endTime]);
-
+  }, [
+    audioMetaData,
+    audio?.ontimeupdate,
+    startTime,
+    endTime,
+    handleTimeUpdate,
+    audio,
+  ]);
+  //would be good for useeffect to not have handletimeupdate, updateprogress and audio in
+  //there because those change so often. test with putting them other places.
+  //even netlify doesn't like it in useEffect.
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
     if (audio?.paused) {
@@ -138,7 +144,7 @@ export const Controls: React.FC<{
   const showTime = (decimal: number) => {
     if (decimal < 60) {
       let string = decimal.toString().split(".");
-      if (decimal != 0) {
+      if (decimal !== 0) {
         let min = string[0];
         let seconds;
         if (string[1]) {

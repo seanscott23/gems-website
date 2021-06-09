@@ -1,7 +1,7 @@
 import React from "react";
 import { InputGroup } from "react-bootstrap";
 import Input from "../UI/Input";
-import Button from "../UI/Button";
+
 import "../../styles/Search.css";
 
 export interface SearchBarProps {

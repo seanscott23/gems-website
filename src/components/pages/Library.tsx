@@ -1,15 +1,12 @@
 import React, { FC, useState } from "react";
-import { useEffect } from "react";
 import { ListGroup } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-
 import "../../styles/Library.css";
 import SearchBar from "../sections/SearchBar";
 import GemPagination from "../sections/GemPagination";
 import PaginationBar from "../sections/PaginationBar";
 import { getUserGems } from "../../store/actions/gemSubmitAction";
-import { useHistory } from "react-router-dom";
 
 const Library: FC = () => {
   const { userGems } = useSelector((state: RootState) => state.auth);
@@ -36,8 +33,8 @@ const Library: FC = () => {
   const currentPosts = storedGems.slice(indexOfFirstPost, indexOfLastPost);
   const [input, setInput] = useState<string>("");
   const [clips, setClips] = useState(storedGems);
-  const dispatch = useDispatch();
-  const history = useHistory();
+  // const dispatch = useDispatch();
+  // const history = useHistory();
 
   React.useEffect(() => {
     if (storedGems.length === 0) {
@@ -46,8 +43,8 @@ const Library: FC = () => {
     return () => {
       getUserGems();
     };
-  }, [currentPosts, userGems]);
-
+  }, [currentPosts, userGems, storedGems.length]);
+  //added storedgems.length cause of netlify error, remove if causes issue
   const handleFilterList = (input: string) => {
     const filtered = storedGems.filter((clip: any) => {
       return input === ""
