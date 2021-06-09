@@ -1,5 +1,5 @@
 .container {
-  width: 40%;
+  /* width: 40%; */
   margin-top: 150px;
   align-items: center;
   height: 100%;
@@ -10,13 +10,14 @@
   margin-bottom: 15px;
 }
 .sign-in-container {
-  width: 40%;
+  /* width: 40%; */
   margin: 0 auto;
   align-items: center;
   margin-top: 150px;
   height: 50%;
   padding: 10px 5px 5px 5px;
 }
+
 
 .sign-in-container .button {
   margin-bottom: 10px;

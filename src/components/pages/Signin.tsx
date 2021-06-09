@@ -1,4 +1,4 @@
-import { FC, useState, FormEvent, useEffect } from "react";
+import React, { FC, useState, FormEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
@@ -6,7 +6,7 @@ import Message from "../UI/Message";
 import { signin } from "../../store/actions/authActions";
 import { RootState } from "../../store";
 import { Link } from "react-router-dom";
-import { Form, Card } from "react-bootstrap";
+import { Form, Card, Container } from "react-bootstrap";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import PasswordToggle from "../hooks/PasswordToggle";
@@ -39,7 +39,7 @@ const Signin: FC = () => {
   };
 
   return (
-    <div>
+    <Container>
       <Card className="sign-in-container">
         <h2 className="text-center">Sign In</h2>
         <Form onSubmit={submitHandler}>
@@ -85,7 +85,7 @@ const Signin: FC = () => {
       <div className="homeLink">
         <span>New to Karats?</span> <Link to={"/signup"}>Sign up</Link>
       </div>
-    </div>
+    </Container>
   );
 };
 
