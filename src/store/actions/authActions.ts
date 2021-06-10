@@ -234,7 +234,8 @@ export const submitNewClip = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      await fetch("http://localhost:8000/api/deliver/audio/", {
+      // await fetch("http://localhost:8000/api/deliver/audio/", {
+        await fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/audio/", {
         method: "POST",
         // mode: 'no-cors',
         headers: new Headers({

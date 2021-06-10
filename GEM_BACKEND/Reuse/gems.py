@@ -62,7 +62,7 @@ async def update_gem(gem: Gems):
     print(gem.token)
     return "Gem updated"
 
-@router.post("/api/get/all/")
+@router.post("https://floating-retreat-09098.herokuapp.com/api/get/all/")
 def get_gems_by_user(gem:Gems):
     try:
         array_of_user_gems = []
