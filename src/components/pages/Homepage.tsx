@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "../UI/Button";
 import "../../styles/Homepage.css";
+import { Container } from "react-bootstrap";
 
 const Homepage: FC = () => {
   const history = useHistory();
@@ -23,7 +24,7 @@ const Homepage: FC = () => {
   };
 
   return (
-    <section className="section">
+    <Container className="section">
       <div className="home-container">
         <h1 className=".title has-text-centered is-size-1 mb-6">
           Welcome to Karats!
@@ -61,7 +62,7 @@ const Homepage: FC = () => {
           ></Button>
         </div>
       </div>
-    </section>
+    </Container>
   );
 };
 

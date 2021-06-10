@@ -3,6 +3,13 @@
   width: 60%;
 }
 
+@media only screen and (max-width: 768px) {
+  .gem-container {
+    margin: 20% auto;
+    width: 60%;
+  }
+}
+
 .gem-container h1 {
   color: #057dcd;
 }

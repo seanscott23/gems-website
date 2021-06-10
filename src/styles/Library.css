@@ -13,3 +13,10 @@
   color: #1e3d58;
   width: 60%;
 }
+
+@media only screen and (max-width: 768px) {
+  .library-section {
+    margin: 20% auto;
+    width: 80%;
+  }
+}

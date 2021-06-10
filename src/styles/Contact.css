@@ -10,6 +10,12 @@
   font-size: 1.5em;
 }
 
+@media only screen and (max-width: 768px) {
+  .Contact-container {
+    width: 90%;
+  }
+}
+
 .contact-or,
 .contact-signin {
   text-align: center;
