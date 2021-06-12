@@ -301,7 +301,7 @@ export const submitNewFile = (
     let beginInt = begin * 60;
     let endInt = end * 60;
     const mp3file = new File([blob], "simonsays", { type: "audio/*" });
-    formData.append("url", mp3file);
+    // formData.append("file", mp3file);
     // });
 
     formData.append("userID", auth.currentUser?.uid as string);
