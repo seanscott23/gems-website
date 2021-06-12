@@ -106,7 +106,7 @@ const sendingProfileImageToDB = async (image: File) => {
   formData.append("user_id", auth.currentUser?.uid as string);
   formData.append("token", (await auth?.currentUser?.getIdToken()) as string);
 
-  return fetch("http://localhost:8000/api/deliver/userImage/", {
+  return fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/userImage/", {
     method: "POST",
     body: formData,
   })
