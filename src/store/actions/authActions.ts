@@ -301,23 +301,22 @@ export const submitNewFile = (
     let beginInt = begin * 60;
     let endInt = end * 60;
     const mp3file = new File([blob], "simonsays", { type: "audio/*" });
-    // formData.append("file", mp3file);
+    formData.append("file", mp3file);
     // });
 
     formData.append("userID", auth.currentUser?.uid as string);
     formData.append("token", (await auth?.currentUser?.getIdToken()) as string);
-    formData.append("url", mp3file);
     formData.append("begin", beginInt.toString());
     formData.append("end", endInt.toString());
 
     try {
       // await fetch("http://localhost:8000/api/deliver/mp3/audio/", {
-        await fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/audio/", { 
+        await fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/mp3/audio/", { 
         method: "POST",
-        // headers: new Headers ({
-        //   'Content-Type': "multipart/form-data",
-        //   'Access-Control-Allow-Origin': "*"
-        // }),
+        headers: new Headers ({
+          'Content-Type': "multipart/form-data",
+          'Access-Control-Allow-Origin': "*"
+        }),
         body: formData,
       })
         .then(async (response) => await response.json())
