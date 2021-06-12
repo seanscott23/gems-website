@@ -301,11 +301,12 @@ export const submitNewFile = (
     let beginInt = begin * 60;
     let endInt = end * 60;
     const mp3file = new File([blob], "simonsays", { type: "audio/*" });
-    formData.append("file", mp3file);
+    formData.append("url", mp3file);
     // });
 
     formData.append("userID", auth.currentUser?.uid as string);
     formData.append("token", (await auth?.currentUser?.getIdToken()) as string);
+    formData.append("url", mp3file);
     formData.append("begin", beginInt.toString());
     formData.append("end", endInt.toString());
 
