@@ -64,7 +64,7 @@ export const getUserGems = (): ThunkAction<
 > => {
   return async (dispatch) => {
     try {
-      await fetch("http://localhost:8000/api/get/gems/", {
+      await fetch("https://floating-retreat-09098.herokuapp.com/api/get/gems/", {
         method: "POST",
         body: JSON.stringify({
           ownerID: auth.currentUser?.uid,
