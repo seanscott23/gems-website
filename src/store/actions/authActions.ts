@@ -311,7 +311,8 @@ export const submitNewFile = (
     formData.append("end", endInt.toString());
 
     try {
-      await fetch("http://localhost:8000/api/deliver/mp3/audio/", {
+      // await fetch("http://localhost:8000/api/deliver/mp3/audio/", {
+        await fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/audio/", { 
         method: "POST",
         body: formData,
       })
