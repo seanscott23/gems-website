@@ -313,10 +313,10 @@ export const submitNewFile = (
       // await fetch("http://localhost:8000/api/deliver/mp3/audio/", {
         await fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/mp3/audio/", { 
         method: "POST",
-        headers: new Headers ({
-          'Content-Type': "multipart/form-data",
-          'Access-Control-Allow-Origin': "*"
-        }),
+        // headers: new Headers ({
+        //   'Content-Type': "multipart/form-data",
+        //   'Access-Control-Allow-Origin': "*"
+        // }),
         body: formData,
       })
         .then(async (response) => await response.json())
