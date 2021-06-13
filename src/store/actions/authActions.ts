@@ -106,7 +106,7 @@ const sendingProfileImageToDB = async (image: File) => {
   formData.append("user_id", auth.currentUser?.uid as string);
   formData.append("token", (await auth?.currentUser?.getIdToken()) as string);
 
-  return fetch("http://localhost:8000/api/deliver/userImage/", {
+  return fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/userImage/", {
     method: "POST",
     body: formData,
   })
@@ -312,11 +312,15 @@ export const submitNewFile = (
 
     try {
       // await fetch("http://localhost:8000/api/deliver/mp3/audio/", {
-        await fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/audio/", { 
+        await fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/mp3/audio/", { 
         method: "POST",
+        // headers: new Headers ({
+        //   'Content-Type': "multipart/form-data",
+        //   'Access-Control-Allow-Origin': "*"
+        // }),
         body: formData,
       })
-        .then((response) => response.json())
+        .then(async (response) => await response.json())
         .then((data) => {
           let url = data.trimmed_audio_url;
           console.log(data);

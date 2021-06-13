@@ -16,7 +16,7 @@ export const submitFinalGem = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      fetch("http://localhost:8000/api/post/gems", {
+      fetch("https://floating-retreat-09098.herokuapp.com/api/post/gems", {
         method: "POST",
         body: JSON.stringify({
           ownerID: auth.currentUser?.uid,
@@ -64,7 +64,7 @@ export const getUserGems = (): ThunkAction<
 > => {
   return async (dispatch) => {
     try {
-      await fetch("http://localhost:8000/api/get/gems/", {
+      await fetch("https://floating-retreat-09098.herokuapp.com/api/get/gems/", {
         method: "POST",
         body: JSON.stringify({
           ownerID: auth.currentUser?.uid,
@@ -105,7 +105,7 @@ export const updateGemAction = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      await fetch("http://localhost:8000/api/update/gem/", {
+      await fetch("https://floating-retreat-09098.herokuapp.com/api/update/gem/", {
         method: "PUT",
         body: JSON.stringify({
           ownerID: await auth.currentUser?.uid,
@@ -155,7 +155,7 @@ export const deleteGemAction = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      await fetch("http://localhost:8000/api/remove/gem/", {
+      await fetch("https://floating-retreat-09098.herokuapp.com/api/remove/gem/", {
         method: "DELETE",
         body: JSON.stringify({
           token: await auth.currentUser?.getIdToken(),
