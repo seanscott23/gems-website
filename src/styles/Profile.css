@@ -4,26 +4,6 @@
   width: 60%;
 }
 
-@media only screen and (max-width: 768px) {
-  #profile-container {
-    margin: 20% auto;
-    width: 60%;
-  }
-}
-
-@media only screen and (max-width: 320px) {
-  #profile-container {
-    margin: 25% auto;
-    width: 80%;
-  }
-  .form-group > h2 {
-    font-size: 1.5rem;
-  }
-  .photo-section > h2 {
-    font-size: 1.5rem;
-  }
-}
-
 .photoupload-div {
   display: flex;
 }
@@ -49,4 +29,30 @@
   width: 280px;
   margin-top: 10px;
   text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  #profile-container {
+    margin: 20% auto;
+    width: 60%;
+  }
+  .form-group > h2 {
+    font-size: 1.5rem;
+  }
+  .photo-section > h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  #profile-container {
+    margin: 25% auto;
+    width: 80%;
+  }
+  .form-group > h2 {
+    font-size: 1.5rem;
+  }
+  .photo-section > h2 {
+    font-size: 1.5rem;
+  }
 }
