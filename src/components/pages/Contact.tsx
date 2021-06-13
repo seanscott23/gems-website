@@ -1,7 +1,7 @@
-import  { FC, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../styles/Contact.css";
 
 const Contact: FC = () => {
@@ -18,11 +18,11 @@ const Contact: FC = () => {
       <div className="Contact-container">
         <h2 className="text-center">Contact</h2>
         <br />
-        <p>
+        <p className="contact-p">
           Please contact us at [INSERT_KARATS_EMAIL_HERE] if you have any
           questions or concerns.
         </p>
-        <p>
+        <p className="contact-p">
           If you have a traidmark claim, please provide all neccesary
           information in the email and we will take all content associated with
           the trademark.

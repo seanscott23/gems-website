@@ -235,22 +235,25 @@ export const submitNewClip = (
   return async (dispatch) => {
     try {
       // await fetch("http://localhost:8000/api/deliver/audio/", {
-        await fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/audio/", {
-        method: "POST",
-        // mode: 'no-cors',
-        headers: new Headers({
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        }),
-        body: JSON.stringify({
-          userID: auth.currentUser?.uid,
-          token: await auth?.currentUser?.getIdToken(),
-          url: url,
-          begin: begin * 60,
-          end: end * 60,
-        }),
-      })
+      await fetch(
+        "https://floating-retreat-09098.herokuapp.com/api/deliver/audio/",
+        {
+          method: "POST",
+          // mode: 'no-cors',
+          headers: new Headers({
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+          }),
+          body: JSON.stringify({
+            userID: auth.currentUser?.uid,
+            token: await auth?.currentUser?.getIdToken(),
+            url: url,
+            begin: begin * 60,
+            end: end * 60,
+          }),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           let url = data.trimmed_audio_url;
@@ -275,6 +278,7 @@ export const submitNewFile = (
   return async (dispatch) => {
     // let encodedString = file.replace("data:audio/mpeg;base64,", "");
     // let base64 = file.split(",")[1];
+    // 
     const formData = new FormData();
     const b64toBlob = (file: string) => {
       var byteString = atob(file.split(",")[1]);
@@ -301,7 +305,7 @@ export const submitNewFile = (
     let beginInt = begin * 60;
     let endInt = end * 60;
     const mp3file = new File([blob], "simonsays", { type: "audio/*" });
-
+// debugger;
     formData.append("file", mp3file);
     // });
 

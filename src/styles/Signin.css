@@ -19,11 +19,10 @@
 }
 
 @media only screen and (max-width: 768px) {
- .sign-in-container{
-   width: 90%;
- }
+  .sign-in-container {
+    width: 90%;
+  }
 }
-
 
 .sign-in-container .button {
   margin-bottom: 10px;
@@ -57,4 +56,12 @@
 
 .form-group > .alert {
   width: 100%;
+}
+
+@media only screen and (max-width: 320px) {
+  .in-eye-icon {
+    position: absolute;
+    right: 40px;
+    bottom: 135px;
+  }
 }

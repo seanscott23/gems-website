@@ -27,6 +27,19 @@ Form > .btn-primary {
     height: 100%;
   }
 }
+@media only screen and (max-width: 320px) {
+  #container {
+    width: 80%;
+    margin: 120px auto;
+    height: 100%;
+  }
+  .dash-name {
+    font-size: 1.5rem;
+  }
+  #audio_dropped_player {
+    width: 95%;
+  }
+}
 
 body {
   background-color: #63a4ff;

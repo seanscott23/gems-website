@@ -20,3 +20,12 @@
     width: 80%;
   }
 }
+
+@media only screen and (max-width: 320px) {
+  .noGem-h1 {
+    font-size: 1.5rem;
+    margin: 30% auto;
+    color: #1e3d58;
+    width: 90%;
+  }
+}

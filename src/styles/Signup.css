@@ -37,3 +37,22 @@
   right: 80px;
   bottom: 170px;
 }
+.homeLink-signup {
+  text-align: center;
+}
+
+@media only screen and (max-width: 320px) {
+  .homeLink-signup {
+    margin-top: 5px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .sign-up-container {
+    margin-top: 100px;
+  }
+  .up-eye-icon {
+    position: absolute;
+    right: 50px;
+    bottom: 190px;
+  }
+}

@@ -9,7 +9,6 @@
   cursor: pointer;
 }
 
-
 .preparing-4-drag {
   text-align: center;
 }
@@ -44,4 +43,10 @@
   display: grid;
   justify-self: center;
   margin-bottom: 15px;
+}
+
+@media only screen and (max-width: 320px) {
+  .signup-user-audio {
+    height: 150px;
+  }
 }

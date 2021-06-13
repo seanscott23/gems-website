@@ -157,3 +157,9 @@
 .audioInputError > .alert {
   padding: 0 1.25rem;
 }
+
+@media only screen and (max-width: 320px) {
+  .modal-title {
+    font-size: 1rem;
+  }
+}

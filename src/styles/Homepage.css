@@ -12,3 +12,19 @@
   margin: 10% auto;
   width: 90%;
 }
+
+@media only screen and (max-width: 320px) {
+  .home-container {
+    margin: 0 auto;
+    width: 90%;
+  }
+  .container {
+    margin-top: 100px;
+  }
+  .home-container > h1 {
+    font-size: 1.8rem;
+  }
+  .homepage-buttons > button {
+    margin: 10px;
+  }
+}
