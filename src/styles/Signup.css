@@ -7,12 +7,6 @@
   padding: 10px 5px 5px 5px;
 }
 
-@media only screen and (max-width: 768px) {
-  .sign-up-container {
-    width: 90%;
-  }
-}
-
 .sign-up-container .button {
   margin-bottom: 10px;
   font-size: 1.5em;
@@ -36,4 +30,35 @@
   position: absolute;
   right: 80px;
   bottom: 170px;
+}
+.homeLink-signup {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+@media only screen and (max-width: 320px) {
+  .homeLink-signup {
+    margin-top: 5px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .sign-up-container {
+    margin-top: 100px;
+  }
+  .up-eye-icon {
+    position: absolute;
+    right: 50px;
+    bottom: 190px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .sign-up-container {
+    width: 90%;
+  }
+  .homeLink-signup {
+    margin-top: 5px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
 }

@@ -16,3 +16,11 @@
   margin: 5px;
   align-items: center;
 }
+
+@media only screen and (max-width: 320px) {
+  #upload-audio,
+  #crop-audio {
+    margin: 0;
+    /* padding: 0.1rem 0.2rem; */
+  }
+}

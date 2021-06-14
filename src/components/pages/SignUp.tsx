@@ -36,9 +36,9 @@ const SignUp: FC = () => {
     let target: any = e.target;
     // let result = fReader.readAsDataURL(target.files[0]);
     let fileEvent = target.files[0];
-  
+
     fReader.onload = function (e) {
-      console.log(e.target?.result)
+      console.log(e.target?.result);
       if (
         e.target?.result !== undefined &&
         typeof e.target?.result === "string"
@@ -114,7 +114,7 @@ const SignUp: FC = () => {
               onChange={(e: React.ChangeEvent) => updatePhoto(e)}
               accept=".jpg,.png"
               id="exampleFormControlFile1"
-              label="Your gem profile image(optional)"
+              label="Profile image(optional)"
             />
             <div className="signup-photo"></div>
           </Form.Group>
@@ -127,7 +127,7 @@ const SignUp: FC = () => {
         </Form>
         {/* </div> */}
       </Card>
-      <div className="homeLink">
+      <div className="homeLink-signup">
         <span>Already have an account?</span>{" "}
         <Link to={"/signin"}>Sign in</Link>
       </div>
