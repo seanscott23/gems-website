@@ -30,11 +30,12 @@ export const signup = (
   onError: () => void
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
+    debugger;
     try {
       const res = await firebase
         .auth()
         .createUserWithEmailAndPassword(data.email, data.password);
-      console.log(res.user);
+
       if (res.user) {
         let userPhoto = await sendingProfileImageToDB(
           data.profilePhoto as File
@@ -58,6 +59,7 @@ export const signup = (
           dispatch(
             setError("Please check your email to verify your email address")
           );
+
           // const unsubscribeOnUserChanged = firebase
           //   .auth()
           //   .onAuthStateChanged((response) => {
@@ -73,12 +75,17 @@ export const signup = (
           //     }
           //   });
         });
-        // if (!res.user.emailVerified) {
-        //   debugger;
-        //   dispatch(
-        //     setError("Please check your email to verify your email addess")
-        //   );
-        // }
+
+        if (!res.user.emailVerified) {
+          debugger;
+          dispatch({
+            type: SET_ERROR,
+            payload: "Please check your email to verify your email addess",
+          });
+          // dispatch(
+          //   setError("Please check your email to verify your email addess")
+          // );
+        }
         // dispatch({
         //   type: NEED_VERIFICATION,
         // });
@@ -106,10 +113,13 @@ const sendingProfileImageToDB = async (image: File) => {
   formData.append("user_id", auth.currentUser?.uid as string);
   formData.append("token", (await auth?.currentUser?.getIdToken()) as string);
 
-  return fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/userImage/", {
-    method: "POST",
-    body: formData,
-  })
+  return fetch(
+    "https://floating-retreat-09098.herokuapp.com/api/deliver/userImage/",
+    {
+      method: "POST",
+      body: formData,
+    }
+  )
     .then((response) => response.json())
     .then((data) => {
       let url = data;
@@ -175,6 +185,11 @@ export const signin = (
           } else {
             // firebase.auth().setPersistence("session").then(())
             localStorage.clear();
+            debugger;
+            // dispatch({
+            //   type: SET_USER,
+            //   payload: userData,
+            // });
             console.log(userCredential);
 
             // dispatch({
@@ -278,7 +293,7 @@ export const submitNewFile = (
   return async (dispatch) => {
     // let encodedString = file.replace("data:audio/mpeg;base64,", "");
     // let base64 = file.split(",")[1];
-    // 
+    //
     const formData = new FormData();
     const b64toBlob = (file: string) => {
       var byteString = atob(file.split(",")[1]);
@@ -305,7 +320,7 @@ export const submitNewFile = (
     let beginInt = begin * 60;
     let endInt = end * 60;
     const mp3file = new File([blob], "simonsays", { type: "audio/*" });
-// debugger;
+    // debugger;
     formData.append("file", mp3file);
     // });
 
@@ -316,14 +331,17 @@ export const submitNewFile = (
 
     try {
       // await fetch("http://localhost:8000/api/deliver/mp3/audio/", {
-        await fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/mp3/audio/", { 
-        method: "POST",
-        // headers: new Headers ({
-        //   'Content-Type': "multipart/form-data",
-        //   'Access-Control-Allow-Origin': "*"
-        // }),
-        body: formData,
-      })
+      await fetch(
+        "https://floating-retreat-09098.herokuapp.com/api/deliver/mp3/audio/",
+        {
+          method: "POST",
+          // headers: new Headers ({
+          //   'Content-Type': "multipart/form-data",
+          //   'Access-Control-Allow-Origin': "*"
+          // }),
+          body: formData,
+        }
+      )
         .then(async (response) => await response.json())
         .then((data) => {
           let url = data.trimmed_audio_url;
