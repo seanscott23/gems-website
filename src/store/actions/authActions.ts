@@ -238,11 +238,11 @@ export const submitNewClip = (
         await fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/audio/", {
         method: "POST",
         // mode: 'no-cors',
-        headers: new Headers({
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        }),
+        // headers: new Headers({
+        //   "Content-Type": "application/json",
+        //   Accept: "application/json",
+        //   "Access-Control-Allow-Origin": "*",
+        // }),
         body: JSON.stringify({
           userID: auth.currentUser?.uid,
           token: await auth?.currentUser?.getIdToken(),
