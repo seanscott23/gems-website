@@ -40,7 +40,6 @@ const AudioModalRipper: FC<ModalProps> = ({
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     if (end - begin <= 10) {
-      debugger;
       e.preventDefault();
       setLoading(true);
       setTimeError(false);

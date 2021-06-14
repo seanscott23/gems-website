@@ -30,7 +30,6 @@ export const signup = (
   onError: () => void
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
-    debugger;
     try {
       const res = await firebase
         .auth()
@@ -56,9 +55,10 @@ export const signup = (
           .set(userData);
         res.user.sendEmailVerification().then(() => {
           //useState used on my loading (user can cancel this loading and exit               this task
-          dispatch(
-            setError("Please check your email to verify your email address")
-          );
+          dispatch({
+            type: SET_ERROR,
+            payload: "Please check your email to verify your email addess",
+          });
 
           // const unsubscribeOnUserChanged = firebase
           //   .auth()
@@ -76,16 +76,12 @@ export const signup = (
           //   });
         });
 
-        if (!res.user.emailVerified) {
-          debugger;
-          dispatch({
-            type: SET_ERROR,
-            payload: "Please check your email to verify your email addess",
-          });
-          // dispatch(
-          //   setError("Please check your email to verify your email addess")
-          // );
-        }
+        // if (!res.user.emailVerified) {
+        //   dispatch({
+        //     type: SET_ERROR,
+        //     payload: "Please check your email to verify your email addess",
+        //   });
+        // }
         // dispatch({
         //   type: NEED_VERIFICATION,
         // });
@@ -185,7 +181,6 @@ export const signin = (
           } else {
             // firebase.auth().setPersistence("session").then(())
             localStorage.clear();
-            debugger;
             // dispatch({
             //   type: SET_USER,
             //   payload: userData,
