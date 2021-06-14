@@ -1,6 +1,6 @@
 [build]
     command = "npm run build"
-    publish = "/scr"
+    publish = "/src"
     base = "/"
 
 [context.production.environment]
