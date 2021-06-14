@@ -13,12 +13,6 @@
     REACT_APP_FIREBASE_APP_ID = "1:962054406113:web:56dbc0c04217543a44dca0"
     REACT_APP_FIREBASE_MEASUREMENT_ID = "G-K2E7VRL238"
 
-
-[[redirects]]
-    from = "/signin"
-    to  = "/signin"
-    status =200
-   
 [[redirects]]
     from = "/*"
     to  = "src/index.tsx"
