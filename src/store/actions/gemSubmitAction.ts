@@ -111,6 +111,7 @@ export const updateGemAction = (
           ownerID: await auth.currentUser?.uid,
           token: await auth.currentUser?.getIdToken(),
           gemID: gemID,
+          duration: duration,
           audioURL: audioURL,
           title: title,
           description: description,
