@@ -50,7 +50,7 @@ const AudioModalRipper: FC<ModalProps> = ({
         await dispatch(submitNewFile(clip.enclosure.url, begin, end));
         setLoading(false);
       }
-      localStorage.clear();
+
       history.push("/gem-form");
     } else {
       setTimeError(true);

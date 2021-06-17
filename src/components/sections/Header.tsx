@@ -26,17 +26,15 @@ const Header: FC = () => {
     if (userGems.length < 1) {
       dispatch(getUserGems());
     }
-    localStorage.clear();
+
     history.push("/library");
   };
 
   const dashHandler = () => {
-    localStorage.clear();
     history.push("/dashboard");
   };
 
   const profileHandler = () => {
-    localStorage.clear();
     history.push("/profile");
   };
 
