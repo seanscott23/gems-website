@@ -64,22 +64,24 @@ export const getUserGems = (): ThunkAction<
 > => {
   return async (dispatch) => {
     try {
-      await fetch("https://floating-retreat-09098.herokuapp.com/api/get/gems/", {
-        method: "POST",
-        body: JSON.stringify({
-          ownerID: auth.currentUser?.uid,
-          token: await auth.currentUser?.getIdToken(),
-          gemID: "",
-          audioURL: "",
-          title: "",
-          description: "",
-          categories: [],
-          explicit: false,
-        }),
-      })
+      await fetch(
+        "https://floating-retreat-09098.herokuapp.com/api/get/gems/",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            ownerID: auth.currentUser?.uid,
+            token: await auth.currentUser?.getIdToken(),
+            gemID: "",
+            audioURL: "",
+            title: "",
+            description: "",
+            categories: [],
+            explicit: false,
+          }),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
-      
           let newData = data.reverse();
 
           dispatch({
@@ -105,19 +107,22 @@ export const updateGemAction = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      await fetch("https://floating-retreat-09098.herokuapp.com/api/update/gem/", {
-        method: "PUT",
-        body: JSON.stringify({
-          ownerID: await auth.currentUser?.uid,
-          token: await auth.currentUser?.getIdToken(),
-          gemID: gemID,
-          audioURL: audioURL,
-          title: title,
-          description: description,
-          categories: categories,
-          explicit: explicit,
-        }),
-      });
+      await fetch(
+        "https://floating-retreat-09098.herokuapp.com/api/update/gem/",
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            ownerID: await auth.currentUser?.uid,
+            token: await auth.currentUser?.getIdToken(),
+            gemID: gemID,
+            audioURL: audioURL,
+            title: title,
+            description: description,
+            categories: categories,
+            explicit: explicit,
+          }),
+        }
+      );
 
       // let currentGem = [
       //   gemID,
@@ -155,13 +160,16 @@ export const deleteGemAction = (
 ): ThunkAction<void, RootState, null, AuthAction> => {
   return async (dispatch) => {
     try {
-      await fetch("https://floating-retreat-09098.herokuapp.com/api/remove/gem/", {
-        method: "DELETE",
-        body: JSON.stringify({
-          token: await auth.currentUser?.getIdToken(),
-          gemID: gemID,
-        }),
-      })
+      await fetch(
+        "https://floating-retreat-09098.herokuapp.com/api/remove/gem/",
+        {
+          method: "DELETE",
+          body: JSON.stringify({
+            token: await auth.currentUser?.getIdToken(),
+            gemID: gemID,
+          }),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           let storedGems: any[] = [];

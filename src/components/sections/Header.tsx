@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {  NavDropdown } from "react-bootstrap";
+import { NavDropdown } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Navbar from "react-bootstrap/Navbar";
 import { RootState } from "../../store";
@@ -33,7 +33,11 @@ const Header: FC = () => {
   return (
     <Navbar bg="light" expand="lg" id="navbar">
       <Navbar.Brand>
-        <Link className="navbar-item" to={!authenticated ? "/" : "/dashboard"}>
+        <Link
+          className="navbar-item"
+          to={!authenticated ? "/" : "/dashboard"}
+          onClick={() => localStorage.clear()}
+        >
           Karats
         </Link>
       </Navbar.Brand>
