@@ -26,7 +26,6 @@ const Header: FC = () => {
     if (userGems.length < 1) {
       dispatch(getUserGems());
     }
-    // await dispatch(getUserGems());
     history.push("/library");
   };
 
