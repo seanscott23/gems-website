@@ -245,25 +245,22 @@ export const submitNewClip = (
   return async (dispatch) => {
     try {
       // await fetch("http://localhost:8000/api/deliver/audio/", {
-      await fetch(
-        "https://floating-retreat-09098.herokuapp.com/api/deliver/audio/",
-        {
-          method: "POST",
-          // mode: 'no-cors',
-          headers: new Headers({
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-          }),
-          body: JSON.stringify({
-            userID: auth.currentUser?.uid,
-            token: await auth?.currentUser?.getIdToken(),
-            url: url,
-            begin: begin * 60,
-            end: end * 60,
-          }),
-        }
-      )
+        await fetch("https://floating-retreat-09098.herokuapp.com/api/deliver/audio/", {
+        method: "POST",
+        // mode: 'no-cors',
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        }),
+        body: JSON.stringify({
+          userID: auth.currentUser?.uid,
+          token: await auth?.currentUser?.getIdToken(),
+          url: url,
+          begin: begin * 60,
+          end: end * 60,
+        }),
+      })
         .then((response) => response.json())
         .then((data) => {
           let url = data.trimmed_audio_url;
