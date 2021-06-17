@@ -26,7 +26,18 @@ const Header: FC = () => {
     if (userGems.length < 1) {
       dispatch(getUserGems());
     }
+    localStorage.clear();
     history.push("/library");
+  };
+
+  const dashHandler = () => {
+    localStorage.clear();
+    history.push("/dashboard");
+  };
+
+  const profileHandler = () => {
+    localStorage.clear();
+    history.push("/profile");
   };
 
   return (
@@ -61,10 +72,7 @@ const Header: FC = () => {
         ) : (
           <div className="loggedIn-buttons">
             <NavDropdown.Item eventKey="4.1">
-              <Button
-                variant="primary"
-                onClick={() => history.push("/dashboard")}
-              >
+              <Button variant="primary" onClick={() => dashHandler}>
                 Upload Gem
               </Button>
             </NavDropdown.Item>
@@ -74,10 +82,7 @@ const Header: FC = () => {
               </Button>
             </NavDropdown.Item>
             <NavDropdown.Item eventKey="4.3">
-              <Button
-                variant="primary"
-                onClick={() => history.push("/profile")}
-              >
+              <Button variant="primary" onClick={() => profileHandler}>
                 Profile
               </Button>
             </NavDropdown.Item>
