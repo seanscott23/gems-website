@@ -49,7 +49,6 @@ const GemForm: FC = () => {
     e.preventDefault();
     setLoading(true);
     getGemID(gemURL);
-
     if (gemURL === "" && audioMetaData) {
       dispatch(
         await submitFinalGem(
@@ -75,7 +74,7 @@ const GemForm: FC = () => {
         )
       );
     }
-
+    localStorage.clear();
     setLoading(false);
     history.push("/library");
   };
