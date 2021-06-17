@@ -72,7 +72,7 @@ const Header: FC = () => {
         ) : (
           <div className="loggedIn-buttons">
             <NavDropdown.Item eventKey="4.1">
-              <Button variant="primary" onClick={() => dashHandler}>
+              <Button variant="primary" onClick={() => dashHandler()}>
                 Upload Gem
               </Button>
             </NavDropdown.Item>
@@ -82,7 +82,7 @@ const Header: FC = () => {
               </Button>
             </NavDropdown.Item>
             <NavDropdown.Item eventKey="4.3">
-              <Button variant="primary" onClick={() => profileHandler}>
+              <Button variant="primary" onClick={() => profileHandler()}>
                 Profile
               </Button>
             </NavDropdown.Item>
