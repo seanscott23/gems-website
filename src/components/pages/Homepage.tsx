@@ -37,13 +37,16 @@ const Homepage: FC = () => {
           files to below 10 min for everyone to listen to.
           <br />
           <br />
-          We created this platform for two reasons. The first was to provide
-          podcasters with a unique and effective way to advertise their podcast
-          highlights to gain new users. The second was to provide new and
-          existing creators with a platform exclusivly for focused material they
-          can share with the world. That's why we chose the name 'Karats', we
-          like to call any clips that you upload 'gems' and as you upload more,
-          the value "(karats)" of your organization grows
+          We created this platform for two reasons.
+          <br />
+          The first was to provide podcasters with a unique and effective way to
+          advertise their podcast highlights to gain new users.
+          <br />
+          The second was to provide new and existing creators with a platform
+          exclusivly for focused material they can share with the world. That's
+          why we chose the name 'Karats', we like to call any clips that you
+          upload 'gems' and as you upload more, the value "(karats)" of your
+          organization grows!
         </p>
         <div className="homepage-buttons">
           <Button

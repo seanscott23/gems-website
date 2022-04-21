@@ -14,6 +14,7 @@ from Reuse import user
 settings = config.Settings()
 app = FastAPI()
 
+
 origins = [
   "http://localhost:3000/*",
   "http://localhost:3000",
