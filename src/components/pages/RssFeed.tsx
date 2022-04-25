@@ -68,7 +68,7 @@ const RssFeed: FC = () => {
       <div className="rss-columns">
         <ListGroup id="needToBeTrimmed" as="ul">
           <h3 style={{ textAlign: "center" }}>
-            Upload or Crop these items below 10 minutes.
+            Upload or Crop audio below 10 minutes.
           </h3>
           <SearchBar input={input} setInput={handleFilterList} />
           <ReturnHTML
@@ -88,7 +88,7 @@ const RssFeed: FC = () => {
       </div>
     </section>
   ) : (
-    <h1 className="noGem-h1">This RSS Feed has nothing in it.</h1>
+    <h1 className="noGem-h1">This RSS Feed has nothing in it. Please make sure you have the correct link.</h1>
   );
 };
 
