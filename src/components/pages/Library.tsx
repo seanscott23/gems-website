@@ -59,10 +59,10 @@ const Library: FC = () => {
   return storedGems.length > 0 ? (
     <div>
       <section className="library-section">
-        <h1>Your gem library!</h1>
+        <h1>Your audio clip library!</h1>
         <h6>
           This page is linked directly with your account on our app. Update or
-          delete any gem within this page.
+          delete any audio clip within this page.
         </h6>
         <SearchBar input={input} setInput={handleFilterList} />
         <ListGroup id="allGems" as="ul">
@@ -84,7 +84,7 @@ const Library: FC = () => {
     </div>
   ) : (
     <h1 className="noGem-h1">
-      You have no gems yet. Please upload a gem first.
+      You have no audio clips yet. Please upload some audio first.
     </h1>
   );
 };
