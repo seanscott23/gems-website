@@ -58,9 +58,9 @@ const DeleteGemModal: FC<ModalProps> = ({ isOpen, handleClose, gem }) => {
       // size="lg"
     >
       <Modal.Header className="deleteModal-warning">
-        Are you sure you want to delete this gem?
+        Are you sure you want to delete this audio clip?
       </Modal.Header>
-      <Modal.Body>Once you delete this gem, it cannot be undone.</Modal.Body>
+      <Modal.Body>Once you delete this audio clip, it cannot be undone.</Modal.Body>
       <Modal.Footer>
         <Button onClick={handleClose}>Close</Button>
         <Button onClick={(e) => deleteHandler(e)}>Delete</Button>

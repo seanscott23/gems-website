@@ -91,7 +91,7 @@ const GemForm: FC = () => {
 
   return (
     <div className="gem-container">
-      <h1>Upload Gem Form</h1>
+      <h1>Upload Audio Clip</h1>
       {gemURL !== "" ? (
         <audio src={gemURL} controls preload="metadata" ref={audioRef}></audio>
       ) : (
