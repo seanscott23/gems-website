@@ -19,13 +19,13 @@ const Contact: FC = () => {
         <h2 className="text-center">Contact</h2>
         <br />
         <p className="contact-p">
-          Please contact us at [INSERT_KARATS_EMAIL_HERE] if you have any
+          Please contact us at [insert_email_here] if you have any
           questions or concerns.
         </p>
         <p className="contact-p">
-          If you have a traidmark claim, please provide all neccesary
-          information in the email and we will take all content associated with
-          the trademark.
+          If you have a traidmark or copyright claim, please provide all neccesary
+          information in the email and we will take down all content associated with
+          the complaint.
         </p>
       </div>
       <div className="homeLink">
