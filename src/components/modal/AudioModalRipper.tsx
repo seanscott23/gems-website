@@ -87,7 +87,7 @@ const AudioModalRipper: FC<ModalProps> = ({
       <Modal.Footer id="modal-footer">
         {timeError ? (
           <span className="audioError">
-            Audio length must be below 10 minutes.
+            Audio clip length must be below 10 minutes.
           </span>
         ) : null}
         <Button variant="secondary" onClick={handleClose}>

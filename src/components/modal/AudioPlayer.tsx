@@ -12,8 +12,9 @@ export const AudioPlayer: React.FC<{
 }> = ({ url, isOpen, begin, end, handleTimeUpdate }) => {
   const [show, setShow] = React.useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [audioMetaData, setAudioMetaData] =
-    useState<HTMLAudioElement | undefined>();
+  const [audioMetaData, setAudioMetaData] = useState<
+    HTMLAudioElement | undefined
+  >();
 
   React.useEffect(() => {
     setShow(true);
@@ -34,7 +35,7 @@ export const AudioPlayer: React.FC<{
         src={url}
         preload="metadata"
       >
-        Your browser does not support the audio element.
+        Your browser does not support this audio element.
       </audio>
       {show ? (
         <Controls

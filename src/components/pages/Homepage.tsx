@@ -33,8 +33,8 @@ const Homepage: FC = () => {
           The new platform for audio content creators.
           <br />
           <br />
-          Quickly upload short audio clips or trim existing podcast or audio
-          files to below 10 min for everyone to listen to.
+          Quickly upload short audio clips or trim existing podcast/audio files
+          to below 10 min for anyone to listen to.
           <br />
           <br />
           We created this platform for two reasons.
@@ -43,10 +43,7 @@ const Homepage: FC = () => {
           advertise their podcast highlights to gain new users.
           <br />
           The second was to provide new and existing creators with a platform
-          exclusivly for focused material they can share with the world. That's
-          why we chose the name 'Karats', we like to call any clips that you
-          upload 'gems' and as you upload more, the value "(karats)" of your
-          organization grows!
+          exclusivly for focused material they can share with the world.
         </p>
         <div className="homepage-buttons">
           <Button
