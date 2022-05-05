@@ -137,6 +137,8 @@ const GemForm: FC = () => {
           <option>Health & Fitness</option>
           <option>Arts</option>
           <option>Fiction</option>
+          <option>Non-Fiction</option>
+          <option>Tech</option>
           <option>Philosophy</option>
           <option>Motivation</option>
           <option>True Crime</option>
