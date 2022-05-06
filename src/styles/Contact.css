@@ -24,16 +24,16 @@
 
 @media only screen and (max-width: 320px) {
   .Contact-container {
-    margin-top: 100px;
+    margin-top: 101px;
     width: 90%;
   }
   .Contact-container > .homelink > span {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
   .contact-signin {
-    margin-bottom: 40px;
+    margin-bottom: 41px;
   }
   .contact-p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 }
