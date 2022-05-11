@@ -42,11 +42,11 @@
 .dragdrop-image {
   display: grid;
   justify-self: center;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 @media only screen and (max-width: 320px) {
   .signup-user-audio {
-    height: 150px;
+    height: 151px;
   }
 }
