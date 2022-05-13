@@ -1,11 +1,11 @@
 .homepage-buttons {
   display: flex;
-  margin-top: 30px;
+  margin-top: 31px;
 }
 
 .homepage-buttons > button {
   margin: 20px;
-  font-size: 1.5em;
+  font-size: 1.6em;
 }
 
 .home-container {
@@ -25,12 +25,12 @@
     font-size: 1.9rem;
   }
   .homepage-buttons > button {
-    margin: 11px;
+    margin: 12px;
   }
 }
 
 @media only screen and (max-width: 768px) {
   .home-container > h1 {
-    font-size: 1.9rem;
+    font-size: 1.8rem;
   }
 }
