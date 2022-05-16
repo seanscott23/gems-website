@@ -145,17 +145,17 @@
 }
 
 .audioInputError {
-  margin-top: 10px;
-  height: 50px;
-  width: 250px;
+  margin-top: 11px;
+  height: 51px;
+  width: 251px;
 }
 .alert-danger {
-  height: 50px;
-  width: 250px;
+  height: 51px;
+  width: 251px;
 }
 
 .audioInputError > .alert {
-  padding: 0 1.25rem;
+  padding: 0 1.24rem;
 }
 
 @media only screen and (max-width: 320px) {
