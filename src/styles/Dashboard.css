@@ -23,14 +23,14 @@ Form > .btn-primary {
 @media only screen and (max-width: 768px) {
   #container {
     width: 80%;
-    margin: 150px auto;
+    margin: 151px auto;
     height: 100%;
   }
 }
 @media only screen and (max-width: 320px) {
   #container {
     width: 80%;
-    margin: 121px auto;
+    margin: 120px auto;
     height: 100%;
   }
   .dash-name {
