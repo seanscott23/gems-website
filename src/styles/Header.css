@@ -1,10 +1,10 @@
 .loggedIn-buttons > button {
-  margin: 10px;
+  margin: 11px;
   background-color: #057dcd;
 }
 
 .loggedOut-buttons > button {
-  margin: 10px;
+  margin: 11px;
   background-color: #057dcd;
 }
 
@@ -13,8 +13,8 @@
 }
 
 .navbar-item {
-  font-size: 1.4em;
-  margin-left: 20px;
+  font-size: 1.3em;
+  margin-left: 21px;
   color: #057dcd;
 }
 .dropdown-item > button {
